@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Northbricks</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <button ion-item *ngFor="let transaction of transactions" (click)="showTransaction(transaction.id)">
+
+      <h2>{{transaction.description}}</h2>
+      <p>Amount: {{transaction.amount| currency:'USD':true}}</p>
+<p>Id:  {{transaction.id}}</p>
+    </button>
+  </ion-list>
+</ion-content>
