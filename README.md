@@ -1,6 +1,8 @@
 # northbricks-banking-starter-app
 This is a ionic2 hyrbid app that connects to Northbricks platform to utilize banking services on PSD2.
 
+Connect with us [www.northbricks.com](http://www.northbricks.com)
+
 ##  Getting started
 Our goal is to enable developers and third-party providers to connect to banks easily and utilize their today closed services. 
 
@@ -17,13 +19,6 @@ http://www.blitter.se/tmp/northbricks/swagger/
 4. Go into directory created by GIT clone. 
 5. npm install
 6. ionic serve
-
-
-# Transactions
-- Currency
-- Date
-- Bank id 
-- Paging transactions
 
 We wanna make it possible for third-party to consume
   banking services in 5 minutes.
