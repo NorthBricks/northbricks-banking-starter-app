@@ -14,11 +14,11 @@ http://www.blitter.se/tmp/northbricks/swagger/
 
 ### Install and in 5 minutes connect to banking service
 1. Install node.js and GIT
-2. run from command prompt npm install ionic@latest cordova@latest -g
+2. run from command prompt `npm install ionic@latest cordova@latest -g`
 3. git clone https://github.com/NorthBricks/northbricks-banking-starter-app.git
 4. Go into directory created by GIT clone. 
-5. npm install
-6. ionic serve
+5. `npm install`
+6. `ionic serve`
 
 We wanna make it possible for third-party to consume
   banking services in 5 minutes.
