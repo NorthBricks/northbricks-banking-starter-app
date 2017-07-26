@@ -11,7 +11,7 @@ Our slogan is - "One API to rule them ALL". With that we mean that we are going 
 
 ### Try app with Ionic View - https://view.ionic.io/
 1. Download app from app store or google play (https://view.ionic.io/)
-2. Click preview app and write in 918f579e
+2. Click preview app and write in *918f579e*
 
 
 ### 5 minutes connect to banking service
