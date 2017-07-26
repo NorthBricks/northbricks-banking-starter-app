@@ -8,8 +8,10 @@ Our goal is to enable developers and third-party providers to connect to banks e
 
 Our slogan is - "One API to rule them ALL". With that we mean that we are going to connect banks and you as a developer should be able to use it easily.
 
-See our swagger and how an API is built from ground up:
-http://www.blitter.se/tmp/northbricks/swagger/
+
+### Try app with Ionic View - https://view.ionic.io/
+1. Download app from app store or google play (https://view.ionic.io/)
+2. Click preview app and write in *918f579e*
 
 
 ### 5 minutes connect to banking service
