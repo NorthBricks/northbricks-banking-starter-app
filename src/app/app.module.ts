@@ -18,6 +18,7 @@ import { Keyboard } from '@ionic-native/keyboard';
 import { MomentPipe } from '../pipes/moment.pipe';
 import { ToastService } from "../providers/utils/toast.service";
 import { AlertService } from "../providers/utils/alert.service";
+import { LoginPageModule } from "../pages/login/login.module";
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { AlertService } from "../providers/utils/alert.service";
   imports: [
     BrowserModule,
     HttpModule,
+    LoginPageModule,
     IonicModule.forRoot(MyApp, {
       tabsHideOnSubPages: true
     }),
@@ -44,7 +46,8 @@ import { AlertService } from "../providers/utils/alert.service";
     MyApp,
     AboutPage,
     HomePage,
-    TabsPage,
+    TabsPage
+
 
   ],
   providers: [
@@ -55,7 +58,6 @@ import { AlertService } from "../providers/utils/alert.service";
     SplashScreen,
     ToastService,
     AlertService,
-
     { provide: ErrorHandler, useClass: IonicErrorHandler },
   ]
 })

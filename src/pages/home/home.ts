@@ -1,8 +1,9 @@
+import { LoginPage } from '../login/login';
 
 // import { GroupsRootObject } from '../../interface/iBubble';
 import { NorthbricksApi } from '../../providers/northbricks-api';
 import { Component } from '@angular/core';
-import { LoadingController, NavController } from 'ionic-angular';
+import { LoadingController, ModalController, NavController } from 'ionic-angular';
 import { NorthbricksStorage } from "../../providers/northbricks-storage";
 import { Transaction } from "../../interface/iTransaction";
 import { ToastService } from "../../providers/utils/toast.service";
@@ -13,7 +14,7 @@ import { ToastService } from "../../providers/utils/toast.service";
 })
 export class HomePage {
   transactions: Transaction[] = [];
-  constructor(public loadingCtrl: LoadingController,
+  constructor(public modalCtrl: ModalController, public loadingCtrl: LoadingController,
     public storage: NorthbricksStorage,
     public northbricksApi: NorthbricksApi,
     public navCtrl: NavController,
@@ -52,6 +53,11 @@ export class HomePage {
       loader.dismiss();
     });
 
+  }
+
+  openLogin() {
+    let modal = this.modalCtrl.create(LoginPage);
+    modal.present();
   }
 
 
