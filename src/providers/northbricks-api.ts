@@ -13,7 +13,7 @@ export class NorthbricksApi {
   // private static httpHeaders = new Headers();
   private options = new RequestOptions({ headers: new Headers({ 'Content-Type': 'application/json' }) });
 
-  private baseUrl = 'http://northbricks.blitter.se/api/v1'
+  private baseUrl = 'http://api.northbricks.io/api/v1'
   // private token: string
   constructor(public http: Http, public storage: NorthbricksStorage) {
     console.log('Hello Northbricks API Provider');

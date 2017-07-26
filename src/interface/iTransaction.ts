@@ -1,5 +1,5 @@
 /**
- * http://www.blitter.se/tmp/northbricks/swagger/
+ * http://api.northbricks.io/swagger/
  * 
  * @export
  * @interface Transaction
