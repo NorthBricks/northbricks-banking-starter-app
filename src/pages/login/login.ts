@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
+import { NavParams, ToastController, ViewController } from 'ionic-angular';
 
 /**
  * Generated class for the LoginPage page.
