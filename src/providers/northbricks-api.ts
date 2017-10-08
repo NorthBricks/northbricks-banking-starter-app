@@ -12,13 +12,23 @@ import { Transaction } from "../interface/iTransaction";
 export class NorthbricksApi {
   // private static httpHeaders = new Headers();
   private options = new RequestOptions({ headers: new Headers({ 'Content-Type': 'application/json' }) });
+  public static oAuthUrl = `https://api.northbricks.io/oauth/authorize?client_id=sampleClientId&redirect_uri=https://localhost/oauth/token&scope=read&response_type=token`;
+  private accessTokenUrl = 'https://api.northbricks.io/oauth/token';
+  private baseUrl = 'https://api.northbricks.io/api/v1'
 
-  private baseUrl = 'http://api.northbricks.io/api/v1'
+  private clientId = 'SampleClientId';
+  private clientSecret = 'secret';
+  private clientScope = 'read';
   // private token: string
   constructor(public http: Http, public storage: NorthbricksStorage) {
+
     console.log('Hello Northbricks API Provider');
   }
 
+
+  login() {
+
+  }
 
   /**
    * Returns all transactions for user id

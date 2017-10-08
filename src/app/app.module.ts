@@ -12,7 +12,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { IonicStorageModule } from '@ionic/storage';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { InputDebounceDirective } from '../directives/input-debounce/input-debounce';
 import { Keyboard } from '@ionic-native/keyboard';
 import { MomentPipe } from '../pipes/moment.pipe';
@@ -52,6 +52,7 @@ import { LoginPageModule } from "../pages/login/login.module";
   ],
   providers: [
     StatusBar,
+    InAppBrowser,
     NorthbricksApi,
     NorthbricksStorage,
     Keyboard,
