@@ -62,6 +62,25 @@ export class NorthbricksApi {
       .map(res => <Transaction>res.json())
   }
 
+  fetchBanks() {
+    return this.http.get(this.baseUrl + '/banks', this.options)
+      .map(res => <any>res.json())
+  }
+
+  fetchBank(bankId: number) {
+    return this.http.get(this.baseUrl + `/banks/${bankId}`, this.options)
+      .map(res => <any>res.json())
+  }
+
+  fetchUser() {
+    return this.http.get(this.baseUrl + '/me/user', this.options)
+      .map(res => <any>res.json())
+  }
+
+
+
+
+
   /**
    * Generic post
    * 

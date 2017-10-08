@@ -19,7 +19,9 @@ export class HomePage {
     public northbricksApi: NorthbricksApi,
     public navCtrl: NavController,
     public toastCtrl: ToastService) {
-
+    this.northbricksApi.fetchBanks().subscribe(banks => {
+      console.log(JSON.stringify(banks));
+    });
   }
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
@@ -35,6 +37,9 @@ export class HomePage {
   }
   ionViewCanEnter() {
     this.fetchTransactions();
+
+
+
   }
 
   fetchTransactions() {
