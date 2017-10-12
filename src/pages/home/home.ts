@@ -19,9 +19,11 @@ export class HomePage {
     public northbricksApi: NorthbricksApi,
     public navCtrl: NavController,
     public toastCtrl: ToastService) {
+
     this.northbricksApi.fetchBanks().subscribe(banks => {
-      console.log(JSON.stringify(banks));
+      alert(JSON.stringify(banks));
     });
+
   }
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
@@ -36,7 +38,7 @@ export class HomePage {
     this.toastCtrl.create('Not implemented yet - ID- ' + transactionId, false, 1000);
   }
   ionViewCanEnter() {
-    this.fetchTransactions();
+    // this.fetchTransactions();
 
 
 
@@ -62,6 +64,14 @@ export class HomePage {
 
   openLogin() {
     let modal = this.modalCtrl.create(LoginPage);
+    modal.onDidDismiss(dismissed => {
+      alert(dismissed);
+      this.northbricksApi.fetchBanks().subscribe(banks => {
+        console.log(JSON.stringify(banks));
+      }, error => {
+        console.log(JSON.stringify(error));
+      });
+    });
     modal.present();
   }
 

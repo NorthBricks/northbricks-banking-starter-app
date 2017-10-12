@@ -1,80 +1,83 @@
 {
-    "name": "northbricks",
-    "version": "0.0.0",
-    "author": "Tobias Larsson",
-    "homepage": "http://www.northbricks.com",
-    "private": true,
-    "scripts": {
-        "clean": "ionic-app-scripts clean",
-        "build": "ionic-app-scripts build",
-        "lint": "ionic-app-scripts lint",
-        "ionic:build": "ionic-app-scripts build",
-        "ionic:serve": "ionic-app-scripts serve"
+  "name": "northbricks",
+  "version": "0.0.0",
+  "author": "Tobias Larsson",
+  "homepage": "http://www.northbricks.com",
+  "private": true,
+  "scripts": {
+    "clean": "ionic-app-scripts clean",
+    "build": "ionic-app-scripts build",
+    "lint": "ionic-app-scripts lint",
+    "ionic:build": "ionic-app-scripts build",
+    "ionic:serve": "ionic-app-scripts serve"
+  },
+  "dependencies": {
+    "@angular/common": "^4.4.3",
+    "@angular/compiler": "^4.4.3",
+    "@angular/compiler-cli": "^4.4.3",
+    "@angular/core": "^4.4.3",
+    "@angular/forms": "^4.4.3",
+    "@angular/http": "^4.4.3",
+    "@angular/platform-browser": "^4.4.3",
+    "@angular/platform-browser-dynamic": "^4.4.3",
+    "@ionic-native/action-sheet": "4.3.1",
+    "@ionic-native/core": "^4.3.1",
+    "@ionic-native/in-app-browser": "4.3.1",
+    "@ionic-native/keyboard": "4.3.1",
+    "@ionic-native/splash-screen": "4.3.1",
+    "@ionic-native/status-bar": "4.3.1",
+    "@ionic/storage": "^2.0.1",
+    "auth0-js": "^8.10.1",
+    "cordova-ios": "^4.5.1",
+    "cordova-plugin-actionsheet": "^2.3.3",
+    "cordova-plugin-compat": "^1.1.0",
+    "cordova-plugin-console": "^1.0.7",
+    "cordova-plugin-device": "^1.1.6",
+    "cordova-plugin-inappbrowser": "^1.7.1",
+    "cordova-plugin-ionic-webview": "^1.1.14",
+    "cordova-plugin-splashscreen": "^4.0.3",
+    "cordova-plugin-statusbar": "^2.2.3",
+    "cordova-plugin-whitelist": "^1.3.2",
+    "generate": "^0.14.0",
+    "ionic-angular": "^3.7.0",
+    "ionic-plugin-keyboard": "^2.2.1",
+    "ionicons": "3.0.0",
+    "ios-sim": "^6.1.2",
+    "moment": "2.19.1",
+    "rxjs": "^5.4.3",
+    "sw-toolbox": "3.6.0",
+    "zone.js": "^0.8.17"
+  },
+  "devDependencies": {
+    "@ionic/app-scripts": "^3.0.0",
+    "@ionic/cli-utils": "1.5.0",
+    "typescript": "2.3.4"
+  },
+  "cordovaPlugins": [
+    "cordova-plugin-inappbrowser",
+    "cordova-plugin-whitelist",
+    "cordova-plugin-console",
+    "cordova-plugin-statusbar",
+    "cordova-plugin-device",
+    "ionic-plugin-keyboard",
+    "cordova-plugin-splashscreen"
+  ],
+  "cordovaPlatforms": [],
+  "description": "Northbricks: Empowering the financial ecosystem",
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-actionsheet": {},
+      "cordova-plugin-console": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-whitelist": {},
+      "ionic-plugin-keyboard": {},
+      "cordova-plugin-ionic-webview": {}
     },
-    "dependencies": {
-        "@angular/common": "^4.4.3",
-        "@angular/compiler": "^4.4.3",
-        "@angular/compiler-cli": "^4.4.3",
-        "@angular/core": "^4.4.3",
-        "@angular/forms": "^4.4.3",
-        "@angular/http": "^4.4.3",
-        "@angular/platform-browser": "^4.4.3",
-        "@angular/platform-browser-dynamic": "^4.4.3",
-        "@ionic-native/action-sheet": "4.2.1",
-        "@ionic-native/core": "4.2.1",
-        "@ionic-native/in-app-browser": "4.2.1",
-        "@ionic-native/keyboard": "4.2.1",
-        "@ionic-native/splash-screen": "4.2.1",
-        "@ionic-native/status-bar": "4.2.1",
-        "@ionic/storage": "^2.0.1",
-        "cordova-ios": "^4.5.1",
-        "cordova-plugin-actionsheet": "^2.3.3",
-        "cordova-plugin-compat": "^1.1.0",
-        "cordova-plugin-console": "^1.0.7",
-        "cordova-plugin-device": "^1.1.6",
-        "cordova-plugin-inappbrowser": "^1.7.1",
-        "cordova-plugin-splashscreen": "^4.0.3",
-        "cordova-plugin-statusbar": "^2.2.3",
-        "cordova-plugin-whitelist": "^1.3.2",
-        "generate": "^0.14.0",
-        "ionic-angular": "^3.7.0",
-        "ionic-plugin-keyboard": "^2.2.1",
-        "ionicons": "3.0.0",
-        "ios-sim": "^6.1.2",
-        "moment": "2.18.1",
-        "rxjs": "^5.4.3",
-        "sw-toolbox": "3.6.0",
-        "zone.js": "^0.8.17"
-    },
-    "devDependencies": {
-        "@ionic/app-scripts": "^3.0.0",
-        "@ionic/cli-utils": "1.5.0",
-        "typescript": "2.3.4"
-    },
-    "cordovaPlugins": [
-        "cordova-plugin-inappbrowser",
-        "cordova-plugin-whitelist",
-        "cordova-plugin-console",
-        "cordova-plugin-statusbar",
-        "cordova-plugin-device",
-        "ionic-plugin-keyboard",
-        "cordova-plugin-splashscreen"
-    ],
-    "cordovaPlatforms": [],
-    "description": "Northbricks: Empowering the financial ecosystem",
-    "cordova": {
-        "plugins": {
-            "cordova-plugin-inappbrowser": {},
-            "cordova-plugin-actionsheet": {},
-            "cordova-plugin-console": {},
-            "cordova-plugin-device": {},
-            "cordova-plugin-splashscreen": {},
-            "cordova-plugin-statusbar": {},
-            "cordova-plugin-whitelist": {},
-            "ionic-plugin-keyboard": {}
-        },
-        "platforms": [
-            "ios"
-        ]
-    }
+    "platforms": [
+      "ios"
+    ]
+  }
 }

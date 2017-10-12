@@ -16,9 +16,13 @@ export class NorthbricksApi {
   private accessTokenUrl = 'https://api.northbricks.io/oauth/token';
   private baseUrl = 'https://api.northbricks.io/api/v1'
 
-  private clientId = 'SampleClientId';
+  private clientId = 'sampleClientId';
   private clientSecret = 'secret';
   private clientScope = 'read';
+
+  public static accessToken: string = '';
+  public static tokenType: string = '';
+
   // private token: string
   constructor(public http: Http, public storage: NorthbricksStorage) {
 
@@ -63,7 +67,19 @@ export class NorthbricksApi {
   }
 
   fetchBanks() {
-    return this.http.get(this.baseUrl + '/banks', this.options)
+    let options2 = new RequestOptions();
+    options2.method = "GET";
+    options2.headers = new Headers();
+    options2.headers.append('Content-Type', 'application/json')
+    if (NorthbricksApi.accessToken !== '') {
+      options2.headers.append('Authorization', 'Bearer ' + NorthbricksApi.accessToken);
+
+    } else {
+      options2.headers.append('Authorization', 'Bearer 30f4d335-87e1-4370-a357-689f1e568693');
+
+    }
+
+    return this.http.get(this.baseUrl + '/banks', options2)
       .map(res => <any>res.json())
   }
 
@@ -136,3 +152,4 @@ export class NorthbricksApi {
     return this.http.put(this.baseUrl + '/' + endpoint, body, options);
   }
 }
+
