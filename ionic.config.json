@@ -1,5 +1,8 @@
 {
-  "name": "Raqt",
-  "app_id": "a0a62360",
-  "type": "ionic-angular"
+  "name": "Northbricks",
+  "app_id": "02c7108e",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
 }

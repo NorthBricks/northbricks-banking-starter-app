@@ -1,7 +1,13 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Northbricks</ion-title>
+    <ion-buttons end>
+      <button (click)="openLogin()" ion-button outline>
+        Login
+      </button>
+    </ion-buttons>
   </ion-navbar>
+
 </ion-header>
 
 <ion-content>
@@ -9,11 +15,12 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list>
-    <button ion-item *ngFor="let transaction of transactions" (click)="showTransaction(transaction.id)">
+    <button ion-item *ngFor="let bank of banks" (click)="showBank(bank.id)">
+      <ion-avatar item-start>
+        <img src="{{bank.logo}}">
+      </ion-avatar>
+      <h2>{{bank.fullName}}</h2>
 
-      <h2>{{transaction.description}}</h2>
-      <p>Amount: {{transaction.amount| currency:'USD':true}}</p>
-<p>Id:  {{transaction.id}}</p>
     </button>
   </ion-list>
 </ion-content>

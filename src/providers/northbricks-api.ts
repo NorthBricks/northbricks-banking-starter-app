@@ -1,24 +1,39 @@
-import { NorthbricksStorage } from './northbricks-storage';
-import { Injectable } from '@angular/core';
-import { Http, URLSearchParams, Headers, RequestOptions } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/mergeMap';
-import { Transaction } from "../interface/iTransaction";
+import 'rxjs/add/operator/take';
+
+import { Injectable } from '@angular/core';
+import { Headers, Http, RequestOptions, URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+
+import { Banks } from '../interface/iBanks';
+import { Transaction } from '../interface/iTransaction';
+import { AuthServiceNorthbricksProvider } from './auth-service-northbricks/auth-service-northbricks';
+import { NorthbricksStorage } from './northbricks-storage';
 
 
 @Injectable()
 export class NorthbricksApi {
   // private static httpHeaders = new Headers();
   private options = new RequestOptions({ headers: new Headers({ 'Content-Type': 'application/json' }) });
+  // private accessTokenUrl = 'https://api.northbricks.io/oauth/token';
+  private baseUrl = 'https://api.northbricks.io/api/v1'
 
-  private baseUrl = 'http://api.northbricks.io/api/v1'
+  // private clientId = 'sampleClientId';
+  // private clientSecret = 'secret';
+  // private clientScope = 'read';
+
+
   // private token: string
   constructor(public http: Http, public storage: NorthbricksStorage) {
+
     console.log('Hello Northbricks API Provider');
   }
 
+
+  login() {
+
+  }
 
   /**
    * Returns all transactions for user id
@@ -32,7 +47,7 @@ export class NorthbricksApi {
     let myParams: URLSearchParams = new URLSearchParams();
     myParams.set('userId', userId.toString());
     this.options.search = myParams;
-    return this.http.get(this.baseUrl + '/transactions/', this.options)
+    return this.http.get(this.baseUrl + '/transactions/', this.setHeaders())
       .map(res => <Transaction[]>res.json())
   }
 
@@ -48,9 +63,44 @@ export class NorthbricksApi {
     let myParams: URLSearchParams = new URLSearchParams();
     myParams.set('transactionId', transactionId.toString());
     this.options.search = myParams;
-    return this.http.get(this.baseUrl + '/transactions/', this.options)
+    return this.http.get(this.baseUrl + '/transactions/', this.setHeaders())
       .map(res => <Transaction>res.json())
   }
+
+  fetchBanks(): Observable<Banks[]> {
+
+    return this.http.get(this.baseUrl + '/banks', this.setHeaders())
+      .map(res => <Banks[]>res.json())
+  }
+
+  fetchBank(bankId: number) {
+
+    return this.http.get(this.baseUrl + `/banks/${bankId}`, this.setHeaders())
+      .map(res => <any>res.json())
+  }
+
+  setHeaders(supplementalHeaders: Headers[] = null): RequestOptions {
+    let options = new RequestOptions();
+    options.method = "GET";
+    options.headers = new Headers();
+    options.headers.append('Content-Type', 'application/json')
+    if (AuthServiceNorthbricksProvider.accessToken !== '') {
+      options.headers.append('Authorization', 'Bearer ' + AuthServiceNorthbricksProvider.accessToken);
+
+    } else {
+      options.headers.append('Authorization', 'Bearer ' + AuthServiceNorthbricksProvider.devAccessToken);
+    }
+    return options;
+  }
+  fetchUser() {
+
+    return this.http.get(this.baseUrl + '/me/user', this.setHeaders())
+      .map(res => <any>res.json())
+  }
+
+
+
+
 
   /**
    * Generic post
@@ -107,3 +157,4 @@ export class NorthbricksApi {
     return this.http.put(this.baseUrl + '/' + endpoint, body, options);
   }
 }
+

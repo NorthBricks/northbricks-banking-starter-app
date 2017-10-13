@@ -10,11 +10,19 @@ export class NorthbricksStorage {
     console.log('Hello Northbricks Storage Provider');
   }
 
-  setToken(value: string) {
-    // alert(value);
-    this.storage.set('token', value);
+  setValue(key: string, value: string): Promise<any> {
+    return this.storage.set(key, value);
   }
-  getToken(): Promise<string> {
+
+  getValue(key: string): Promise<any> {
+    return this.storage.get(key);
+  }
+
+  setToken(value: string): Promise<any> {
+    // alert(value);
+    return this.storage.set('token', value);
+  }
+  getToken(): Promise<any> {
     return this.storage.get('token');
   }
 

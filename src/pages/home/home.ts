@@ -1,11 +1,11 @@
-
-// import { GroupsRootObject } from '../../interface/iBubble';
-import { NorthbricksApi } from '../../providers/northbricks-api';
 import { Component } from '@angular/core';
-import { LoadingController, NavController } from 'ionic-angular';
-import { NorthbricksStorage } from "../../providers/northbricks-storage";
-import { Transaction } from "../../interface/iTransaction";
-import { ToastService } from "../../providers/utils/toast.service";
+import { LoadingController, ModalController, NavController } from 'ionic-angular';
+
+import { Banks } from '../../interface/iBanks';
+import { Transaction } from '../../interface/iTransaction';
+import { NorthbricksApi } from '../../providers/northbricks-api';
+import { ToastService } from '../../providers/utils/toast.service';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-home',
@@ -13,8 +13,8 @@ import { ToastService } from "../../providers/utils/toast.service";
 })
 export class HomePage {
   transactions: Transaction[] = [];
-  constructor(public loadingCtrl: LoadingController,
-    public storage: NorthbricksStorage,
+  banks: Banks[] = [];
+  constructor(public modalCtrl: ModalController, public loadingCtrl: LoadingController,
     public northbricksApi: NorthbricksApi,
     public navCtrl: NavController,
     public toastCtrl: ToastService) {
@@ -25,18 +25,21 @@ export class HomePage {
 
     setTimeout(() => {
       console.log('Async operation has ended');
-      this.fetchTransactions();
+      this.fetchBanks();
       refresher.complete();
     }, 2000);
   }
-  showTransaction(transactionId: number) {
+  showBank(transactionId: number) {
     this.toastCtrl.create('Not implemented yet - ID- ' + transactionId, false, 1000);
   }
   ionViewCanEnter() {
-    this.fetchTransactions();
+    this.fetchBanks();
+
+
+
   }
 
-  fetchTransactions() {
+  fetchBanks() {
     let loader = this.loadingCtrl.create({
       content: "Please wait...",
       showBackdrop: true,
@@ -44,14 +47,24 @@ export class HomePage {
     });
     loader.present();
 
-    this.northbricksApi.fetchTransactions(1).subscribe(data => {
-      console.log(JSON.stringify(data));
-      this.transactions = data;
+    this.northbricksApi.fetchBanks().subscribe(banks => {
+      this.banks = banks;
+      // alert(JSON.stringify(banks));
       loader.dismiss();
     }, () => {
       loader.dismiss();
     });
 
+
+  }
+
+  openLogin() {
+    let modal = this.modalCtrl.create(LoginPage);
+    modal.onDidDismiss(token => {
+      // alert(token);
+      this.fetchBanks();
+    });
+    modal.present();
   }
 
 

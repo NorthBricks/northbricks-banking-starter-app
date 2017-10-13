@@ -12,12 +12,15 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { IonicStorageModule } from '@ionic/storage';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { InputDebounceDirective } from '../directives/input-debounce/input-debounce';
 import { Keyboard } from '@ionic-native/keyboard';
 import { MomentPipe } from '../pipes/moment.pipe';
 import { ToastService } from "../providers/utils/toast.service";
 import { AlertService } from "../providers/utils/alert.service";
+import { LoginPageModule } from "../pages/login/login.module";
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { AuthServiceNorthbricksProvider } from '../providers/auth-service-northbricks/auth-service-northbricks';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,7 @@ import { AlertService } from "../providers/utils/alert.service";
   imports: [
     BrowserModule,
     HttpModule,
+    LoginPageModule,
     IonicModule.forRoot(MyApp, {
       tabsHideOnSubPages: true
     }),
@@ -44,19 +48,22 @@ import { AlertService } from "../providers/utils/alert.service";
     MyApp,
     AboutPage,
     HomePage,
-    TabsPage,
+    TabsPage
+
 
   ],
   providers: [
     StatusBar,
+    InAppBrowser,
     NorthbricksApi,
     NorthbricksStorage,
     Keyboard,
     SplashScreen,
     ToastService,
     AlertService,
-
     { provide: ErrorHandler, useClass: IonicErrorHandler },
+    AuthServiceProvider,
+    AuthServiceNorthbricksProvider,
   ]
 })
 export class AppModule { }
