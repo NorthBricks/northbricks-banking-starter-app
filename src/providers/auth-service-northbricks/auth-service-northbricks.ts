@@ -1,14 +1,17 @@
+import 'rxjs/add/operator/map';
+
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
-import { InAppBrowserOptions, InAppBrowser, InAppBrowserObject } from '@ionic-native/in-app-browser';
-import { NorthbricksApi } from '../northbricks-api';
-
+import { InAppBrowser, InAppBrowserObject, InAppBrowserOptions } from '@ionic-native/in-app-browser';
 import { Subscription } from 'rxjs/Subscription';
 
 
 @Injectable()
 export class AuthServiceNorthbricksProvider {
+  private oAuthUrl = `https://api.northbricks.io/oauth/authorize?client_id=sampleClientId&redirect_uri=https://localhost/oauth/token&scope=read&response_type=token`;
+
+  public static accessToken: string = '';
+  public tokenType: string = '';
 
   options: InAppBrowserOptions = {
     location: 'yes',//Or 'no' 
@@ -36,7 +39,7 @@ export class AuthServiceNorthbricksProvider {
     // alert(NorthbricksApi.oAuthUrl);
     return new Promise((resolve, reject) => {
 
-      let browserRef: InAppBrowserObject = this.iab.create(NorthbricksApi.oAuthUrl, "_blank", "location=no,clearsessioncache=yes,clearcache=yes")
+      let browserRef: InAppBrowserObject = this.iab.create(this.oAuthUrl, "_blank", "location=no,clearsessioncache=yes,clearcache=yes")
 
       const exitSubscription: Subscription = browserRef.on("exit").subscribe((event) => {
         alert("The  sign in flow was canceled");
