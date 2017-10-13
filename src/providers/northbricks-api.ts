@@ -47,7 +47,7 @@ export class NorthbricksApi {
     let myParams: URLSearchParams = new URLSearchParams();
     myParams.set('userId', userId.toString());
     this.options.search = myParams;
-    return this.http.get(this.baseUrl + '/transactions/', this.options)
+    return this.http.get(this.baseUrl + '/transactions/', this.setHeaders())
       .map(res => <Transaction[]>res.json())
   }
 
@@ -63,43 +63,23 @@ export class NorthbricksApi {
     let myParams: URLSearchParams = new URLSearchParams();
     myParams.set('transactionId', transactionId.toString());
     this.options.search = myParams;
-    return this.http.get(this.baseUrl + '/transactions/', this.options)
+    return this.http.get(this.baseUrl + '/transactions/', this.setHeaders())
       .map(res => <Transaction>res.json())
   }
 
   fetchBanks(): Observable<Banks[]> {
-    let options = new RequestOptions();
-    options.method = "GET";
-    options.headers = new Headers();
-    options.headers.append('Content-Type', 'application/json')
-    if (AuthServiceNorthbricksProvider.accessToken !== '') {
-      options.headers.append('Authorization', 'Bearer ' + AuthServiceNorthbricksProvider.accessToken);
 
-    } else {
-      options.headers.append('Authorization', 'Bearer 30f4d335-87e1-4370-a357-689f1e568693');
-
-    }
-    return this.http.get(this.baseUrl + '/banks', options)
+    return this.http.get(this.baseUrl + '/banks', this.setHeaders())
       .map(res => <Banks[]>res.json())
   }
 
   fetchBank(bankId: number) {
-    let options = new RequestOptions();
-    options.method = "GET";
-    options.headers = new Headers();
-    options.headers.append('Content-Type', 'application/json')
-    if (AuthServiceNorthbricksProvider.accessToken !== '') {
-      options.headers.append('Authorization', 'Bearer ' + AuthServiceNorthbricksProvider.accessToken);
 
-    } else {
-      options.headers.append('Authorization', 'Bearer 30f4d335-87e1-4370-a357-689f1e568693');
-
-    }
-    return this.http.get(this.baseUrl + `/banks/${bankId}`, options)
+    return this.http.get(this.baseUrl + `/banks/${bankId}`, this.setHeaders())
       .map(res => <any>res.json())
   }
 
-  fetchUser() {
+  setHeaders(supplementalHeaders: Headers[] = null): RequestOptions {
     let options = new RequestOptions();
     options.method = "GET";
     options.headers = new Headers();
@@ -108,10 +88,13 @@ export class NorthbricksApi {
       options.headers.append('Authorization', 'Bearer ' + AuthServiceNorthbricksProvider.accessToken);
 
     } else {
-      options.headers.append('Authorization', 'Bearer 30f4d335-87e1-4370-a357-689f1e568693');
-
+      options.headers.append('Authorization', 'Bearer ' + AuthServiceNorthbricksProvider.devAccessToken);
     }
-    return this.http.get(this.baseUrl + '/me/user', options)
+    return options;
+  }
+  fetchUser() {
+
+    return this.http.get(this.baseUrl + '/me/user', this.setHeaders())
       .map(res => <any>res.json())
   }
 

@@ -11,6 +11,7 @@ export class AuthServiceNorthbricksProvider {
   private oAuthUrl = `https://api.northbricks.io/oauth/authorize?client_id=sampleClientId&redirect_uri=https://localhost/oauth/token&scope=read&response_type=token`;
 
   public static accessToken: string = '';
+  public static devAccessToken: string = 'f41e2702-a659-4c95-a824-5eb317555a9d';
   public tokenType: string = '';
 
   options: InAppBrowserOptions = {
