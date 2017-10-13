@@ -19,6 +19,8 @@ import { MomentPipe } from '../pipes/moment.pipe';
 import { ToastService } from "../providers/utils/toast.service";
 import { AlertService } from "../providers/utils/alert.service";
 import { LoginPageModule } from "../pages/login/login.module";
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { AuthServiceNorthbricksProvider } from '../providers/auth-service-northbricks/auth-service-northbricks';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,8 @@ import { LoginPageModule } from "../pages/login/login.module";
     ToastService,
     AlertService,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
+    AuthServiceProvider,
+    AuthServiceNorthbricksProvider,
   ]
 })
 export class AppModule { }
