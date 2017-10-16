@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Banks } from '../interface/iBanks';
 import { Transaction } from '../interface/iTransaction';
+import { User } from '../interface/iUser';
 import { AuthServiceNorthbricksProvider } from './auth-service-northbricks/auth-service-northbricks';
 import { NorthbricksStorage } from './northbricks-storage';
 
@@ -68,9 +69,13 @@ export class NorthbricksApi {
   }
 
   fetchBanks(): Observable<Banks[]> {
-
-    return this.http.get(this.baseUrl + '/banks', this.setHeaders())
-      .map(res => <Banks[]>res.json())
+    if (AuthServiceNorthbricksProvider.accessToken === '') {
+      return this.http.get('assets/dummydata/banks.json', this.setHeaders())
+        .map(res => <Banks[]>res.json());
+    } else {
+      return this.http.get(this.baseUrl + '/banks', this.setHeaders())
+        .map(res => <Banks[]>res.json());
+    }
   }
 
   fetchBank(bankId: number) {
@@ -84,18 +89,17 @@ export class NorthbricksApi {
     options.method = "GET";
     options.headers = new Headers();
     options.headers.append('Content-Type', 'application/json')
+
     if (AuthServiceNorthbricksProvider.accessToken !== '') {
       options.headers.append('Authorization', 'Bearer ' + AuthServiceNorthbricksProvider.accessToken);
-
     } else {
       options.headers.append('Authorization', 'Bearer ' + AuthServiceNorthbricksProvider.devAccessToken);
     }
     return options;
   }
-  fetchUser() {
-
+  fetchUser(): Observable<User> {
     return this.http.get(this.baseUrl + '/me/user', this.setHeaders())
-      .map(res => <any>res.json())
+      .map(res => <User>res.json())
   }
 
 

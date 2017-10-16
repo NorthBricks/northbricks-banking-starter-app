@@ -1,26 +1,28 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { MyApp } from './app.component';
-import { NorthbricksApi } from '../providers/northbricks-api'
-import { NorthbricksStorage } from '../providers/northbricks-storage'
-import { AboutPage } from '../pages/about/about';
-
-import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
-import { IonicStorageModule } from '@ionic/storage';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { InputDebounceDirective } from '../directives/input-debounce/input-debounce';
 import { Keyboard } from '@ionic-native/keyboard';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import { IonicStorageModule } from '@ionic/storage';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+
+import { InputDebounceDirective } from '../directives/input-debounce/input-debounce';
+import { AboutPage } from '../pages/about/about';
+import { BankPageModule } from '../pages/bank/bank.module';
+import { HomePage } from '../pages/home/home';
+import { LoginPageModule } from '../pages/login/login.module';
+import { ProfilePageModule } from '../pages/profile/profile.module';
+import { TabsPage } from '../pages/tabs/tabs';
 import { MomentPipe } from '../pipes/moment.pipe';
-import { ToastService } from "../providers/utils/toast.service";
-import { AlertService } from "../providers/utils/alert.service";
-import { LoginPageModule } from "../pages/login/login.module";
-import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { AuthServiceNorthbricksProvider } from '../providers/auth-service-northbricks/auth-service-northbricks';
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { NorthbricksApi } from '../providers/northbricks-api';
+import { NorthbricksStorage } from '../providers/northbricks-storage';
+import { AlertService } from '../providers/utils/alert.service';
+import { ToastService } from '../providers/utils/toast.service';
+import { MyApp } from './app.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { AuthServiceNorthbricksProvider } from '../providers/auth-service-northb
   imports: [
     BrowserModule,
     HttpModule,
+    ProfilePageModule,
+    BankPageModule,
     LoginPageModule,
     IonicModule.forRoot(MyApp, {
       tabsHideOnSubPages: true

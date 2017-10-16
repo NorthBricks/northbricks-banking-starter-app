@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { LoadingController, ModalController, NavController } from 'ionic-angular';
+import { LoadingController, ModalController, NavController, PopoverController } from 'ionic-angular';
 
 import { Banks } from '../../interface/iBanks';
 import { Transaction } from '../../interface/iTransaction';
 import { NorthbricksApi } from '../../providers/northbricks-api';
 import { ToastService } from '../../providers/utils/toast.service';
+import { BankPage } from '../bank/bank';
 import { LoginPage } from '../login/login';
 
 @Component({
@@ -14,7 +15,9 @@ import { LoginPage } from '../login/login';
 export class HomePage {
   transactions: Transaction[] = [];
   banks: Banks[] = [];
-  constructor(public modalCtrl: ModalController, public loadingCtrl: LoadingController,
+  constructor(public modalCtrl: ModalController,
+    public popoverCtrl: PopoverController,
+    public loadingCtrl: LoadingController,
     public northbricksApi: NorthbricksApi,
     public navCtrl: NavController,
     public toastCtrl: ToastService) {
@@ -29,14 +32,13 @@ export class HomePage {
       refresher.complete();
     }, 2000);
   }
-  showBank(transactionId: number) {
-    this.toastCtrl.create('Not implemented yet - ID- ' + transactionId, false, 1000);
+  showBank(bankId: number) {
+    let popover = this.popoverCtrl.create(BankPage, { bankId: bankId });
+    popover.present();
+    // this.toastCtrl.create('Not implemented yet - ID- ' + transactionId, false, 1000);
   }
   ionViewCanEnter() {
     this.fetchBanks();
-
-
-
   }
 
   fetchBanks() {
