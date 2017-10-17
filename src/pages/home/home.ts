@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
-import { LoadingController, ModalController, NavController, PopoverController } from 'ionic-angular';
+import { LoadingController, ModalController, NavController } from 'ionic-angular';
 
 import { Banks } from '../../interface/iBanks';
 import { Transaction } from '../../interface/iTransaction';
+import { User } from '../../interface/iUser';
 import { NorthbricksApi } from '../../providers/northbricks-api';
+import { NorthbricksStorage } from '../../providers/northbricks-storage';
 import { ToastService } from '../../providers/utils/toast.service';
 import { BankPage } from '../bank/bank';
 import { LoginPage } from '../login/login';
+
 
 @Component({
   selector: 'page-home',
@@ -15,27 +18,37 @@ import { LoginPage } from '../login/login';
 export class HomePage {
   transactions: Transaction[] = [];
   banks: Banks[] = [];
+  bank: Banks;
+  accountId: number;
+  user: User;
   constructor(public modalCtrl: ModalController,
-    public popoverCtrl: PopoverController,
     public loadingCtrl: LoadingController,
     public northbricksApi: NorthbricksApi,
     public navCtrl: NavController,
-    public toastCtrl: ToastService) {
+    public toastCtrl: ToastService,
+    private storage: NorthbricksStorage) {
 
   }
+
+  ionViewDidLoad() {
+    this.northbricksApi.fetchUser().subscribe(user => {
+      this.storage.setUser(user);
+      this.user = user;
+    });
+  }
+
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
 
     setTimeout(() => {
-      console.log('Async operation has ended');
       this.fetchBanks();
       refresher.complete();
     }, 2000);
   }
-  showBank(bankId: number) {
-    let popover = this.popoverCtrl.create(BankPage, { bankId: bankId });
-    popover.present();
-    // this.toastCtrl.create('Not implemented yet - ID- ' + transactionId, false, 1000);
+  showBank(bank: Banks) {
+    alert(bank.id);
+    this.navCtrl.push(BankPage, { bank: bank, user: this.user });
+
   }
   ionViewCanEnter() {
     this.fetchBanks();

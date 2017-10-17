@@ -1,15 +1,29 @@
-<ion-list>
-  <div padding>
-    <h2>{{bank?.fullName}}</h2>
-  </div>
-  <ion-item>
-    <ion-label stacked>Short name</ion-label>
-    <ion-input type="text" value="{{bank?.shortName}}"></ion-input>
-  </ion-item>
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{bank?.fullName}}</ion-title>
+    <ion-buttons end>
+      <button (click)="addFavourite()" ion-button outline>
+        Add to favourite
+      </button>
+    </ion-buttons>
+  </ion-navbar>
 
-  <ion-item>
-    <ion-label stacked>Website</ion-label>
-    <ion-input type="text" value="{{bank?.website}}"></ion-input>
-  </ion-item>
+</ion-header>
 
-</ion-list>
+<ion-content>
+  <ion-list>
+    <div padding>
+      <h2>{{bank?.fullName}}</h2>
+    </div>
+    <ion-item>
+      <ion-label stacked>Short name</ion-label>
+      <ion-input type="text" value="{{bank?.shortName}}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Website</ion-label>
+      <ion-input type="text" value="{{bank?.website}}"></ion-input>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavParams, ToastController, ViewController } from 'ionic-angular';
 
 import { AuthServiceNorthbricksProvider } from '../../providers/auth-service-northbricks/auth-service-northbricks';
+import { NorthbricksApi } from '../../providers/northbricks-api';
 import { NorthbricksStorage } from '../../providers/northbricks-storage';
 
 @Component({
@@ -18,7 +19,8 @@ export class LoginPage {
     public viewCtrl: ViewController,
     private storage: NorthbricksStorage,
     public navParams: NavParams,
-    private ngAuthProvider: AuthServiceNorthbricksProvider) {
+    private ngAuthProvider: AuthServiceNorthbricksProvider,
+    public northbricksApi: NorthbricksApi) {
 
   }
 
@@ -28,7 +30,11 @@ export class LoginPage {
   doLogin() {
     this.ngAuthProvider.loginNorthbricks().then(response => {
       AuthServiceNorthbricksProvider.accessToken = response.access_token;
-      this.closeModal();
+      this.northbricksApi.fetchUser().subscribe(user => {
+        this.storage.setValue('user', JSON.stringify(user));
+        this.closeModal();
+      });
+
 
     }, error => {
       this.closeModal();

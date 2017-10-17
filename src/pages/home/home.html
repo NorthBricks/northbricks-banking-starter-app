@@ -15,7 +15,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list>
-    <button ion-item *ngFor="let bank of banks" (click)="showBank(bank.id)">
+    <button ion-item *ngFor="let bank of banks" (click)="showBank(bank)">
       <ion-avatar item-start>
         <img src="{{bank.logo}}">
       </ion-avatar>

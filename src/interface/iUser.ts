@@ -1,5 +1,5 @@
 export interface User {
-    id: string;
+    id: number;
     username: string;
     oauth2Scope: string;
     firstName: string;

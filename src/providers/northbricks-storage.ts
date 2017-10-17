@@ -1,7 +1,10 @@
+import 'rxjs/add/operator/map';
+
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
+
+import { User } from '../interface/iUser';
 
 @Injectable()
 export class NorthbricksStorage {
@@ -24,6 +27,14 @@ export class NorthbricksStorage {
   }
   getToken(): Promise<any> {
     return this.storage.get('token');
+  }
+
+  setUser(value: User): Promise<any> {
+    // alert(value);
+    return this.storage.set('user', JSON.stringify(value));
+  }
+  getUser(): Promise<any> {
+    return this.storage.get('user');
   }
 
   deleteAll(): Promise<any> {

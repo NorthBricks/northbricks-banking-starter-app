@@ -37,7 +37,7 @@ export class AuthServiceNorthbricksProvider {
   }
 
   loginNorthbricks(): Promise<OAuthResponse> {
-    // alert(NorthbricksApi.oAuthUrl);
+
     return new Promise((resolve, reject) => {
 
       let browserRef: InAppBrowserObject = this.iab.create(this.oAuthUrl, "_blank", "location=no,clearsessioncache=yes,clearcache=yes")
@@ -48,34 +48,21 @@ export class AuthServiceNorthbricksProvider {
       });
 
       browserRef.on("loadstart").subscribe((event) => {
-        // console.log(JSON.stringify(event));
-        // console.log('Load start event url ' + JSON.stringify(event.url));
-        // alert(JSON.stringify(event.url));
-        // console.log('LOADSTART _ FIIIIIRRREEEE???');
         if ((event.url).indexOf(`https://localhost/oauth/token`) === 0) {
           console.log('Fick tillbaka loadstart - redirect url');
           exitSubscription.unsubscribe();
           browserRef.close();
 
 
-          // let params = new URLSearchParams(event.url);
-          // alert('Access token ' + event.url + params.get('access_token'));
-          // alert(event.url);
           console.log(event.url);
           var responseParameters = ((event.url).split("#")[1]).split("&");
-          // var responseParameters = ((event.url).split("&"));
-          // alert('Response parameters ' + responseParameters);
           var parsedResponse = {};
-          // var parsedResponse: OAuthResponse;
           console.log('RESPONSE::: ' + responseParameters);
-          // alert(responseParameters.length);
           for (var i = 0; i < responseParameters.length; i++) {
-            // alert(responseParameters[i]);
             parsedResponse[responseParameters[i].split("=")[0]] = responseParameters[i].split("=")[1];
           }
           console.log('PARSED RESPONSE ' + JSON.stringify(parsedResponse));
           if (parsedResponse["access_token"] !== undefined && parsedResponse["access_token"] !== null) {
-            // alert(parsedResponse);
             console.log('Access token..');
             resolve(<OAuthResponse>parsedResponse);
           } else {

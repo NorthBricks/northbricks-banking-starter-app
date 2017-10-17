@@ -44,11 +44,11 @@ export class NorthbricksApi {
    * 
    * @memberof NorthbricksApi
    */
-  fetchTransactions(userId: number): Observable<Transaction[]> {
-    let myParams: URLSearchParams = new URLSearchParams();
-    myParams.set('userId', userId.toString());
-    this.options.search = myParams;
-    return this.http.get(this.baseUrl + '/transactions/', this.setHeaders())
+  fetchTransactions(accountId: number, bankId: number): Observable<Transaction[]> {
+    // let myParams: URLSearchParams = new URLSearchParams();
+    // myParams.set('userId', userId.toString());
+    // this.options.search = myParams;
+    return this.http.get(this.baseUrl + `/banks/${bankId}/accounts/${accountId}/transactions/`, this.setHeaders())
       .map(res => <Transaction[]>res.json())
   }
 
@@ -69,13 +69,13 @@ export class NorthbricksApi {
   }
 
   fetchBanks(): Observable<Banks[]> {
-    if (AuthServiceNorthbricksProvider.accessToken === '') {
-      return this.http.get('assets/dummydata/banks.json', this.setHeaders())
-        .map(res => <Banks[]>res.json());
-    } else {
-      return this.http.get(this.baseUrl + '/banks', this.setHeaders())
-        .map(res => <Banks[]>res.json());
-    }
+    // if (AuthServiceNorthbricksProvider.accessToken === '') {
+    //   return this.http.get('assets/dummydata/banks.json', this.setHeaders())
+    //     .map(res => <Banks[]>res.json());
+    // } else {
+    return this.http.get(this.baseUrl + '/banks', this.setHeaders())
+      .map(res => <Banks[]>res.json());
+    // }
   }
 
   fetchBank(bankId: number) {

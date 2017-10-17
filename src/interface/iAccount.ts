@@ -3,7 +3,7 @@ export interface Owner {
 }
 
 export interface Account {
-    id: string;
+    id: number;
     iban: string;
     owner: Owner;
 }
