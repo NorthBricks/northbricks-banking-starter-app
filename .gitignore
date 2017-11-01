@@ -3,4 +3,4 @@ platforms/
 plugins/
 www
 build
-.sourcemaps/
+.sourcemaps
