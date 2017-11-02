@@ -4,6 +4,7 @@
  * @export
  * @interface Transaction
  */
+import { Transaction } from './iTransaction';
 
 export interface Amount {
     value: number;
@@ -16,7 +17,6 @@ export interface RelatedParty {
 
 export interface Transaction {
     id: string;
-    type: string;
     description: string;
     bookingDate: Date;
     valueDate: Date;
