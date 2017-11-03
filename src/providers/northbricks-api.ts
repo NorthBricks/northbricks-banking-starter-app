@@ -44,11 +44,14 @@ export class NorthbricksApi {
    * 
    * @memberof NorthbricksApi
    */
-  fetchTransactions(accountId: number, bankId: number): Observable<Transaction[]> {
+  fetchTransactions(accountId: string, bankId: number): Observable<Transaction[]> {
     // let myParams: URLSearchParams = new URLSearchParams();
     // myParams.set('userId', userId.toString());
     // this.options.search = myParams;
-    return this.http.get(this.baseUrl + `/banks/${bankId}/accounts/${accountId}/transactions/`, this.setHeaders())
+
+    accountId = 'FI6593857450293470-EUR';
+    //  https://api.northbricks.io/api/v1/banks/5707648880082944/accounts/FI6593857450293470-EUR/transactions
+    return this.http.get(this.baseUrl + `/banks/${bankId}/accounts/${accountId}/transactions`, this.setHeaders())
       .map(res => <Transaction[]>res.json())
   }
 

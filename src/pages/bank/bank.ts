@@ -1,3 +1,4 @@
+import { Transaction } from '../../interface/iTransaction';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -5,12 +6,6 @@ import { Banks } from '../../interface/iBanks';
 import { User } from '../../interface/iUser';
 import { NorthbricksApi } from '../../providers/northbricks-api';
 
-/**
- * Generated class for the BankPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -19,7 +14,7 @@ import { NorthbricksApi } from '../../providers/northbricks-api';
 })
 export class BankPage {
   bank: Banks;
-
+  transactions: Transaction[] = [];
   user: User;
   constructor(public northbricksApi: NorthbricksApi, public navCtrl: NavController, public navParams: NavParams) {
     this.bank = <Banks>navParams.get('bank');
@@ -36,9 +31,10 @@ export class BankPage {
     }, () => {
       alert('Error fetchBank');
     });
-    alert(this.user.id + ' ' + this.bank.id);
+    // alert(this.user.id + ' ' + this.bank.id);
     this.northbricksApi.fetchTransactions(this.user.id, this.bank.id).subscribe(transactions => {
-      alert(JSON.stringify(transactions));
+      // alert(JSON.stringify(transactions));
+      this.transactions = transactions;
     }, () => {
       alert('Error transactions');
     });

@@ -26,4 +26,13 @@
     </ion-item>
 
   </ion-list>
+
+
+  <ion-list>
+    <ion-list-header>
+      Nordea
+    </ion-list-header>
+    <ion-item *ngFor="let trans of transactions">{{trans.amount.value}} {{trans.amount.currency}} {{trans.relatedParty.name}}</ion-item>
+
+  </ion-list>
 </ion-content>

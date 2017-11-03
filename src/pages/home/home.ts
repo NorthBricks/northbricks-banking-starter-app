@@ -46,7 +46,7 @@ export class HomePage {
     }, 2000);
   }
   showBank(bank: Banks) {
-    alert(bank.id);
+    // alert(bank.id);
     this.navCtrl.push(BankPage, { bank: bank, user: this.user });
 
   }
