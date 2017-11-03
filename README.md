@@ -8,6 +8,15 @@ Our goal is to enable developers and third-party providers to connect to banks e
 
 Our slogan is - "One API to rule them ALL". With that we mean that we are going to connect banks and you as a developer should be able to use it easily.
 
+### Conntected banks
+- Nordea (11 million customers)
+
+### Soon to be onboarded
+- Länsförsäkringar
+- SEB
+- ICA
+- And of course....all other banks in Europe
+
 
 ### Try app with Ionic View - https://view.ionic.io/
 1. Download app from app store or google play (https://view.ionic.io/)
