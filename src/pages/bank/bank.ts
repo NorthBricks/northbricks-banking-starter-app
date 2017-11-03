@@ -5,6 +5,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Banks } from '../../interface/iBanks';
 import { User } from '../../interface/iUser';
 import { NorthbricksApi } from '../../providers/northbricks-api';
+import { ToastService } from '../../providers/utils/toast.service';
 
 
 @IonicPage()
@@ -16,7 +17,10 @@ export class BankPage {
   bank: Banks;
   transactions: Transaction[] = [];
   user: User;
-  constructor(public northbricksApi: NorthbricksApi, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public northbricksApi: NorthbricksApi,
+    public navCtrl: NavController,
+    public toastCtrl: ToastService,
+    public navParams: NavParams) {
     this.bank = <Banks>navParams.get('bank');
     this.user = <User>navParams.get('user');
 
@@ -24,7 +28,7 @@ export class BankPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BankPage');
-    alert(this.bank);
+    // alert(this.bank);
     this.northbricksApi.fetchBank(this.bank.id).subscribe(bank => {
       // alert(JSON.stringify(bank));
       this.bank = bank;
@@ -41,6 +45,12 @@ export class BankPage {
 
 
 
+  }
+  showTransaction(transaction: Transaction) {
+    this.toastCtrl.showTransaction(transaction,
+      true,
+      5000
+    );
   }
 
 }
