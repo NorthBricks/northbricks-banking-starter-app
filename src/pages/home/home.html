@@ -16,8 +16,8 @@
   </ion-refresher>
   <ion-list>
     <button ion-item *ngFor="let bank of banks" (click)="showBank(bank)">
-      <ion-avatar item-start>
-        <img src="{{bank.logo}}">
+      <ion-avatar item-start class="logo">
+        <img src="../../assets/logo/Nordea200px.png">
       </ion-avatar>
       <h2>{{bank.fullName}}</h2>
 
