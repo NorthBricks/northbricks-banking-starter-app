@@ -25,7 +25,7 @@ Our slogan is - "One API to rule them ALL". With that we mean that we are going 
 
 ### 5 minutes connect to banking service
 1. Install node.js and GIT
-2. run from command prompt `npm install ionic@latest cordova@latest -g`
+2. run from command prompt `npm install ionic cordova -g`
 3. git clone https://github.com/NorthBricks/northbricks-banking-starter-app.git
 4. Go into directory created by GIT clone. 
 5. `npm install`
