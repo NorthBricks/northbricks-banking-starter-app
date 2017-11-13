@@ -1,7 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/take';
-
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/of';
 import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -15,6 +17,7 @@ import { NorthbricksStorage } from './northbricks-storage';
 
 @Injectable()
 export class NorthbricksApi {
+
   // private static httpHeaders = new Headers();
   private options = new RequestOptions({ headers: new Headers({ 'Content-Type': 'application/json' }) });
   // private accessTokenUrl = 'https://api.northbricks.io/oauth/token';
@@ -72,13 +75,40 @@ export class NorthbricksApi {
   }
 
   fetchBanks(): Observable<Banks[]> {
-    // if (AuthServiceNorthbricksProvider.accessToken === '') {
-    //   return this.http.get('assets/dummydata/banks.json', this.setHeaders())
-    //     .map(res => <Banks[]>res.json());
-    // } else {
+
     return this.http.get(this.baseUrl + '/banks', this.setHeaders())
-      .map(res => <Banks[]>res.json());
-    // }
+      .map(res => <Banks[]>res.json())
+      .catch(res => this._handle401(res));
+
+  }
+
+
+  private _handle401(response: HttpErrorResponse): Observable<any> {
+
+    try {
+      console.error(response.status);
+      if (response.status === 401) {
+        console.log(response.status);
+        return Observable.throw(new Error(response.statusText));
+      } else if (response.status === undefined) {
+        console.log(response.status);
+        return Observable.throw(new Error('Check your TFS url and token'));
+      } else if (response.status === 404) {
+
+        console.log('404 404');
+        return Observable.throw(new Error('Check your TFS url and token'));
+      } else if (response.status === 0) {
+
+        console.log('Status 0 ' + response.statusText);
+        return Observable.throw(new Error('Check your TFS url and token'));
+      }
+    } catch (err) {
+
+      console.warn('AuthenticatedHttpService._handle401');
+      console.error(err);
+    }
+
+    return Observable.of(response);
   }
 
   fetchBank(bankId: number) {
@@ -103,6 +133,7 @@ export class NorthbricksApi {
   fetchUser(): Observable<User> {
     return this.http.get(this.baseUrl + '/me/user', this.setHeaders())
       .map(res => <User>res.json())
+      .catch(res => this._handle401(res));
   }
 
 

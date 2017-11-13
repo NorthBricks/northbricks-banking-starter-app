@@ -5,7 +5,7 @@ import { Banks } from '../../interface/iBanks';
 import { Transaction } from '../../interface/iTransaction';
 import { User } from '../../interface/iUser';
 import { NorthbricksApi } from '../../providers/northbricks-api';
-import { NorthbricksStorage } from '../../providers/northbricks-storage';
+
 import { ToastService } from '../../providers/utils/toast.service';
 import { BankPage } from '../bank/bank';
 import { LoginPage } from '../login/login';
@@ -25,16 +25,19 @@ export class HomePage {
     public loadingCtrl: LoadingController,
     public northbricksApi: NorthbricksApi,
     public navCtrl: NavController,
-    public toastCtrl: ToastService,
-    private storage: NorthbricksStorage) {
+    public toastCtrl: ToastService) {
 
   }
 
   ionViewDidLoad() {
-    this.northbricksApi.fetchUser().subscribe(user => {
-      this.storage.setUser(user);
-      this.user = user;
-    });
+
+    // this.northbricksApi.fetchUser().subscribe(user => {
+    //   this.storage.setUser(user);
+    //   this.user = user;
+    //   this.fetchBanks();
+    // }, error => {
+    //   alert(error);
+    // });
   }
 
   doRefresh(refresher) {
@@ -51,7 +54,7 @@ export class HomePage {
 
   }
   ionViewCanEnter() {
-    this.fetchBanks();
+
   }
 
   fetchBanks() {
@@ -66,7 +69,8 @@ export class HomePage {
       this.banks = banks;
       // alert(JSON.stringify(banks));
       loader.dismiss();
-    }, () => {
+    }, (error) => {
+      alert(error);
       loader.dismiss();
     });
 
