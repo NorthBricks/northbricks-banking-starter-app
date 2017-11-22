@@ -9,6 +9,7 @@ import { NorthbricksApi } from '../../providers/northbricks-api';
 import { ToastService } from '../../providers/utils/toast.service';
 import { BankPage } from '../bank/bank';
 import { LoginPage } from '../login/login';
+import { NorthbricksStorage } from '../../providers/northbricks-storage';
 
 
 @Component({
@@ -25,19 +26,20 @@ export class HomePage {
     public loadingCtrl: LoadingController,
     public northbricksApi: NorthbricksApi,
     public navCtrl: NavController,
-    public toastCtrl: ToastService) {
+    public toastCtrl: ToastService,
+    private storage: NorthbricksStorage) {
 
   }
 
   ionViewDidLoad() {
 
-    // this.northbricksApi.fetchUser().subscribe(user => {
-    //   this.storage.setUser(user);
-    //   this.user = user;
-    //   this.fetchBanks();
-    // }, error => {
-    //   alert(error);
-    // });
+    this.northbricksApi.fetchUser().subscribe(user => {
+      this.storage.setUser(user);
+      this.user = user;
+      this.fetchBanks();
+    }, error => {
+      alert(error);
+    });
   }
 
   doRefresh(refresher) {
