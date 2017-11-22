@@ -18,6 +18,12 @@ import { NorthbricksApi } from '../../providers/northbricks-api';
 })
 export class ProfilePage {
   user: User;
+  placeholderPicture = 'http://api.adorable.io/avatar/200/bob';
+  paymentMethods = ['Paypal', 'Credit Card'];
+  languages = ['English', 'Portuguese', 'Swedish'];
+  currencies = ['USD', 'BRL', 'EUR', 'SEK'];
+  banks = [{ name: 'Nordea' }, { name: 'Skandia' }, { name: 'SEB' }, { name: 'ICA' }];
+
   constructor(private northbricksApi: NorthbricksApi, public navCtrl: NavController, public navParams: NavParams) {
   }
 
@@ -25,7 +31,9 @@ export class ProfilePage {
     console.log('ionViewDidLoad ProfilePage');
 
     this.northbricksApi.fetchUser().subscribe(user => {
-      alert(JSON.stringify(user));
+      // alert(JSON.stringify(user));
+      this.user = user;
+
     });
 
 

@@ -7,6 +7,48 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      <ion-avatar item-start (click)="updateProfileImage()">
+        <img [src]="placeholderPicture">
+      </ion-avatar>
+      <p class="username">{{user?.firstName}} {{user?.lastName}}</p>
+      <p *ngIf="user?.email">{{user?.email}}</p>
+      <p *ngIf="user?.phone">{{user?.phone}}</p>
+    </ion-list-header>
+  </ion-list>
+  <ion-list no-border>
+    <ion-list-header>
+      My banks
+    </ion-list-header>
+
+    <button ion-item *ngFor="let bank of banks">
+      <h2>{{bank.name}}</h2>
+    </button>
+  </ion-list>
+  <!-- <ion-list>
+    <ion-list-header>
+      Currency
+    </ion-list-header>
+    <ion-item>
+      <ion-icon name='card' item-start></ion-icon>
+      <ion-label>Payment Method</ion-label>
+      <ion-select [(ngModel)]="paymentMethod">
+        <ion-option *ngFor="let method of paymentMethods" [value]="method">{{method}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-icon name='logo-usd' item-start></ion-icon>
+      <ion-label>Currency</ion-label>
+      <ion-select [(ngModel)]="currency">
+        <ion-option *ngFor="let currency of currencies" [value]="currency">{{currency}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list> -->
+
+
+
+
 
 </ion-content>

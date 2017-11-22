@@ -1,7 +1,7 @@
 import { Transaction } from '../../interface/iTransaction';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import * as moment from 'moment';
 import { Banks } from '../../interface/iBanks';
 import { User } from '../../interface/iUser';
 import { NorthbricksApi } from '../../providers/northbricks-api';
