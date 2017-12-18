@@ -3,7 +3,12 @@ export interface Owner {
 }
 
 export interface Account {
-    id: number;
+    id: string;
     iban: string;
+    type: string;
     owner: Owner;
+}
+
+export interface Accounts {
+    accounts: Account[];
 }

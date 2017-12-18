@@ -1,11 +1,3 @@
-/**
- * http://api.northbricks.io/swagger/
- * 
- * @export
- * @interface Transaction
- */
-import { Transaction } from './iTransaction';
-
 export interface Amount {
     value: number;
     currency: string;
@@ -24,3 +16,6 @@ export interface Transaction {
     relatedParty: RelatedParty;
 }
 
+export interface TransactionsRoot {
+    transactions: Transaction[];
+}

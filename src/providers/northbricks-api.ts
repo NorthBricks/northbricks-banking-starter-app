@@ -1,3 +1,4 @@
+import { Accounts } from '../interface/iAccount';
 import { HttpErrorResponse } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
@@ -9,7 +10,7 @@ import { Headers, Http, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { Banks } from '../interface/iBanks';
-import { Transaction } from '../interface/iTransaction';
+import { Transaction, TransactionsRoot } from '../interface/iTransaction';
 import { User } from '../interface/iUser';
 import { AuthServiceNorthbricksProvider } from './auth-service-northbricks/auth-service-northbricks';
 import { NorthbricksStorage } from './northbricks-storage';
@@ -38,6 +39,16 @@ export class NorthbricksApi {
   login() {
 
   }
+  bankAuth(bankId: string) {
+    return this.http.get(this.baseUrl + `/me/banks/${bankId}/auth/`, this.setHeaders())
+      .map(res => <Transaction[]>res.json())
+  }
+
+  fetchAccounts(bankId: string): Observable<Accounts> {
+    return this.http.get(this.baseUrl + `/banks/${bankId}/accounts`, this.setHeaders())
+      .map(res => <Accounts>res.json())
+  }
+
 
   /**
    * Returns all transactions for user id
@@ -47,15 +58,15 @@ export class NorthbricksApi {
    * 
    * @memberof NorthbricksApi
    */
-  fetchTransactions(accountId: string, bankId: number): Observable<Transaction[]> {
+  fetchTransactions(accountId: string, bankId: string): Observable<TransactionsRoot> {
     // let myParams: URLSearchParams = new URLSearchParams();
     // myParams.set('userId', userId.toString());
     // this.options.search = myParams;
 
-    accountId = 'FI6593857450293470-EUR';
+    // accountId = 'FI6593857450293470-EUR';
     //  https://api.northbricks.io/api/v1/banks/5707648880082944/accounts/FI6593857450293470-EUR/transactions
     return this.http.get(this.baseUrl + `/banks/${bankId}/accounts/${accountId}/transactions`, this.setHeaders())
-      .map(res => <Transaction[]>res.json())
+      .map(res => <TransactionsRoot>res.json())
   }
 
   /**
@@ -74,10 +85,10 @@ export class NorthbricksApi {
       .map(res => <Transaction>res.json())
   }
 
-  fetchBanks(): Observable<Banks[]> {
+  fetchBanks(): Observable<Banks> {
 
     return this.http.get(this.baseUrl + '/banks', this.setHeaders())
-      .map(res => <Banks[]>res.json())
+      .map(res => <Banks>res.json())
       .catch(res => this._handle401(res));
 
   }
@@ -111,23 +122,30 @@ export class NorthbricksApi {
     return Observable.of(response);
   }
 
-  fetchBank(bankId: number) {
+  fetchBank(bankId: string) {
 
+    // return this.http.get(this.baseUrl + `/banks/${bankId}`, this.setHeaders())
+    //   .map(res => <any>res.json());
     return this.http.get(this.baseUrl + `/banks/${bankId}`, this.setHeaders())
-      .map(res => <any>res.json())
+      .map(res => <any>res.json());
   }
+
+
 
   setHeaders(supplementalHeaders: Headers[] = null): RequestOptions {
     let options = new RequestOptions();
+
     options.method = "GET";
     options.headers = new Headers();
     options.headers.append('Content-Type', 'application/json')
 
-    if (AuthServiceNorthbricksProvider.accessToken !== '') {
-      options.headers.append('Authorization', 'Bearer ' + AuthServiceNorthbricksProvider.accessToken);
-    } else {
-      options.headers.append('Authorization', 'Bearer ' + AuthServiceNorthbricksProvider.devAccessToken);
-    }
+    // if (AuthServiceNorthbricksProvider.accessToken !== '') {
+    //   options.headers.append('Authorization', 'Bearer ' + AuthServiceNorthbricksProvider.accessToken);
+    // } else {
+
+    options.headers.append('Authorization', 'Bearer ' + AuthServiceNorthbricksProvider.devAccessToken);
+    // alert(JSON.stringify(AuthServiceNorthbricksProvider.devAccessToken));
+    // }
     return options;
   }
   fetchUser(): Observable<User> {

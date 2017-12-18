@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LoadingController, ModalController, NavController } from 'ionic-angular';
 
-import { Banks } from '../../interface/iBanks';
+import { Banks, Bank } from '../../interface/iBanks';
 import { Transaction } from '../../interface/iTransaction';
 import { User } from '../../interface/iUser';
 import { NorthbricksApi } from '../../providers/northbricks-api';
@@ -18,7 +18,7 @@ import { NorthbricksStorage } from '../../providers/northbricks-storage';
 })
 export class HomePage {
   transactions: Transaction[] = [];
-  banks: Banks[] = [];
+  banks: Bank[] = [];
   bank: Banks;
   accountId: number;
   user: User;
@@ -68,8 +68,10 @@ export class HomePage {
     loader.present();
 
     this.northbricksApi.fetchBanks().subscribe(banks => {
-      this.banks = banks;
       // alert(JSON.stringify(banks));
+      this.banks = banks.banks;
+
+      console.log(JSON.stringify(this.bank));
       loader.dismiss();
     }, (error) => {
       alert(error);

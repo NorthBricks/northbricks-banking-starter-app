@@ -30,9 +30,22 @@
   <ion-list>
 
     <ion-list-header>
-      Transactions
+      Accounts
     </ion-list-header>
-    <ion-item (click)="showTransaction(trans)" *ngFor="let trans of transactions">{{trans.amount.value}} {{trans.amount.currency}} {{trans.relatedParty.name}}</ion-item>
+    <ion-item (click)="fetchAccountsTransactions(account)" *ngFor="let account of accounts">{{account.owner.name}} - {{account.id}}</ion-item>
+
+  </ion-list>
+  <br>
+  <ion-list>
+
+    <ion-list-header>
+      Transactions
+      <span *ngIf="countTransactions>0">{{countTransactions}}</span>
+    </ion-list-header>
+    <ion-item *ngIf="countTransactions===0">No transactions</ion-item>
+    <ion-item (click)="showTransaction(trans)" *ngFor="let trans of transactions">
+      {{trans.amount.value}} {{trans.amount.currency}} {{trans.relatedParty.name}}
+    </ion-item>
 
   </ion-list>
 </ion-content>
