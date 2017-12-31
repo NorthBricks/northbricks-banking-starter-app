@@ -1,3 +1,4 @@
+import { BankAuthPageModule } from '../pages/bank/bank-auth/bank-auth.module';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -39,6 +40,7 @@ import { MyApp } from './app.component';
     ProfilePageModule,
     BankPageModule,
     LoginPageModule,
+    BankAuthPageModule,
     IonicModule.forRoot(MyApp, {
       tabsHideOnSubPages: true
     }),

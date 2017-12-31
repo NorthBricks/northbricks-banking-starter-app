@@ -39,9 +39,10 @@ export class NorthbricksApi {
   login() {
 
   }
-  bankAuth(bankId: string) {
-    return this.http.get(this.baseUrl + `/me/banks/${bankId}/auth/`, this.setHeaders())
-      .map(res => <Transaction[]>res.json())
+  bankAuth(bankId: string): Observable<Response> {
+    return this.http.get(this.baseUrl + `/me/banks/${bankId}/auth?access_token=${AuthServiceNorthbricksProvider.devAccessToken}`, this.setHeaders())
+      .map(res => <Response>res.json())
+
   }
 
   fetchAccounts(bankId: string): Observable<Accounts> {
@@ -88,6 +89,13 @@ export class NorthbricksApi {
   fetchBanks(): Observable<Banks> {
 
     return this.http.get(this.baseUrl + '/banks', this.setHeaders())
+      .map(res => <Banks>res.json())
+      .catch(res => this._handle401(res));
+
+  }
+  fetchMyBanks(): Observable<Banks> {
+
+    return this.http.get(this.baseUrl + '/me/banks', this.setHeaders())
       .map(res => <Banks>res.json())
       .catch(res => this._handle401(res));
 

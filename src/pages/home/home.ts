@@ -1,3 +1,4 @@
+import { BankAuthPage } from '../bank/bank-auth/bank-auth';
 import { Component } from '@angular/core';
 import { LoadingController, ModalController, NavController } from 'ionic-angular';
 
@@ -58,7 +59,12 @@ export class HomePage {
   ionViewCanEnter() {
 
   }
+  AddBank(bankId: string, name: string) {
+    alert(bankId);
+    let authModal = this.modalCtrl.create(BankAuthPage, { bankId: bankId, name: name });
+    authModal.present();
 
+  }
   fetchBanks() {
     let loader = this.loadingCtrl.create({
       content: "Please wait...",

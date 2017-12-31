@@ -11,6 +11,16 @@
 </ion-header>
 
 <ion-content>
+  <ion-list>
+    <ion-list-header>
+      Action
+    </ion-list-header>
+    <ion-item>Terminator II</ion-item>
+    <ion-item>The Empire Strikes Back</ion-item>
+    <ion-item>Blade Runner</ion-item>
+  </ion-list>
+
+
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
@@ -32,12 +42,12 @@
     <ion-list-header>
       Add new banks
     </ion-list-header>
-    <ion-item *ngFor="let bank of banks" (click)="showBank(bank)">
+    <ion-item *ngFor="let bank of banks">
       <ion-avatar item-start class="logo">
         <img src="../../assets/logo/Nordea200px.png">
       </ion-avatar>
       <h2>{{bank.fullName}}</h2>
-      <button ion-button outline item-end (click)="buttonClick()">Add bank</button>
+      <button ion-button outline item-end (click)="AddBank(bank.id,bank.fullName)">Add bank</button>
     </ion-item>
   </ion-list>
 </ion-content>
