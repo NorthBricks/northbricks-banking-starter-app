@@ -2,7 +2,7 @@ import 'rxjs/add/operator/map';
 
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { InAppBrowser, InAppBrowserObject, InAppBrowserOptions } from '@ionic-native/in-app-browser';
+import { InAppBrowser, InAppBrowserObject, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { Subscription } from 'rxjs/Subscription';
 
 
@@ -11,7 +11,7 @@ export class AuthServiceNorthbricksProvider {
   private oAuthUrl = `https://api.northbricks.io/oauth/authorize?client_id=sampleClientId&redirect_uri=https://localhost/oauth/token&scope=read&response_type=token`;
 
   public static accessToken: string = '';
-  public static devAccessToken: string = 'b227928f-a8d3-474f-b944-3e84970473dd';
+  public static devAccessToken: string = '16d53601-65b7-4c42-a4c9-fd89276e82dc';
   public tokenType: string = '';
 
   options: InAppBrowserOptions = {

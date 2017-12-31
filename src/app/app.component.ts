@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Keyboard } from '@ionic-native/keyboard';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Events, Platform } from 'ionic-angular';
 
 import { TabsPage } from '../pages/tabs/tabs';
