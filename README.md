@@ -30,4 +30,4 @@ We wanna make it possible for third-party to consume
   banking services in 5 minutes.
   <br><br>
 
-  Send an mail to us and be part of something great - developer@northbricks.com
+  Send an mail to us and be part of something great and build your own banking services thru one api - developer@northbricks.com
