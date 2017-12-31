@@ -18,14 +18,9 @@ Our slogan is - "One API to rule them ALL". With that we mean that we are going 
 - And of course....all other banks in Europe
 
 
-### Try app with Ionic View - https://view.ionic.io/
-1. Download app from app store or google play (https://view.ionic.io/)
-2. Click preview app and write in *918f579e*
-
-
 ### 5 minutes connect to banking service
 1. Install node.js and GIT
-2. run from command prompt `npm install ionic cordova -g`
+2. run from command prompt `npm install cordova -g` `npm install --save @ionic-native/core@beta`
 3. git clone https://github.com/NorthBricks/northbricks-banking-starter-app.git
 4. Go into directory created by GIT clone. 
 5. `npm install`
@@ -35,4 +30,4 @@ We wanna make it possible for third-party to consume
   banking services in 5 minutes.
   <br><br>
 
-  Send an mail to us and be part of something great - developer@northbricks.com
+  Send an mail to us and be part of something great and build your own banking services thru one api - developer@northbricks.com
