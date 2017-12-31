@@ -1,6 +1,6 @@
 import { NorthbricksApi } from '../../../providers/northbricks-api';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 
 /**
  * Generated class for the BankAuthPage page.
