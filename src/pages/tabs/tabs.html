@@ -1,6 +1,8 @@
 <ion-tabs #myTabs>
+  <ion-tab [root]="banksRoot" tabTitle="Overview" tabIcon="information-circle"></ion-tab>
   <ion-tab [root]="banksRoot" tabTitle="Banks" tabIcon="information-circle"></ion-tab>
-  <ion-tab [root]="homeRoot" tabTitle="Transactions" tabIcon="cash"></ion-tab>
+
+  <!-- <ion-tab [root]="transactionsRoot" tabTitle="Transactions" tabIcon="cash"></ion-tab> -->
 
   <ion-tab [root]="profileRoot" tabTitle="Profile" tabIcon="person"></ion-tab>
 </ion-tabs>

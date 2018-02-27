@@ -18,7 +18,15 @@
       <p *ngIf="user?.phone">{{user?.phone}}</p>
     </ion-list-header>
   </ion-list>
-  
+  <ion-list>
+    <button ion-item detail-push (click)="LinkBanks()">
+      Link bank to you're account
+    </button>
+    <button ion-item detail-push (click)="EditProfile()">
+      Edit your profile
+    </button>
+  </ion-list>
+
   <ion-list no-border>
     <ion-list-header>
       My banks
@@ -28,10 +36,10 @@
         <img src="../../assets/logo/Nordea200px.png">
       </ion-avatar>
       <h2>{{bank.fullName}}</h2>
-      <button ion-button outline item-end (click)="buttonClick()">Add bank</button>
+      <button ion-button outline item-end (click)="removeBank()">Disconnect</button>
     </ion-item>
   </ion-list>
-  <ion-list>
+  <!-- <ion-list>
     <ion-list-header>
       Add banks
     </ion-list-header>
@@ -42,7 +50,7 @@
       <h2>{{bank.fullName}}</h2>
       <button ion-button outline item-end (click)="buttonClick()">Add bank</button>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
   <!-- <ion-list>
     <ion-list-header>
       Currency

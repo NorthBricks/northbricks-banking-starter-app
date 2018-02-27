@@ -26,18 +26,14 @@
       <ion-input readonly="true" type="text" value="{{bank?.website}}"></ion-input>
     </ion-item>
   </ion-list>
-  <br>
   <ion-list>
-
     <ion-list-header>
       Accounts
     </ion-list-header>
     <ion-item (click)="fetchAccountsTransactions(account)" *ngFor="let account of accounts">{{account.owner.name}} - {{account.id}}</ion-item>
 
   </ion-list>
-  <br>
   <ion-list>
-
     <ion-list-header>
       Transactions
       <span *ngIf="countTransactions>0">{{countTransactions}}</span>

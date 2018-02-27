@@ -24,6 +24,8 @@ import { NorthbricksStorage } from '../providers/northbricks-storage';
 import { AlertService } from '../providers/utils/alert.service';
 import { ToastService } from '../providers/utils/toast.service';
 import { MyApp } from './app.component';
+import { LinkBanksPageModule } from '../pages/link-banks/link-banks.module';
+import { EditProfilePageModule } from '../pages/edit-profile/edit-profile.module';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { MyApp } from './app.component';
     HttpModule,
     ProfilePageModule,
     BankPageModule,
+    LinkBanksPageModule,
+    EditProfilePageModule,
     LoginPageModule,
     BankAuthPageModule,
     IonicModule.forRoot(MyApp, {

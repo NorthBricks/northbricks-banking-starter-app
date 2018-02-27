@@ -76,7 +76,6 @@ export class HomePage {
     this.northbricksApi.fetchBanks().subscribe(banks => {
       // alert(JSON.stringify(banks));
       this.banks = banks.banks;
-
       console.log(JSON.stringify(this.bank));
       loader.dismiss();
     }, (error) => {

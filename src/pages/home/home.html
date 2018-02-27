@@ -11,21 +11,61 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-list-header>
-      Action
-    </ion-list-header>
-    <ion-item>Terminator II</ion-item>
-    <ion-item>The Empire Strikes Back</ion-item>
-    <ion-item>Blade Runner</ion-item>
-  </ion-list>
-
-
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-list>
+  <ion-card>
+    <ion-card-header>
+      Welcome to Northbricks
+    </ion-card-header>
+    <ion-card-content>
+      Here you can link your'e bank to your Nortbricks account.
 
+    </ion-card-content>
+  </ion-card>
+  <div cards>
+
+    <div class="grid-full">
+      <ion-row>
+        <ion-col *ngFor="let bank of banks">
+          <ion-card>
+            <p>{{bank.fullName}}</p>
+            <p>
+              <i>Account X</i>
+            </p>
+            <h1 color="danger">1500$</h1>
+            <p (click)="showBank(bank)">
+              <strong>Show transactions</strong>
+            </p>
+          </ion-card>
+        </ion-col>
+
+        <!-- <ion-col>
+          <ion-card>
+            <h1 grey>10</h1>
+            <p>Encerradas</p>
+          </ion-card>
+        </ion-col>
+
+        <ion-col>
+          <ion-card>
+            <h1 green>41</h1>
+            <p>Em gozo</p>
+          </ion-card>
+        </ion-col>
+
+        <ion-col>
+          <ion-card>
+            <h1 green>18</h1>
+            <p>Homologadas</p>
+          </ion-card>
+        </ion-col> -->
+      </ion-row>
+    </div>
+
+  </div>
+
+  <!-- <ion-list>
     <ion-list-header>
       My banks
     </ion-list-header>
@@ -49,5 +89,5 @@
       <h2>{{bank.fullName}}</h2>
       <button ion-button outline item-end (click)="AddBank(bank.id,bank.fullName)">Add bank</button>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 </ion-content>

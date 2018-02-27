@@ -4,6 +4,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { User } from '../../interface/iUser';
 import { NorthbricksApi } from '../../providers/northbricks-api';
+import { LinkBanksPage } from '../link-banks/link-banks';
+import { EditProfilePage } from '../edit-profile/edit-profile';
 
 /**
  * Generated class for the ProfilePage page.
@@ -27,9 +29,16 @@ export class ProfilePage {
   currencies = ['USD', 'BRL', 'EUR', 'SEK'];
   // banks = [{ name: 'Nordea' }, { name: 'Skandia' }, { name: 'SEB' }, { name: 'ICA' }];
 
-  constructor(private northbricksApi: NorthbricksApi, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private northbricksApi: NorthbricksApi,
+    public navCtrl: NavController,
+    public navParams: NavParams) {
   }
-
+  LinkBanks() {
+    this.navCtrl.push(LinkBanksPage);
+  }
+  EditProfile() {
+    this.navCtrl.push(EditProfilePage);
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
 
