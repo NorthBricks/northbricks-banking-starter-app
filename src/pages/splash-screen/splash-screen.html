@@ -1,0 +1,51 @@
+<!--
+  Generated template for the SplashScreenPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Welcome to Northbricks</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <form (submit)="doLogin()">
+    <b>
+      <h3> </h3>
+    </b>
+    <br> Connect to your bank accounts and see an overview of your balance. Enable payments from third-party providers that uses
+    Northbricks services. We give you control.
+    <ion-list>
+      <ion-item>
+        <ion-label fixed>Email</ion-label>
+        <ion-input type="email" [(ngModel)]="account.email" name="email"></ion-input>
+      </ion-item>
+
+      <!--
+      Want to use a Username instead of an Email? Here you go:
+      <ion-item>
+        <ion-label floating>{{ 'USERNAME' | translate }}</ion-label>
+        <ion-input type="text" [(ngModel)]="account.username" name="username"></ion-input>
+      </ion-item>
+    -->
+
+      <!-- <ion-item>
+        <ion-label fixed>Password</ion-label>
+        <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
+      </ion-item> -->
+
+    </ion-list>
+    <hr> Already got Northbricks account - Login below
+    <div padding>
+      <button ion-button color="primary" block>Login</button>
+    </div>
+  </form>
+
+  By signing up you are agreeing to Northbricks
+  <button ion-button clear (click)="termsAndConditions()"> Terms and Conditions</button>
+</ion-content>

@@ -26,6 +26,8 @@ import { ToastService } from '../providers/utils/toast.service';
 import { MyApp } from './app.component';
 import { LinkBanksPageModule } from '../pages/link-banks/link-banks.module';
 import { EditProfilePageModule } from '../pages/edit-profile/edit-profile.module';
+import { SplashScreenPageModule } from '../pages/splash-screen/splash-screen.module';
+import { TermsAndConditionsPageModule } from '../pages/terms-and-conditions/terms-and-conditions.module';
 
 @NgModule({
   declarations: [
@@ -38,9 +40,11 @@ import { EditProfilePageModule } from '../pages/edit-profile/edit-profile.module
   ],
   imports: [
     BrowserModule,
+    TermsAndConditionsPageModule,
     HttpModule,
     ProfilePageModule,
     BankPageModule,
+    SplashScreenPageModule,
     LinkBanksPageModule,
     EditProfilePageModule,
     LoginPageModule,
