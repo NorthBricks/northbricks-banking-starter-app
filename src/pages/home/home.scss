@@ -1,3 +1,25 @@
+.sliderBank{
+    height : 200px;
+    width: 90%;
+    margin:20px;
+    position: relative;
+}
+.slideHeader{
+    top:5px;
+    height: 20px;
+    margin-left: 30px;
+    
+    line-height: 20px;
+    // border: 1px solid black;
+    position: absolute;
+}
+.sliderHeaderLogo{
+    position: absolute;
+    top:5px;
+    margin-left: 5px;
+    width: 20px;
+    height: 20px;
+}
 ion-avatar img  {
     width:100% !important;
     height : 100% !important;

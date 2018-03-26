@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Northbricks</ion-title>
+    <ion-title>MY BANKS</ion-title>
     <ion-buttons end>
       <button (click)="openLogin()" ion-button outline>
         Login
@@ -14,7 +14,25 @@
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-card>
+
+  <ion-slides pager class="sliderBank">
+    <ion-slide *ngFor="let bank of banks" style="background-color: white">
+      <div class="sliderHeaderLogo">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAK1SURBVGhD7dlLyA1hHMfxw4IFYuGSBcolt4VLIrEgSlHKwsKShZJbxMZCKbGgsLFxCUUoFhZYsLJgRyxccikLSiS3csnl+5veo+ed93/mnGfOf86ZqfdXn8V75j/P+/7fM8/MMzO1BpmLQ3iA9/jbRV/xBKewCgPQNKNwEX9gDVoGdzEbDTMDr2DtXDb6ltagT/RNVKWJuh9YgF65BKu47F5iMJLoeCvznGhmM5IchlVQFfeQRKdYq6AqfmM4un6d8KAzrrmhahbD3OBlGzb20LFs1XgovJEwx2HVeOhvpBVvEWYdruA5rPp2FNLITWjgrFXqdByD14XYtRH9UTvRanTu/wVrrFiujRxFTNbCGicPt0Y+YwTCDMQm3MAdXMVeTINyBtZYebg1cg3p7IFVq0PwFtS8tT0Pt0aOIJ0LsGqL4NbICaQzH57/9SxujdyHlXHQXPgOaz8vbo3IEjTKGOzDB1j7tsu1kdcYj6wMw254H3KujYiWJSvQLJOh+21rjDzcG6m7DjWUtUyZCj3WsfaPVVgjdY+xBUNhRU8zrf1iFd5IneZP8stSWQSrPlbHGpF3GIQwOptZtbE62ohMQJixsOpiuTayA1oY6vGMtf020lkGqzaWWyO60Gm1q0zBdpyFVr6Xe34egnROwhovllsj5xGbefgJa7xYbo1sQExm4Q2ssfJwa0RX9F3Q5M2Kth+A9yLSdbKLJvojnIMezoXRnGl0ImiXeyOhhwij212rzkN/I63QqzytcidiEnTIWXUeCm2kk5JGvgQfVNUcJC/jrY1VMhq108EHVfQUSVbCKqgKXWCT6Ha0yLdJRfqEkfgfrX2+wSous/Xok9Uo+kGap/1omIV4AWvHsvgI85tIR/fVW6F5U9QiL49nOIhec6LV6K3STCzF8i7RxU4PKTJSq/0DSaBcw2Hs/8kAAAAASUVORK5CYII=">
+      </div>
+      <div class="slideHeader">
+        {{bank.fullName}}
+      </div>
+      <div class="slideBankAmount">
+        2000$
+        <br>
+        <span>Available balance</span>
+      </div>
+
+    </ion-slide>
+  </ion-slides>
+
+  <!-- <ion-card>
     <ion-card-header>
       Welcome to Northbricks
     </ion-card-header>
@@ -22,7 +40,20 @@
       Here you can link your'e bank to your Nortbricks account.
 
     </ion-card-content>
-  </ion-card>
+  </ion-card> -->
+
+  <ion-list no-border>
+    <ion-list-header>
+      My banks
+    </ion-list-header>
+    <ion-item *ngFor="let bank of banks" (click)="showBank(bank)">
+      <ion-avatar item-start class="logo">
+        <img src="../../assets/logo/Nordea200px.png">
+      </ion-avatar>
+      <h2>{{bank.fullName}}</h2>
+      <button ion-button outline item-end (click)="removeBank()">Disconnect</button>
+    </ion-item>
+  </ion-list>
   <div cards>
 
     <div class="grid-full">
