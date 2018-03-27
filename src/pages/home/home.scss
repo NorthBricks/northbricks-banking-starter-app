@@ -1,25 +1,149 @@
-.sliderBank{
-    height : 200px;
-    width: 90%;
-    margin:20px;
-    position: relative;
-}
-.slideHeader{
-    top:5px;
-    height: 20px;
-    margin-left: 30px;
+.slider{
     
-    line-height: 20px;
-    // border: 1px solid black;
-    position: absolute;
+    height: 300px;
+    background-color: #F6F6F6;
+    display: flex;
+
+    /* Direction of the items, can be row or column */
+    flex-direction: column;
+    // border-top: 1px solid green;
 }
-.sliderHeaderLogo{
-    position: absolute;
-    top:5px;
-    margin-left: 5px;
-    width: 20px;
-    height: 20px;
+.wrapper{
+    margin: 10px;
+    border-radius: 10px;
+    background-color: white;
+    // height: 300px;
+    height: 200px;
+    display: flex;
+
+    /* Direction of the items, can be row or column */
+    flex-direction: column;
+    div.headerImage {
+        float: left;   
+        height: 40px;
+        margin-top: 2px;
+        margin-left: 2px;
+        line-height: 30px;
+        img{
+            height: 20px;
+        
+        }
+    }
+    div.headerTitle{
+        float: left;
+        margin-left: 10px;
+        height: 40px;
+        line-height: 30px;
+        font-size: 15px;
+        
+    }
 }
+header {
+    // border: 1px solid;
+    height: 40px; 
+}
+footer {
+    border-top: 1px solid rgb(230, 226, 226);
+    height: 40px;
+}
+
+main {
+    flex: 1;
+
+    padding: 5px;
+    
+    height: 80px;
+    margin-top: 10px;
+    vertical-align: middle;
+    line-height: 80px;
+
+    font-weight: 300;
+    font-size: 40px;
+    text-align: center;
+    div{
+       position: relative;
+        line-height: 10px;
+        height: 10px;
+        font-weight: 300;
+        font-size: 14px;
+    }
+}
+
+// .sliderCard{
+//     position: absolute;
+//     top:0;
+//     height: 300px;
+//     width: 100%;
+//     display: block;
+//     border: 1px solid black;
+//     .sliderHeader{
+//         height: 30px;
+//          top:2px;
+//             position: absolute;
+//          margin: 4px;
+//         div.sliderHeader-title {
+//             // margin: 5px;
+//             // top:5px;
+//             // height: 20px;
+//             // margin-left: 30px;
+//             float: left;
+//             line-height: 30px;
+//             // border: 1px solid black;
+//             // position: absolute;
+//             // left: 80%;
+//             // left: 40px;
+        
+            
+//         }
+//         div.sliderHeader-logo{
+//             // position: absolute;
+//             // float: left;
+//             // top:5px;
+//             // margin-left: 5px;
+//             // width: 20px;
+//             // height: 20px;
+//             left: 5px;
+//             height: 30px;
+//             float: left;
+//             // position: absolute;
+//         }
+//     }
+//     div.sliderBody{
+//         // position: absolute;
+//         top: 150px;
+//         width: 100%;
+//         height: 100px;
+//         div.sliderBody-amount{
+//             // position: absolute;
+//             margin-left: auto;
+//             margin-right: auto;
+//             position: relative;
+//             top: 50%;
+//             font-size: 29px;
+//             transform: translateY(-50%);
+//         }
+//         div.sliderBody-availablebalance{
+//             // line-height: 10px;
+//             font-size: small;
+//             color: #C7C7CC;
+//             // margin-left: auto;
+//             // margin-right: auto;
+//             // position: relative;
+//             // top: 51%;
+//             // transform: translateY(-30%);
+//         }
+//     }
+//     div.sliderFooter{
+//         position: absolute;
+//         bottom: 10px;
+//         border-top: 1px solid black;
+//     }
+
+// }
+
+
+
+
 ion-avatar img  {
     width:100% !important;
     height : 100% !important;
