@@ -47,13 +47,13 @@
   <ion-list>
 
     <ion-item *ngFor="let transaction of transactions">
-      <ion-icon name="arrow-dropdown" item-start style="color:red;"></ion-icon>
+      <ion-icon [name]="getIcon(transaction.amount.value)" item-start [style.color]="getColor(transaction.amount.value)"></ion-icon>
       <h2>
         <b>{{transaction.relatedParty.name}}</b>
       </h2>
 
       <p>{{transaction.bookingDate}}</p>
-      <h2 item-end style="color:red;">{{transaction.amount.value}}{{transaction.amount.currency}}</h2>
+      <h2 item-end [style.color]="getColor(transaction.amount.value)">{{transaction.amount.value}}{{transaction.amount.currency}}</h2>
 
     </ion-item>
 

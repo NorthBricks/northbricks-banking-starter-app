@@ -46,7 +46,22 @@ export class HomePage {
       console.log("no item selected");
     }
   }
+  getColor(value: string) {
+    console.log('Value is ' + value);
+    if (value.toString().startsWith("-")) {
+      return "red";
+    } else {
+      return "green"
+    }
+  }
+  getIcon(value: string) {
 
+    if (value.toString().startsWith("-")) {
+      return "arrow-dropdown";
+    } else {
+      return "arrow-dropup"
+    }
+  }
   ionViewDidLoad() {
 
     this.northbricksApi.fetchUser().subscribe(user => {
