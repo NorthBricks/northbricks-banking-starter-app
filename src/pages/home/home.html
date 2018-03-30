@@ -16,7 +16,7 @@
   </ion-refresher>
 
   <ion-slides pager class="slider">
-    <ion-slide *ngFor="let bank of banks">
+    <ion-slide *ngFor="let bank of banks" (click)="fetchAccounts(bank)">
       <div class="wrapper">
         <header>
           <div class="headerImage">
@@ -26,12 +26,17 @@
         </header>
         <main>
 
-          200$
+          220$
           <div>Available balance</div>
 
         </main>
         <footer>
-          I am a footer
+          <ion-item>
+            <ion-label>Accounts</ion-label>
+            <ion-select [(ngModel)]="selectedAccount" (ionChange)="onItemSelection($event)">
+              <ion-option *ngFor="let account of accounts" [value]="account">{{account.iban}}</ion-option>
+            </ion-select>
+          </ion-item>
         </footer>
       </div>
     </ion-slide>
@@ -40,16 +45,19 @@
     Transaction history
   </div>
   <ion-list>
-    <ion-item>
+
+    <ion-item *ngFor="let transaction of transactions">
       <ion-icon name="arrow-dropdown" item-start style="color:red;"></ion-icon>
       <h2>
-        <b>IKEA</b>
+        <b>{{transaction.relatedParty.name}}</b>
       </h2>
 
-      <p>2018-02-02 12:00:12</p>
-      <h2 item-end style="color:red;">-230$</h2>
+      <p>{{transaction.bookingDate}}</p>
+      <h2 item-end style="color:red;">{{transaction.amount.value}}{{transaction.amount.currency}}</h2>
+
     </ion-item>
-    <ion-item>
+
+    <!-- <ion-item>
       <ion-icon name="arrow-dropdown" item-start style="color:red;"></ion-icon>
       <h2>
         <b>Parking</b>
@@ -65,7 +73,7 @@
       <p>2018-02-02 12:00:12</p>
       <h2 item-end style="color:green;">1800$
       </h2>
-    </ion-item>
+    </ion-item> -->
   </ion-list>
 
 

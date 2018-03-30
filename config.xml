@@ -92,6 +92,7 @@
     <plugin name="cordova-plugin-actionsheet" spec="^2.3.3" />
     <plugin name="cordova-plugin-inappbrowser" spec="^1.7.2" />
     <plugin name="cordova-plugin-statusbar" spec="git+https://github.com/apache/cordova-plugin-statusbar.git" />
-    <engine name="ios" spec="4.5.4" />
     <engine name="android" spec="^7.0.0" />
+    <engine name="ios" spec="~4.5.4" />
+    <allow-navigation href="http://192.168.8.108:8100" />
 </widget>

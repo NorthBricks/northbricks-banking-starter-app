@@ -6,7 +6,7 @@ import { Banks, Bank } from '../../interface/iBanks';
 import { Transaction } from '../../interface/iTransaction';
 import { User } from '../../interface/iUser';
 import { NorthbricksApi } from '../../providers/northbricks-api';
-
+import { Account } from '../../interface/iAccount';
 import { ToastService } from '../../providers/utils/toast.service';
 import { BankPage } from '../bank/bank';
 import { LoginPage } from '../login/login';
@@ -18,11 +18,16 @@ import { NorthbricksStorage } from '../../providers/northbricks-storage';
   templateUrl: 'home.html'
 })
 export class HomePage {
+  selectedAccount: Account;
   transactions: Transaction[] = [];
   banks: Bank[] = [];
   bank: Banks;
   accountId: number;
+  selectedBank: Bank;
   user: User;
+  accounts: Account[] = [];
+  countTransactions: number = 0;
+
   constructor(public modalCtrl: ModalController,
     public loadingCtrl: LoadingController,
     public northbricksApi: NorthbricksApi,
@@ -30,6 +35,16 @@ export class HomePage {
     public toastCtrl: ToastService,
     private storage: NorthbricksStorage) {
 
+  }
+
+  public onItemSelection(selection) {
+    console.log(JSON.stringify(selection));
+    if (selection) {
+      console.log("item selected: " + selection.iban);
+      this.fetchAccountsTransactions(selection);
+    } else {
+      console.log("no item selected");
+    }
   }
 
   ionViewDidLoad() {
@@ -56,9 +71,25 @@ export class HomePage {
     this.navCtrl.push(BankPage, { bank: bank, user: this.user });
 
   }
+
+  fetchAccounts(bank: Bank) {
+    this.northbricksApi.fetchAccounts(bank.id).subscribe(account => {
+      console.log(JSON.stringify(account.accounts));
+
+      this.accounts = account.accounts;
+      this.selectedAccount = this.accounts[0];
+      this.fetchAccountsTransactions(this.accounts[0]);
+    }, () => {
+      alert('Error accounts');
+    });
+  }
+
   ionViewCanEnter() {
 
   }
+
+
+
   AddBank(bankId: string, name: string) {
     alert(bankId);
     let authModal = this.modalCtrl.create(BankAuthPage, { bankId: bankId, name: name });
@@ -77,6 +108,8 @@ export class HomePage {
       // alert(JSON.stringify(banks));
       this.banks = banks.banks;
       console.log(JSON.stringify(this.bank));
+      this.selectedBank = this.banks[0];
+      this.fetchAccounts(this.selectedBank);
       loader.dismiss();
     }, (error) => {
       alert(error);
@@ -84,6 +117,17 @@ export class HomePage {
     });
 
 
+  }
+
+  fetchAccountsTransactions(account: Account) {
+    // alert(JSON.stringify(account));
+    this.northbricksApi.fetchTransactions(account.id, this.selectedBank.id).subscribe(transactions => {
+      // alert(JSON.stringify(transactions));
+      this.countTransactions = transactions.transactions.length;
+      this.transactions = transactions.transactions;
+    }, () => {
+      alert('Error transactions');
+    });
   }
 
   openLogin() {
