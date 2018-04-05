@@ -93,7 +93,9 @@ export class HomePage {
 
       this.accounts = account.accounts;
       this.selectedAccount = this.accounts[0];
-      this.fetchAccountsTransactions(this.accounts[0]);
+      if (this.selectedAccount != null) {
+        this.fetchAccountsTransactions(this.selectedAccount);
+      }
     }, () => {
       alert('Error accounts');
     });

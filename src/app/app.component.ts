@@ -6,7 +6,7 @@ import { Events, Platform, ModalController } from 'ionic-angular';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { NorthbricksStorage } from '../providers/northbricks-storage';
-import { SplashScreenPage } from '../pages/splash-screen/splash-screen';
+// import { SplashScreenPage } from '../pages/splash-screen/splash-screen';
 import { LoginPage } from '../pages/login/login';
 import { User } from '../interface/iUser';
 
