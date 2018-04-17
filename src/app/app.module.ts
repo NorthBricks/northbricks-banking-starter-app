@@ -28,6 +28,7 @@ import { LinkBanksPageModule } from '../pages/link-banks/link-banks.module';
 import { EditProfilePageModule } from '../pages/edit-profile/edit-profile.module';
 import { SplashScreenPageModule } from '../pages/splash-screen/splash-screen.module';
 import { TermsAndConditionsPageModule } from '../pages/terms-and-conditions/terms-and-conditions.module';
+import { TransactionPage } from '../pages/transaction/transaction';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { TermsAndConditionsPageModule } from '../pages/terms-and-conditions/term
     AboutPage,
     HomePage,
     TabsPage,
+    TransactionPage,
     // InputDebounceDirective,
     MomentPipe
   ],
@@ -62,7 +64,8 @@ import { TermsAndConditionsPageModule } from '../pages/terms-and-conditions/term
     MyApp,
     AboutPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    TransactionPage
 
 
   ],

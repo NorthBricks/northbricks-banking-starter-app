@@ -11,6 +11,8 @@ import { ToastService } from '../../providers/utils/toast.service';
 import { BankPage } from '../bank/bank';
 import { LoginPage } from '../login/login';
 import { NorthbricksStorage } from '../../providers/northbricks-storage';
+import { LinkBanksPage } from '../link-banks/link-banks';
+import { TransactionPage } from '../transaction/transaction';
 
 
 @Component({
@@ -40,14 +42,14 @@ export class HomePage {
   public onItemSelection(selection) {
     console.log(JSON.stringify(selection));
     if (selection) {
-      console.log("item selected: " + selection.iban);
+      // console.log("item selected: " + selection.iban);
       this.fetchAccountsTransactions(selection);
     } else {
       console.log("no item selected");
     }
   }
   getColor(value: string) {
-    console.log('Value is ' + value);
+    // console.log('Value is ' + value);
     if (value.toString().startsWith("-")) {
       return "red";
     } else {
@@ -57,9 +59,9 @@ export class HomePage {
   getIcon(value: string) {
 
     if (value.toString().startsWith("-")) {
-      return "arrow-dropdown";
+      return "arrowred";
     } else {
-      return "arrow-dropup"
+      return "arrowgreen"
     }
   }
   ionViewDidLoad() {
@@ -72,7 +74,10 @@ export class HomePage {
       alert(error);
     });
   }
-
+  showTransaction(transactionId: string) {
+    let transactionModal = this.modalCtrl.create(TransactionPage, { bankId: this.selectedBank.id, transactionId: transactionId, accountId: this.selectedAccount.id });
+    transactionModal.present();
+  }
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
 
@@ -108,9 +113,12 @@ export class HomePage {
 
 
   AddBank(bankId: string, name: string) {
-    alert(bankId);
+    // alert(bankId);
     let authModal = this.modalCtrl.create(BankAuthPage, { bankId: bankId, name: name });
     authModal.present();
+    authModal.onDidDismiss(dismissed => {
+      this.fetchAccounts(this.selectedBank);
+    });
 
   }
   fetchBanks() {
@@ -148,7 +156,7 @@ export class HomePage {
   }
 
   openLogin() {
-    let modal = this.modalCtrl.create(LoginPage);
+    let modal = this.modalCtrl.create(LinkBanksPage);
     modal.onDidDismiss(token => {
       // alert(token);
       this.fetchBanks();

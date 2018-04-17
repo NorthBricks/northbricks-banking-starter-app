@@ -90,9 +90,13 @@
     <allow-navigation href="http://10.0.1.63:8100" />
     <plugin name="cordova-plugin-device" spec="^1.1.7" />
     <plugin name="cordova-plugin-actionsheet" spec="^2.3.3" />
-    <plugin name="cordova-plugin-inappbrowser" spec="^1.7.2" />
     <plugin name="cordova-plugin-statusbar" spec="git+https://github.com/apache/cordova-plugin-statusbar.git" />
     <allow-navigation href="http://192.168.8.108:8100" />
+    <plugin name="cordova-plugin-inappbrowser" spec="^2.0.2" />
+    <allow-navigation href="http://10.177.49.55:8100" />
     <engine name="ios" spec="4.5.4" />
     <engine name="android" spec="7.0.0" />
+    <allow-navigation href="http://10.117.3.184:8100" />
+    <allow-navigation href="http://192.168.108.187:8101" />
+    <allow-navigation href="http://172.20.10.2:8101" />
 </widget>

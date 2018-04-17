@@ -1,3 +1,42 @@
+
+.arrowgreen {
+
+    background: url(../assets/images/arrowgreen.svg) no-repeat top left;
+    background-size: contain;
+    width: 1px;
+    height: 1px;
+    margin: 5px auto 0 auto;
+
+}
+.arrowred {
+
+    background: url(../assets/images/arrowred.svg) no-repeat top left;
+    background-size: contain;
+    width: 1px;
+    height: 1px;
+    margin: 5px auto 0 auto;
+
+}
+.cards {
+
+    background: url(../assets/images/cards.svg) no-repeat top left;
+    background-size: contain;
+    width: 20px;
+    height: 20px;
+    margin:7px;
+    // margin: 20px auto 0 auto;
+
+}
+.link {
+
+    background: url(../assets/images/cards.svg) no-repeat top left;
+    background-size: contain;
+    width: 20px;
+    height: 20px;
+    margin:7px;
+    // margin: 20px auto 0 auto;
+
+}
 .slider{
     
     height: 300px;
@@ -70,118 +109,3 @@ main {
         font-size: 14px;
     }
 }
-
-// .sliderCard{
-//     position: absolute;
-//     top:0;
-//     height: 300px;
-//     width: 100%;
-//     display: block;
-//     border: 1px solid black;
-//     .sliderHeader{
-//         height: 30px;
-//          top:2px;
-//             position: absolute;
-//          margin: 4px;
-//         div.sliderHeader-title {
-//             // margin: 5px;
-//             // top:5px;
-//             // height: 20px;
-//             // margin-left: 30px;
-//             float: left;
-//             line-height: 30px;
-//             // border: 1px solid black;
-//             // position: absolute;
-//             // left: 80%;
-//             // left: 40px;
-        
-            
-//         }
-//         div.sliderHeader-logo{
-//             // position: absolute;
-//             // float: left;
-//             // top:5px;
-//             // margin-left: 5px;
-//             // width: 20px;
-//             // height: 20px;
-//             left: 5px;
-//             height: 30px;
-//             float: left;
-//             // position: absolute;
-//         }
-//     }
-//     div.sliderBody{
-//         // position: absolute;
-//         top: 150px;
-//         width: 100%;
-//         height: 100px;
-//         div.sliderBody-amount{
-//             // position: absolute;
-//             margin-left: auto;
-//             margin-right: auto;
-//             position: relative;
-//             top: 50%;
-//             font-size: 29px;
-//             transform: translateY(-50%);
-//         }
-//         div.sliderBody-availablebalance{
-//             // line-height: 10px;
-//             font-size: small;
-//             color: #C7C7CC;
-//             // margin-left: auto;
-//             // margin-right: auto;
-//             // position: relative;
-//             // top: 51%;
-//             // transform: translateY(-30%);
-//         }
-//     }
-//     div.sliderFooter{
-//         position: absolute;
-//         bottom: 10px;
-//         border-top: 1px solid black;
-//     }
-
-// }
-
-
-
-
-ion-avatar img  {
-    width:100% !important;
-    height : 100% !important;
-    max-width: 90px !important;  //any size
-    max-height: 90px !important; //any size
-   
-    }
-
-
-    [cards] {
-        .grid-full ion-col {
-            flex: 0 0 50%;
-            max-width: 50%;
-            padding: 5px 0;
-        }
-        .row {
-            padding: 0 5px;
-        }
-        .col {
-            padding: 5px 0;
-        }
-        .card {
-            margin: 0 5px;
-            width: calc(100% - 10px);
-            padding: 14px;
-            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.10);
-            border-radius: 4px;
-            h1 {
-                font-weight: 400;
-                font-size: medium;
-                font-size: 3.5rem;
-                color: map-get($colors,secondary);
-            }
-            p {
-                font-weight: 100;
-                font-size: 1.5rem;
-            }
-        }
-    }

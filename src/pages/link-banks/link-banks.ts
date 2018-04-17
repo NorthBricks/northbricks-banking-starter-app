@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ModalController, ViewController } from 'ionic-angular';
 import { Bank, Banks } from '../../interface/iBanks';
 import { NorthbricksApi } from '../../providers/northbricks-api';
 import { BankAuthPage } from '../bank/bank-auth/bank-auth';
@@ -23,7 +23,8 @@ export class LinkBanksPage {
     public modalCtrl: ModalController,
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
-    public northbricksApi: NorthbricksApi) {
+    public northbricksApi: NorthbricksApi,
+    private viewCtrl: ViewController) {
   }
 
   ionViewDidLoad() {
@@ -56,5 +57,8 @@ export class LinkBanksPage {
     let authModal = this.modalCtrl.create(BankAuthPage, { bankId: bankId, name: name });
     authModal.present();
 
+  }
+  close() {
+    this.viewCtrl.dismiss();
   }
 }

@@ -20,7 +20,7 @@
       <div class="wrapper">
         <header>
           <div class="headerImage">
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAK1SURBVGhD7dlLyA1hHMfxw4IFYuGSBcolt4VLIrEgSlHKwsKShZJbxMZCKbGgsLFxCUUoFhZYsLJgRyxccikLSiS3csnl+5veo+ed93/mnGfOf86ZqfdXn8V75j/P+/7fM8/MMzO1BpmLQ3iA9/jbRV/xBKewCgPQNKNwEX9gDVoGdzEbDTMDr2DtXDb6ltagT/RNVKWJuh9YgF65BKu47F5iMJLoeCvznGhmM5IchlVQFfeQRKdYq6AqfmM4un6d8KAzrrmhahbD3OBlGzb20LFs1XgovJEwx2HVeOhvpBVvEWYdruA5rPp2FNLITWjgrFXqdByD14XYtRH9UTvRanTu/wVrrFiujRxFTNbCGicPt0Y+YwTCDMQm3MAdXMVeTINyBtZYebg1cg3p7IFVq0PwFtS8tT0Pt0aOIJ0LsGqL4NbICaQzH57/9SxujdyHlXHQXPgOaz8vbo3IEjTKGOzDB1j7tsu1kdcYj6wMw254H3KujYiWJSvQLJOh+21rjDzcG6m7DjWUtUyZCj3WsfaPVVgjdY+xBUNhRU8zrf1iFd5IneZP8stSWQSrPlbHGpF3GIQwOptZtbE62ohMQJixsOpiuTayA1oY6vGMtf020lkGqzaWWyO60Gm1q0zBdpyFVr6Xe34egnROwhovllsj5xGbefgJa7xYbo1sQExm4Q2ssfJwa0RX9F3Q5M2Kth+A9yLSdbKLJvojnIMezoXRnGl0ImiXeyOhhwij212rzkN/I63QqzytcidiEnTIWXUeCm2kk5JGvgQfVNUcJC/jrY1VMhq108EHVfQUSVbCKqgKXWCT6Ha0yLdJRfqEkfgfrX2+wSous/Xok9Uo+kGap/1omIV4AWvHsvgI85tIR/fVW6F5U9QiL49nOIhec6LV6K3STCzF8i7RxU4PKTJSq/0DSaBcw2Hs/8kAAAAASUVORK5CYII=">
+            <div class="cards"></div>
           </div>
           <div class="headerTitle">{{bank.fullName}}</div>
         </header>
@@ -32,7 +32,9 @@
         </main>
         <footer>
           <ion-item>
-            <ion-label>Accounts</ion-label>
+
+            <ion-label class="link">
+            </ion-label>
             <ion-select [(ngModel)]="selectedAccount" (ionChange)="onItemSelection($event)">
               <ion-option *ngFor="let account of accounts" [value]="account">{{account.iban}}</ion-option>
             </ion-select>
@@ -46,8 +48,8 @@
   </div>
   <ion-list>
 
-    <ion-item *ngFor="let transaction of transactions">
-      <ion-icon [name]="getIcon(transaction.amount.value)" item-start [style.color]="getColor(transaction.amount.value)"></ion-icon>
+    <ion-item *ngFor="let transaction of transactions" (click)="showTransaction(transaction.id)">
+      <ion-icon [ngClass]="getIcon(transaction.amount.value)" item-start [style.color]="getColor(transaction.amount.value)"></ion-icon>
       <h2>
         <b>{{transaction.relatedParty.name}}</b>
       </h2>
@@ -57,23 +59,6 @@
 
     </ion-item>
 
-    <!-- <ion-item>
-      <ion-icon name="arrow-dropdown" item-start style="color:red;"></ion-icon>
-      <h2>
-        <b>Parking</b>
-      </h2>
-      <p>2018-02-02 12:00:12</p>
-      <h2 item-end style="color:red;">-30$</h2>
-    </ion-item>
-    <ion-item>
-      <ion-icon name="arrow-dropup" item-start style="color:green;"></ion-icon>
-      <h2>
-        <b>Salary Solidify</b>
-      </h2>
-      <p>2018-02-02 12:00:12</p>
-      <h2 item-end style="color:green;">1800$
-      </h2>
-    </ion-item> -->
   </ion-list>
 
 
