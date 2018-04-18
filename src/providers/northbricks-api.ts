@@ -1,5 +1,5 @@
 import { Accounts } from '../interface/iAccount';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/take';
@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/of';
 import { Injectable } from '@angular/core';
-import { Headers, Http, RequestOptions, URLSearchParams } from '@angular/http';
+
 import { Observable } from 'rxjs/Observable';
 
 import { Banks } from '../interface/iBanks';
@@ -17,12 +17,14 @@ import { AuthServiceNorthbricksProvider } from './auth-service-northbricks/auth-
 import { NorthbricksStorage } from './northbricks-storage';
 import { Events } from 'ionic-angular';
 
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { catchError } from 'rxjs/operators/catchError';
+
 
 @Injectable()
 export class NorthbricksApi {
 
-  // private static httpHeaders = new Headers();
-  private options = new RequestOptions({ headers: new Headers({ 'Content-Type': 'application/json' }) });
+
   // private accessTokenUrl = 'https://api.northbricks.io/oauth/token';
   private baseUrl = 'https://api.northbricks.io/api/v1'
 
@@ -32,25 +34,42 @@ export class NorthbricksApi {
 
 
   // private token: string
-  constructor(public http: Http, public events: Events, public storage: NorthbricksStorage) {
+  constructor(public httpClient: HttpClient, public events: Events, public storage: NorthbricksStorage) {
     console.log('Hello Northbricks API Provider');
   }
-
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    // return an ErrorObservable with a user-facing error message
+    return new ErrorObservable(
+      'Something bad happened; please try again later.');
+  };
 
   login() {
 
   }
   bankAuth(bankId: string): Observable<Response> {
-    return this.http.get(this.baseUrl + `/me/banks/${bankId}/auth?access_token=${AuthServiceNorthbricksProvider.devAccessToken}`, this.setHeaders(null, false))
-      .map(res => <Response>res.json())
-      .catch(res => this._handle401(res));
+
+    return this.httpClient.get<Response>(this.baseUrl + `/me/banks/${bankId}/auth?access_token=${AuthServiceNorthbricksProvider.devAccessToken}`, { headers: this.setHeaders2() })
+      .pipe(
+        catchError(this.handleError)
+      );
 
   }
 
   fetchAccounts(bankId: string): Observable<Accounts> {
-    return this.http.get(this.baseUrl + `/banks/${bankId}/accounts`, this.setHeaders())
-      .map(res => <Accounts>res.json())
-      .catch(res => this._handle401(res));
+    return this.httpClient.get<Accounts>(this.baseUrl + `/banks/${bankId}/accounts`, { headers: this.setHeaders2() })
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
 
@@ -69,15 +88,17 @@ export class NorthbricksApi {
 
     // accountId = 'FI6593857450293470-EUR';
     //  https://api.northbricks.io/api/v1/banks/5707648880082944/accounts/FI6593857450293470-EUR/transactions
-    return this.http.get(this.baseUrl + `/banks/${bankId}/accounts/${accountId}/transactions`, this.setHeaders())
-      .map(res => <TransactionsRoot>res.json())
-      .catch(res => this._handle401(res));
+    return this.httpClient.get<TransactionsRoot>(this.baseUrl + `/banks/${bankId}/accounts/${accountId}/transactions`, { headers: this.setHeaders2() })
+      .pipe(
+        catchError(this.handleError)
+      );
   }
   fetchTransaction(accountId: string, bankId: string, transactionId: string): Observable<Transaction> {
 
-    return this.http.get(this.baseUrl + `/banks/${bankId}/accounts/${accountId}/transactions/${transactionId}`, this.setHeaders())
-      .map(res => <Transaction>res.json())
-      .catch(res => this._handle401(res));
+    return this.httpClient.get<Transaction>(this.baseUrl + `/banks/${bankId}/accounts/${accountId}/transactions/${transactionId}`, { headers: this.setHeaders2() })
+      .pipe(
+        catchError(this.handleError)
+      );
   }
   /**
    * Returns a transaction
@@ -88,155 +109,57 @@ export class NorthbricksApi {
    * @memberof NorthbricksApi
    */
   fetchUserTransaction(transactionId: number): Observable<Transaction> {
-    let myParams: URLSearchParams = new URLSearchParams();
+    let myParams: HttpParams = new HttpParams();
     myParams.set('transactionId', transactionId.toString());
-    this.options.search = myParams;
-    return this.http.get(this.baseUrl + '/transactions/', this.setHeaders())
-      .map(res => <Transaction>res.json())
-      .catch(res => this._handle401(res));
+
+    return this.httpClient.get<Transaction>(this.baseUrl + '/transactions/', { headers: this.setHeaders2(), params: myParams })
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
   fetchBanks(): Observable<Banks> {
 
-    return this.http.get(this.baseUrl + '/banks', this.setHeaders())
-      .map(res => <Banks>res.json())
-      .catch(res => this._handle401(res));
+    return this.httpClient.get<Banks>(this.baseUrl + '/banks', { headers: this.setHeaders2() })
+      .pipe(
+        catchError(this.handleError)
+      );
 
   }
   fetchMyBanks(): Observable<Banks> {
 
-    return this.http.get(this.baseUrl + '/me/banks', this.setHeaders())
-      .map(res => <Banks>res.json())
-      .catch(res => this._handle401(res));
+    return this.httpClient.get<Banks>(this.baseUrl + '/me/banks', { headers: this.setHeaders2() })
+      .pipe(
+        catchError(this.handleError)
+      );
 
   }
 
 
-  private _handle401(response: HttpErrorResponse): Observable<any> {
 
-    try {
-      console.error(response.status);
-      if (response.status === 401) {
-        console.log(response.status);
-
-        return Observable.throw(new Error(response.message));
-      } else if (response.status === undefined) {
-        this.events.publish('app:logged-out', '');
-        console.log(response.status);
-        return Observable.throw(new Error(response.message));
-      } else if (response.status === 403) {
-        this.events.publish('app:logged-out', '');
-        console.log('403');
-        return Observable.throw(new Error(response.message));
-      } else if (response.status === 404) {
-        this.events.publish('app:logged-out', '');
-        console.log('404');
-        return Observable.throw(new Error(response.message));
-      } else if (response.status === 0) {
-        this.events.publish('app:logged-out', '');
-        console.log('Status 0 ' + response.statusText);
-        return Observable.throw(new Error(response.message));
-      }
-    } catch (err) {
-
-      console.warn('AuthenticatedHttpService._handle401');
-      console.error(err);
-    }
-
-    return Observable.of(response);
-  }
-
-  fetchBank(bankId: string) {
+  fetchBank(bankId: string): Observable<any> {
 
     // return this.http.get(this.baseUrl + `/banks/${bankId}`, this.setHeaders())
     //   .map(res => <any>res.json());
-    return this.http.get(this.baseUrl + `/banks/${bankId}`, this.setHeaders())
-      .map(res => <any>res.json())
-      .catch(res => this._handle401(res));
+    return this.httpClient.get<any>(this.baseUrl + `/banks/${bankId}`, { headers: this.setHeaders2() })
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
 
+  setHeaders2(supplementalHeaders: Headers[] = null, accessToken: boolean = true): HttpHeaders {
+    return new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + AuthServiceNorthbricksProvider.devAccessToken });
 
-  setHeaders(supplementalHeaders: Headers[] = null, accessToken: boolean = true): RequestOptions {
-    let options = new RequestOptions();
-
-    options.method = "GET";
-    options.headers = new Headers();
-    options.headers.append('Content-Type', 'application/json')
-
-    // if (AuthServiceNorthbricksProvider.accessToken !== '') {
-    //   options.headers.append('Authorization', 'Bearer ' + AuthServiceNorthbricksProvider.accessToken);
-    // } else {
-    if (accessToken) {
-      options.headers.append('Authorization', 'Bearer ' + AuthServiceNorthbricksProvider.devAccessToken);
-    }
-    // alert(JSON.stringify(AuthServiceNorthbricksProvider.devAccessToken));
-    // }
-    return options;
   }
   fetchUser(): Observable<User> {
-    return this.http.get(this.baseUrl + '/me/user', this.setHeaders())
-      .map(res => <User>res.json())
-      .catch(res => this._handle401(res));
+    return this.httpClient.get<User>(this.baseUrl + '/me/user', { headers: this.setHeaders2() })
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
 
 
-
-
-  // /**
-  //  * Generic post
-  //  * 
-  //  * @param {string} endpoint 
-  //  * @param {*} body 
-  //  * @param {RequestOptions} [options] 
-  //  * @returns 
-  //  * 
-  //  * @memberof NorthbricksApi
-  //  */
-  // post(endpoint: string, body: any, options?: RequestOptions) {
-  //   return this.http.post(this.baseUrl + '/' + endpoint, body, options);
-  // }
-
-  // /**
-  //  * Generic put
-  //  * 
-  //  * @param {string} endpoint 
-  //  * @param {*} body 
-  //  * @param {RequestOptions} [options] 
-  //  * @returns 
-  //  * 
-  //  * @memberof NorthbricksApi
-  //  */
-  // put(endpoint: string, body: any, options?: RequestOptions) {
-  //   return this.http.put(this.baseUrl + '/' + endpoint, body, options);
-  // }
-
-  // /**
-  //  * Generic delete
-  //  * 
-  //  * @param {string} endpoint 
-  //  * @param {RequestOptions} [options] 
-  //  * @returns 
-  //  * 
-  //  * @memberof NorthbricksApi
-  //  */
-  // delete(endpoint: string, options?: RequestOptions) {
-  //   return this.http.delete(this.baseUrl + '/' + endpoint, options);
-  // }
-
-  // /**
-  //  * Generic patch
-  //  * 
-  //  * @param {string} endpoint 
-  //  * @param {*} body 
-  //  * @param {RequestOptions} [options] 
-  //  * @returns 
-  //  * 
-  //  * @memberof NorthbricksApi
-  //  */
-  // patch(endpoint: string, body: any, options?: RequestOptions) {
-  //   return this.http.put(this.baseUrl + '/' + endpoint, body, options);
-  // }
 }
 

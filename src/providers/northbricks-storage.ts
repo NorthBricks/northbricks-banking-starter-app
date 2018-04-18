@@ -10,7 +10,7 @@ import { Events } from 'ionic-angular';
 @Injectable()
 export class NorthbricksStorage {
 
-  constructor(public http: Http, private events: Events, private storage: Storage) {
+  constructor(private events: Events, private storage: Storage) {
     console.log('Hello Northbricks Storage Provider');
   }
 

@@ -4,13 +4,6 @@ import { Bank, Banks } from '../../interface/iBanks';
 import { NorthbricksApi } from '../../providers/northbricks-api';
 import { BankAuthPage } from '../bank/bank-auth/bank-auth';
 
-/**
- * Generated class for the LinkBanksPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-link-banks',
