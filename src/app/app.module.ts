@@ -1,12 +1,14 @@
 import { BankAuthPageModule } from '../pages/bank/bank-auth/bank-auth.module';
 import { ErrorHandler, NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
+
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 // import { InputDebounceDirective } from '../directives/input-debounce/input-debounce';
 import { AboutPage } from '../pages/about/about';
 import { BankPageModule } from '../pages/bank/bank.module';
@@ -27,6 +29,7 @@ import { EditProfilePageModule } from '../pages/edit-profile/edit-profile.module
 import { SplashScreenPageModule } from '../pages/splash-screen/splash-screen.module';
 import { TermsAndConditionsPageModule } from '../pages/terms-and-conditions/terms-and-conditions.module';
 import { TransactionPage } from '../pages/transaction/transaction';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -42,9 +45,10 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     TermsAndConditionsPageModule,
-    HttpClientModule,
+    HttpModule,
     ProfilePageModule,
     BankPageModule,
+    HttpClientModule,
     SplashScreenPageModule,
     LinkBanksPageModule,
     EditProfilePageModule,

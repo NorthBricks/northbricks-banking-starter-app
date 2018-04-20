@@ -19,6 +19,7 @@ export class TransactionPage {
     public viewCtrl: ViewController,
     public navParams: NavParams,
     public northbricksApi: NorthbricksApi) {
+
   }
 
   ionViewDidLoad() {

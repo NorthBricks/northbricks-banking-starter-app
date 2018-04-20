@@ -29,8 +29,7 @@
     "@ionic-native/status-bar": "^5.0.0-beta.4",
     "@ionic/storage": "2.1.3",
     "auth0-js": "^9.4.2",
-    "cordova-android": "7.1.0",
-    "cordova-ios": "4.5.4",
+    "cordova-ios": "^4.5.4",
     "cordova-plugin-actionsheet": "^2.3.3",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-console": "^1.1.0",
@@ -80,8 +79,7 @@
       "cordova-plugin-statusbar": {}
     },
     "platforms": [
-      "ios",
-      "android"
+      "ios"
     ]
   }
 }

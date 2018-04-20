@@ -47,8 +47,14 @@ export class LinkBanksPage {
   }
   AddBank(bankId: string, name: string) {
     alert(bankId);
-    let authModal = this.modalCtrl.create(BankAuthPage, { bankId: bankId, name: name });
-    authModal.present();
+    this.northbricksApi.addBankToUser(bankId).subscribe(addedBank => {
+      let authModal = this.modalCtrl.create(BankAuthPage, { bankId: bankId, name: name });
+      authModal.present();
+    }, error => {
+      alert(JSON.stringify(error));
+      let authModal = this.modalCtrl.create(BankAuthPage, { bankId: bankId, name: name });
+      authModal.present();
+    });
 
   }
   close() {

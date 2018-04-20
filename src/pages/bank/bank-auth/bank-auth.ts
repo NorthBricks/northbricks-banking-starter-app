@@ -23,6 +23,8 @@ export class BankAuthPage {
     private authService: AuthServiceNorthbricksProvider,
     private iab: InAppBrowser,
     private platform: Platform) {
+
+    this.bankId = navParams.get("bankId");
   }
   dismiss() {
     this.viewCtrl.dismiss();
@@ -30,13 +32,14 @@ export class BankAuthPage {
   ionViewDidLoad() {
     this.platform.ready().then(() => {
       console.log('ionViewDidLoad BankAuthPage');
-      this.authService.bankAuth(this.bankId).then(response => {
-        console.log(JSON.stringify(response));
+      this.bankAuth(this.bankId)
+      // .then(response => {
+      //   console.log(JSON.stringify(response));
 
-        this.response = response;
-      }, error => {
-        alert(JSON.stringify(error));
-      });
+      //   this.response = response;
+      // }, error => {
+      //   alert(JSON.stringify(error));
+      // });
     });
     // this.authBank().then(callback => {
     //   alert(JSON.stringify(callback));
@@ -44,7 +47,52 @@ export class BankAuthPage {
     //   console.log(JSON.stringify(error));
     // });
   }
+  bankAuth(bankId: string) {
+    let baseUrl = 'https://api.northbricks.io/api/v1'
+    // return new Promise((resolve, reject) => {
 
+    let urlAuth: string = baseUrl + `/me/banks/${bankId}/auth?access_token=${AuthServiceNorthbricksProvider.devAccessToken}`;
+    let browserRef: InAppBrowserObject = this.iab.create(urlAuth, "_self", "location=no,clearsessioncache=yes,clearcache=yes")
+
+    browserRef.on("exit").subscribe((event) => {
+      alert("The  sign in flow was canceled");
+      // reject(new Error("The Northbricks sign in flow was canceled"));
+    });
+    browserRef.on('loadstop').subscribe(event => {
+      browserRef.insertCSS({ code: "body{color: red;" });
+      browserRef.close();
+    });
+    browserRef.on("loadstart").subscribe((event) => {
+      browserRef.close();
+      if ((event.url).indexOf(`https://api.northbricks.io/api/v1`) === 0) {
+        console.log('Fick tillbaka loadstart - redirect url');
+        // exitSubscription.unsubscribe();
+        browserRef.close();
+
+
+        console.log(event.url);
+        var responseParameters = ((event.url).split("#")[1]).split("&");
+        var parsedResponse = {};
+        console.log('RESPONSE::: ' + responseParameters);
+        for (var i = 0; i < responseParameters.length; i++) {
+          parsedResponse[responseParameters[i].split("=")[0]] = responseParameters[i].split("=")[1];
+        }
+        console.log('PARSED RESPONSE ' + JSON.stringify(parsedResponse));
+        if (parsedResponse["access_token"] !== undefined && parsedResponse["access_token"] !== null) {
+          console.log('Access token..');
+          // resolve(<OAuthResponse>parsedResponse);
+        } else {
+          console.log("Problem authenticating with Northbricks");
+          // reject(new Error("Problem authenticating with Northbricks"));
+        }
+      }
+      console.log("Outside" + JSON.stringify(event));
+    });
+    // });
+
+
+
+  }
   authBank(): Promise<OAuthResponse> {
 
     return new Promise((resolve, reject) => {

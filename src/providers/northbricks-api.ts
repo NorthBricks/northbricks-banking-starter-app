@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 
-import { Banks } from '../interface/iBanks';
+import { Banks, Bank } from '../interface/iBanks';
 import { Transaction, TransactionsRoot } from '../interface/iTransaction';
 import { User } from '../interface/iUser';
 import { AuthServiceNorthbricksProvider } from './auth-service-northbricks/auth-service-northbricks';
@@ -37,6 +37,20 @@ export class NorthbricksApi {
   constructor(public httpClient: HttpClient, public events: Events, public storage: NorthbricksStorage) {
     console.log('Hello Northbricks API Provider');
   }
+
+  addBankToUser(bankId: string): Observable<Bank> {
+    let body = {
+      bankId: bankId
+    }
+    return this.httpClient.post<Bank>(`https://api.northbricks.io/api/v1/me/banks`, JSON.stringify(body), { headers: this.setHeaders2() });
+  }
+  removeBankFromUser(bankId: string): Observable<any> {
+    return this.httpClient.delete(`https://api.northbricks.io/api/v1/me/banks/${bankId}`, { headers: this.setHeaders2() });
+
+  }
+
+
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -64,6 +78,8 @@ export class NorthbricksApi {
       );
 
   }
+
+
 
   fetchAccounts(bankId: string): Observable<Accounts> {
     return this.httpClient.get<Accounts>(this.baseUrl + `/banks/${bankId}/accounts`, { headers: this.setHeaders2() })

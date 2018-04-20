@@ -1,6 +1,6 @@
 import { Bank } from '../../interface/iBanks';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { User } from '../../interface/iUser';
 import { NorthbricksApi } from '../../providers/northbricks-api';
@@ -30,6 +30,7 @@ export class ProfilePage {
   // banks = [{ name: 'Nordea' }, { name: 'Skandia' }, { name: 'SEB' }, { name: 'ICA' }];
 
   constructor(private northbricksApi: NorthbricksApi,
+    private toastCtrl: ToastController,
     public navCtrl: NavController,
     public navParams: NavParams) {
   }
@@ -38,6 +39,20 @@ export class ProfilePage {
   }
   EditProfile() {
     this.navCtrl.push(EditProfilePage);
+  }
+  removeBank(bankId: string) {
+    this.northbricksApi.removeBankFromUser(bankId).subscribe(removed => {
+      this.presentToast('Bank was sucessfully removed');
+    }, error => {
+      this.presentToast('Could not remove bank - please try again');
+    });
+  }
+  presentToast(message: string) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000,
+      position: 'top'
+    });
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
