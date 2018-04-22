@@ -1,6 +1,6 @@
 import { BankAuthPage } from '../bank/bank-auth/bank-auth';
 import { Component } from '@angular/core';
-import { LoadingController, ModalController, NavController } from 'ionic-angular';
+import { LoadingController, ModalController, NavController, ActionSheetController, ActionSheetButton, ActionSheet } from 'ionic-angular';
 
 import { Banks, Bank } from '../../interface/iBanks';
 import { Transaction } from '../../interface/iTransaction';
@@ -29,25 +29,56 @@ export class HomePage {
   user: User;
   accounts: Account[] = [];
   countTransactions: number = 0;
-
+  actionSheet: ActionSheet;
   constructor(public modalCtrl: ModalController,
+    private actionSheetCtrl: ActionSheetController,
     public loadingCtrl: LoadingController,
     public northbricksApi: NorthbricksApi,
     public navCtrl: NavController,
     public toastCtrl: ToastService,
     private storage: NorthbricksStorage) {
 
+
+
   }
 
-  public onItemSelection(selection) {
+  onItemSelection(selection) {
     console.log(JSON.stringify(selection));
     if (selection) {
       // console.log("item selected: " + selection.iban);
+      this.selectedAccount = selection;
       this.fetchAccountsTransactions(selection);
     } else {
       console.log("no item selected");
     }
   }
+
+  loadActionSheet() {
+    // if (this.actionSheet) {
+    //   console.log('Action sheet exists');
+    //   this.actionSheet.present();
+
+    // } else {
+    //   console.log('Action does not  exists');
+
+    //   if (this.selectedBank) {
+    //     this.fetchAccounts(this.selectedBank);
+    //   } else {
+    //     this.fetchBanks();
+    //   }
+    // }
+    this.actionSheet = this.actionSheetCtrl.create({
+      title: 'Accounts'
+    });
+    console.log(JSON.stringify(this.accounts));
+    this.accounts.forEach(element => {
+      this.actionSheet.addButton({ text: element.iban, handler: () => { this.onItemSelection(element) } });
+    });
+    this.actionSheet.present();
+
+  }
+
+
   getColor(value: string) {
     // console.log('Value is ' + value);
     if (value.toString().startsWith("-")) {
@@ -73,6 +104,8 @@ export class HomePage {
     }, error => {
       alert(error);
     });
+
+    // this.loadActionSheet();
   }
   showTransaction(transactionId: string) {
     let transactionModal = this.modalCtrl.create(TransactionPage, { bankId: this.selectedBank.id, transactionId: transactionId, accountId: this.selectedAccount.id });
@@ -91,13 +124,21 @@ export class HomePage {
     this.navCtrl.push(BankPage, { bank: bank, user: this.user });
 
   }
+  showActionsSheetAccounts() {
+    this.loadActionSheet();
+
+  }
 
   fetchAccounts(bank: Bank) {
+
     this.northbricksApi.fetchAccounts(bank.id).subscribe(account => {
       console.log(JSON.stringify(account.accounts));
 
       this.accounts = account.accounts;
       this.selectedAccount = this.accounts[0];
+      console.log('Fetching accounts');
+
+
       if (this.selectedAccount != null) {
         this.fetchAccountsTransactions(this.selectedAccount);
       }
@@ -106,18 +147,12 @@ export class HomePage {
     });
   }
 
-  ionViewCanEnter() {
-
-  }
-
-
-
   AddBank(bankId: string, name: string) {
     // alert(bankId);
     let authModal = this.modalCtrl.create(BankAuthPage, { bankId: bankId, name: name });
     authModal.present();
     authModal.onDidDismiss(dismissed => {
-      this.fetchAccounts(this.selectedBank);
+      this.fetchBanks();
     });
 
   }

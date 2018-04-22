@@ -17,13 +17,29 @@
     margin: 5px auto 0 auto;
 
 }
+.arrowDisclosure {
+
+    background: url(../assets/images/disclosureindicator.svg) no-repeat top left;
+    background-size: contain;
+    width: 22px;
+    height: 22px;
+    padding-right: 12px;
+    // margin: 0px auto 0 auto;
+   
+
+}
+.iconAdd{
+    width: 16px;
+    height: 16px;
+}
 .cards {
 
-    background: url(../assets/images/cards.svg) no-repeat top left;
+    // background: url(../assets/banks/nordea/nordea.png) no-repeat top left;
     background-size: contain;
-    width: 20px;
-    height: 20px;
-    margin:7px;
+    width: 36px;
+    height: 36px;
+    margin-left: 18px;
+    margin-top: 13px;
     // margin: 20px auto 0 auto;
 
 }
@@ -63,7 +79,7 @@
         margin-top: 2px;
         margin-left: 2px;
         line-height: 30px;
-        img{
+        img {
             height: 20px;
         
         }
@@ -71,9 +87,10 @@
     div.headerTitle{
         float: left;
         margin-left: 10px;
+        margin-top:13px;
         height: 40px;
         line-height: 30px;
-        font-size: 15px;
+        font-size: 14px;
         
     }
 }

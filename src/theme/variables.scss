@@ -30,7 +30,8 @@ $colors: (
   light:      #f4f4f4,
   dark:       #222,
   navbarColor: #fff,
-  northbricksorange: #f05f40
+  northbricksorange: #f05f40,
+  toolbarTitleTextColor:#000
 );
 $toolbar-backgroud:#fff;
 $tabs-background:#3B3B3B;
@@ -55,7 +56,7 @@ $text-color:#000;
 // iOS only Sass variables can go here
 .toolbar-title.toolbar-title-md, 
 .toolbar-title.toolbar-title-ios, 
-.toolbar-title.toolbar-title-wp { color: map-get($colors, northbricksorange); }
+.toolbar-title.toolbar-title-wp { color: map-get($colors, toolbarTitleTextColor); }
 
 
 

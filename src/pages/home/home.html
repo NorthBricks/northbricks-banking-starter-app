@@ -2,8 +2,8 @@
   <ion-navbar>
     <ion-title>MY BANKS</ion-title>
     <ion-buttons end>
-      <button (click)="openLogin()" ion-button outline>
-        Add bank
+      <button clear (click)="openLogin()" ion-button outline>
+        <ion-icon style="zoom:1.5;" class="iconAdd" name="add"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -16,11 +16,11 @@
   </ion-refresher>
 
   <ion-slides pager class="slider">
-    <ion-slide *ngFor="let bank of banks" (click)="fetchAccounts(bank)">
+    <ion-slide *ngFor="let bank of banks">
       <div class="wrapper">
-        <header>
+        <header (click)="showBank(bank)">
           <div class="headerImage">
-            <div class="cards"></div>
+            <div [ngStyle]="{'background': 'url(../assets/banks/nordea/' + bank.shortName + '.png) no-repeat top left', 'margin-left':'18px','margin-top':'13px', 'background-size': 'contain','height':'36px','width':'36px'}"></div>
           </div>
           <div class="headerTitle">{{bank.fullName}}</div>
         </header>
@@ -32,12 +32,18 @@
         </main>
         <footer>
           <ion-item>
+            <div (click)="showActionsSheetAccounts()">
+              <div style="color:#8E8E93;font-size: 12px">
+                Select account
+              </div>
+              <div style="width: 100%;">
+                <span style="color:#000;font-weight: 500; font-size: 15px">{{selectedAccount?.iban}}</span>
+                <div float-right class="arrowDisclosure">
+                  <!-- <ion-icon class="arrowDisclosure" name="arrow-down" style="color:#C7C7CC"></ion-icon> -->
+                </div>
+              </div>
+            </div>
 
-            <ion-label class="link">
-            </ion-label>
-            <ion-select [(ngModel)]="selectedAccount" (ionChange)="onItemSelection($event)">
-              <ion-option *ngFor="let account of accounts" [value]="account">{{account.iban}}</ion-option>
-            </ion-select>
           </ion-item>
         </footer>
       </div>
