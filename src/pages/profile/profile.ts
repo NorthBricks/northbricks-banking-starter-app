@@ -7,13 +7,6 @@ import { NorthbricksApi } from '../../providers/northbricks-api';
 import { LinkBanksPage } from '../link-banks/link-banks';
 import { EditProfilePage } from '../edit-profile/edit-profile';
 
-/**
- * Generated class for the ProfilePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-profile',
@@ -31,8 +24,8 @@ export class ProfilePage {
 
   constructor(private northbricksApi: NorthbricksApi,
     private toastCtrl: ToastController,
-    public navCtrl: NavController,
-    public navParams: NavParams) {
+    private navCtrl: NavController,
+    private navParams: NavParams) {
   }
   LinkBanks() {
     this.navCtrl.push(LinkBanksPage);
@@ -54,25 +47,22 @@ export class ProfilePage {
       position: 'top'
     });
   }
-  ionViewDidLoad() {
+  ionViewCanEnter() {
     console.log('ionViewDidLoad ProfilePage');
 
     this.northbricksApi.fetchUser().subscribe(user => {
       // alert(JSON.stringify(user));
       this.user = user;
-
     });
 
     this.northbricksApi.fetchMyBanks().subscribe(banks => {
       // alert(JSON.stringify(user));
       this.banks = banks.banks;
-
     });
 
     this.northbricksApi.fetchBanks().subscribe(banksNotAdded => {
       // alert(JSON.stringify(banks));
       this.banksNotAdded = banksNotAdded.banks;
-
     });
 
 

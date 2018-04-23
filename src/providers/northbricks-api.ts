@@ -34,8 +34,11 @@ export class NorthbricksApi {
 
 
   // private token: string
-  constructor(public httpClient: HttpClient, public events: Events, public storage: NorthbricksStorage) {
+  constructor(
+    public httpClient: HttpClient,
+    public events: Events) {
     console.log('Hello Northbricks API Provider');
+
   }
 
   addBankToUser(bankId: string): Observable<Bank> {
@@ -51,20 +54,38 @@ export class NorthbricksApi {
 
 
 
-  private handleError(error: HttpErrorResponse) {
+  public handleError(error: HttpErrorResponse) {
+
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
+      this.events.publish('http', error);
+      return new ErrorObservable(error);
     } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
+      this.events.publish('http', error);
       console.error(
         `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
+        `body was: ${error.error.error}`);
+
+      return new ErrorObservable(error);
+      // switch (error.status) {
+      //   case 401:
+
+      //   // break;
+
+      //   default:
+      //     return new ErrorObservable(
+      //       'Something bad happened; please try again later.');
+      // break;
+      // }
+
+
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+
     }
     // return an ErrorObservable with a user-facing error message
-    return new ErrorObservable(
-      'Something bad happened; please try again later.');
+
   };
 
   login() {
@@ -75,7 +96,6 @@ export class NorthbricksApi {
     return this.httpClient.get<Response>(this.baseUrl + `/me/banks/${bankId}/auth?access_token=${AuthServiceNorthbricksProvider.devAccessToken}`, { headers: this.setHeaders2() })
       .pipe(
         catchError(this.handleError)
-      );
 
   }
 

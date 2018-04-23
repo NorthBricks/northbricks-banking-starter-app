@@ -9,6 +9,7 @@ import { NorthbricksStorage } from '../providers/northbricks-storage';
 // import { SplashScreenPage } from '../pages/splash-screen/splash-screen';
 import { LoginPage } from '../pages/login/login';
 import { User } from '../interface/iUser';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -42,6 +43,13 @@ export class MyApp {
           }
         });
 
+
+      events.subscribe('http', (httpErrorResponse: HttpErrorResponse) => {
+        console.log(httpErrorResponse.status);
+        this.rootPage = TabsPage;
+        let modal = this.modalCtrl.create(LoginPage);
+        modal.present();
+      });
 
       events.subscribe('storage:user', (user) => {
 

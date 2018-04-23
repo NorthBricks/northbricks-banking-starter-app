@@ -1,6 +1,6 @@
 import { BankAuthPage } from '../bank/bank-auth/bank-auth';
 import { Component } from '@angular/core';
-import { LoadingController, ModalController, NavController, ActionSheetController, ActionSheetButton, ActionSheet } from 'ionic-angular';
+import { LoadingController, ModalController, NavController, ActionSheetController, ActionSheetButton, ActionSheet, Events } from 'ionic-angular';
 
 import { Banks, Bank } from '../../interface/iBanks';
 import { Transaction } from '../../interface/iTransaction';
@@ -36,7 +36,8 @@ export class HomePage {
     public northbricksApi: NorthbricksApi,
     public navCtrl: NavController,
     public toastCtrl: ToastService,
-    private storage: NorthbricksStorage) {
+    private storage: NorthbricksStorage,
+    private events: Events) {
 
 
 
@@ -54,19 +55,7 @@ export class HomePage {
   }
 
   loadActionSheet() {
-    // if (this.actionSheet) {
-    //   console.log('Action sheet exists');
-    //   this.actionSheet.present();
 
-    // } else {
-    //   console.log('Action does not  exists');
-
-    //   if (this.selectedBank) {
-    //     this.fetchAccounts(this.selectedBank);
-    //   } else {
-    //     this.fetchBanks();
-    //   }
-    // }
     this.actionSheet = this.actionSheetCtrl.create({
       title: 'Accounts'
     });
@@ -95,14 +84,14 @@ export class HomePage {
       return "arrowgreen"
     }
   }
-  ionViewDidLoad() {
+  ionViewDidEnter() {
 
     this.northbricksApi.fetchUser().subscribe(user => {
       this.storage.setUser(user);
       this.user = user;
       this.fetchBanks();
     }, error => {
-      alert(error);
+      this.events.publish('http', error);
     });
 
     // this.loadActionSheet();

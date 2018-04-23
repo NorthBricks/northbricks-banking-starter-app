@@ -25,7 +25,11 @@ export class LoginPage {
   }
 
 
-
+  register() {
+    this.ngAuthProvider.register().then(register => {
+      console.log(register);
+    });
+  }
 
   doLogin() {
     this.ngAuthProvider.loginNorthbricks().then(response => {
