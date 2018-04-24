@@ -26,10 +26,11 @@ export class LoginPage {
 
 
   register() {
-    this.ngAuthProvider.register();
-    // .then(register => {
-    //   console.log(register);
-    // });
+    this.ngAuthProvider.register().then(register => {
+      console.log(register);
+    }, error => {
+      console.log(error);
+    });
   }
 
   doLogin() {
