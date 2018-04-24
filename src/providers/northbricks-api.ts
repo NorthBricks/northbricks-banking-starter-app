@@ -96,6 +96,7 @@ export class NorthbricksApi {
     return this.httpClient.get<Response>(this.baseUrl + `/me/banks/${bankId}/auth?access_token=${AuthServiceNorthbricksProvider.devAccessToken}`, { headers: this.setHeaders2() })
       .pipe(
         catchError(this.handleError)
+      )
 
   }
 

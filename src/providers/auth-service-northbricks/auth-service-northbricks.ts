@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 
 import { InAppBrowser, InAppBrowserObject, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { Subscription } from 'rxjs/Subscription';
+import { Platform } from 'ionic-angular';
 
 
 @Injectable()
@@ -31,7 +32,7 @@ export class AuthServiceNorthbricksProvider {
     presentationstyle: 'pagesheet',//iOS only 
     fullscreen: 'yes',//Windows only    
   };
-  constructor(public iab: InAppBrowser) {
+  constructor(public iab: InAppBrowser, public platform: Platform) {
     console.log('Hello AuthServiceNorthbricksProvider Provider');
 
   }
@@ -40,43 +41,43 @@ export class AuthServiceNorthbricksProvider {
     return false;
   }
 
-  register(): Promise<OAuthResponse> {
-
-    return new Promise((resolve, reject) => {
+  register() {
+    this.platform.ready().then(() => {
+      // return new Promise((resolve, reject) => {
 
       let browserRef: InAppBrowserObject = this.iab.create('https://api.northbricks.io/signup', "_blank", "location=no,clearsessioncache=yes,clearcache=yes")
-
-      const exitSubscription: Subscription = browserRef.on("exit").subscribe((event) => {
-        alert("The  sign in flow was canceled");
-        reject(new Error("The Northbricks sign in flow was canceled"));
-      });
-
-      browserRef.on("loadstart").subscribe((event) => {
-        console.log(event);
-        // if ((event.url).indexOf(`https://localhost/oauth/token`) === 0) {
-        //   console.log('Fick tillbaka loadstart - redirect url');
-        //   exitSubscription.unsubscribe();
-        //   browserRef.close();
-
-
-        //   console.log(event.url);
-        //   var responseParameters = ((event.url).split("#")[1]).split("&");
-        //   var parsedResponse = {};
-        //   console.log('RESPONSE::: ' + responseParameters);
-        //   for (var i = 0; i < responseParameters.length; i++) {
-        //     parsedResponse[responseParameters[i].split("=")[0]] = responseParameters[i].split("=")[1];
-        //   }
-        //   console.log('PARSED RESPONSE ' + JSON.stringify(parsedResponse));
-        //   if (parsedResponse["access_token"] !== undefined && parsedResponse["access_token"] !== null) {
-        //     console.log('Access token..');
-        //     resolve(<OAuthResponse>parsedResponse);
-        //   } else {
-        //     console.log("Problem authenticating with Northbricks");
-        //     reject(new Error("Problem authenticating with Northbricks"));
-        //   }
-        // }
-      });
     });
+    // const exitSubscription: Subscription = browserRef.on("exit").subscribe((event) => {
+    //   alert("The  sign in flow was canceled");
+    //   reject(new Error("The Northbricks sign in flow was canceled"));
+    // });
+
+    // browserRef.on("loadstart").subscribe((event) => {
+    //   console.log(event);
+    //   // if ((event.url).indexOf(`https://localhost/oauth/token`) === 0) {
+    //   console.log('Fick tillbaka loadstart - redirect url');
+    //   exitSubscription.unsubscribe();
+    //   browserRef.close();
+
+
+    //   console.log(event.url);
+    //   var responseParameters = ((event.url).split("#")[1]).split("&");
+    //   var parsedResponse = {};
+    //   console.log('RESPONSE::: ' + responseParameters);
+    //   for (var i = 0; i < responseParameters.length; i++) {
+    //     parsedResponse[responseParameters[i].split("=")[0]] = responseParameters[i].split("=")[1];
+    //   }
+    //   console.log('PARSED RESPONSE ' + JSON.stringify(parsedResponse));
+    //   if (parsedResponse["access_token"] !== undefined && parsedResponse["access_token"] !== null) {
+    //     console.log('Access token..');
+    //     resolve(<OAuthResponse>parsedResponse);
+    //   } else {
+    //     console.log("Problem authenticating with Northbricks");
+    //     reject(new Error("Problem authenticating with Northbricks"));
+    //   }
+    // }
+    // });
+    // });
 
 
 
