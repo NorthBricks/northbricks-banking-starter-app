@@ -9,7 +9,7 @@ import { Platform } from 'ionic-angular';
 
 @Injectable()
 export class AuthServiceNorthbricksProvider {
-  private oAuthUrl = `https://api.northbricks.io/oauth/authorize?client_id=sampleClientId&redirect_uri=https://localhost/oauth/token&scope=read&response_type=token`;
+  private oAuthUrl = `https://api.northbricks.io/oauth/authorize?client_id=sampleClientId&redirect_uri=https://localhost&scope=read&response_type=token`;
 
   public static accessToken: string = '';
   public static devAccessToken: string = 'd11af3aa-e05e-4c5a-aada-1d1265045fc3';
@@ -45,16 +45,18 @@ export class AuthServiceNorthbricksProvider {
 
     return new Promise((resolve, reject) => {
 
-      let browserRef: InAppBrowserObject = this.iab.create('https://api.northbricks.io/signup', "_blank", "location=no,clearsessioncache=yes,clearcache=yes")
+      let browserRef: InAppBrowserObject = this.iab.create('https://api.northbricks.io/signup', "_blank", this.options)
 
       const exitSubscription: Subscription = browserRef.on("exit").subscribe((event) => {
-        alert("The  sign in flow was canceled");
+        alert("Reload page - check if there are a user.");
         reject(new Error("The Northbricks sign in flow was canceled"));
       });
 
       browserRef.on("loadstart").subscribe((event) => {
-        console.log(event);
-        if ((event.url).indexOf(`https://localhost/oauth/token`) === 0) {
+        console.log('loadstart');
+        console.log(JSON.stringify(event));
+        console.log(event.url);
+        if ((event.url).indexOf(`https://api.northbricks.io/signup-success`) === 0) {
           console.log('Fick tillbaka loadstart - redirect url');
           exitSubscription.unsubscribe();
           browserRef.close();
@@ -74,6 +76,8 @@ export class AuthServiceNorthbricksProvider {
           // } else {
           //   console.log("Problem authenticating with Northbricks");
           //   reject(new Error("Problem authenticating with Northbricks"));
+        } else if ((event.url).indexOf(`https://api.northbricks.io/login-error`) === 0) {
+          console.log('Here we can count logon errors');
         }
       });
 
@@ -88,7 +92,7 @@ export class AuthServiceNorthbricksProvider {
 
     return new Promise((resolve, reject) => {
 
-      let browserRef: InAppBrowserObject = this.iab.create(this.oAuthUrl, "_blank", "location=no,clearsessioncache=yes,clearcache=yes")
+      let browserRef: InAppBrowserObject = this.iab.create(this.oAuthUrl, "_blank", this.options)
 
       const exitSubscription: Subscription = browserRef.on("exit").subscribe((event) => {
         alert("The  sign in flow was canceled");
@@ -96,7 +100,9 @@ export class AuthServiceNorthbricksProvider {
       });
 
       browserRef.on("loadstart").subscribe((event) => {
-        if ((event.url).indexOf(`https://localhost/oauth/token`) === 0) {
+        console.log('loadstart');
+        console.log(JSON.stringify(event));
+        if ((event.url).indexOf(`https://getpostman.com/oauth2/callback`) === 0) {
           console.log('Fick tillbaka loadstart - redirect url');
           exitSubscription.unsubscribe();
           browserRef.close();
@@ -117,6 +123,8 @@ export class AuthServiceNorthbricksProvider {
             console.log("Problem authenticating with Northbricks");
             reject(new Error("Problem authenticating with Northbricks"));
           }
+        } else if ((event.url).indexOf(`https://api.northbricks.io/login-error`) === 0) {
+          console.log('Here we can count logon errors');
         }
       });
     });
