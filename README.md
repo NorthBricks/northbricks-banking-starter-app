@@ -14,7 +14,8 @@ Our slogan is - "One API to rule them ALL". With that we mean that we are going 
 - Nordea (11 million customers)
 
 ### Soon to be onboarded
-- Länsförsäkringar
+- OP Bank Finland [https://uusi.op.fi/]
+- Länsförsäkringar 
 - SEB
 - ICA
 - And of course....all other banks in Europe
