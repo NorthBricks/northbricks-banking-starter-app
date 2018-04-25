@@ -1,0 +1,29 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Connect your bank</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only margin-right (click)="close()">
+        <ion-icon name="close" style="zoom:1.0;"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <br>
+  <ion-list>
+    <ion-item *ngFor="let bank of banks" (click)="AddBank(bank.id,bank.fullName)">
+      <!-- <ion-avatar item-start class="logo">
+        <img src="../../assets/logo/Nordea200px.png">
+      </ion-avatar> -->
+      <div>{{bank.fullName}}</div>
+      <!-- <button ion-button outline item-end (click)="removeBank()">Disconnect</button> -->
+    </ion-item>
+  </ion-list>
+
+
+
+</ion-content>

@@ -1,7 +1,128 @@
-ion-avatar img  {
-    width:100% !important;
-    height : 100% !important;
-    max-width: 90px !important;  //any size
-    max-height: 90px !important; //any size
+
+.arrowgreen {
+
+    background: url(../assets/images/arrowgreen.svg) no-repeat top left;
+    background-size: contain;
+    width: 1px;
+    height: 1px;
+    margin: 5px auto 0 auto;
+
+}
+.arrowred {
+
+    background: url(../assets/images/arrowred.svg) no-repeat top left;
+    background-size: contain;
+    width: 1px;
+    height: 1px;
+    margin: 5px auto 0 auto;
+
+}
+.arrowDisclosure {
+
+    background: url(../assets/images/disclosureindicator.svg) no-repeat top left;
+    background-size: contain;
+    width: 22px;
+    height: 22px;
+    padding-right: 12px;
+    // margin: 0px auto 0 auto;
    
+
+}
+.iconAdd{
+    width: 16px;
+    height: 16px;
+}
+.cards {
+
+    // background: url(../assets/banks/nordea/nordea.png) no-repeat top left;
+    background-size: contain;
+    width: 36px;
+    height: 36px;
+    margin-left: 18px;
+    margin-top: 13px;
+    // margin: 20px auto 0 auto;
+
+}
+.link {
+
+    background: url(../assets/images/cards.svg) no-repeat top left;
+    background-size: contain;
+    width: 20px;
+    height: 20px;
+    margin:7px;
+    // margin: 20px auto 0 auto;
+
+}
+.slider{
+    
+    height: 300px;
+    background-color: #F6F6F6;
+    display: flex;
+
+    /* Direction of the items, can be row or column */
+    flex-direction: column;
+    // border-top: 1px solid green;
+}
+.wrapper{
+    margin: 10px;
+    border-radius: 10px;
+    background-color: white;
+    // height: 300px;
+    height: 198px;
+    display: flex;
+
+    /* Direction of the items, can be row or column */
+    flex-direction: column;
+    div.headerImage {
+        float: left;   
+        height: 40px;
+        margin-top: 2px;
+        margin-left: 2px;
+        line-height: 30px;
+        img {
+            height: 20px;
+        
+        }
     }
+    div.headerTitle{
+        float: left;
+        margin-left: 10px;
+        margin-top:13px;
+        height: 40px;
+        line-height: 30px;
+        font-size: 14px;
+        
+    }
+}
+header {
+    // border: 1px solid;
+    height: 40px; 
+}
+footer {
+    border-top: 1px solid rgb(230, 226, 226);
+    height: 40px;
+    line-height: 40px;
+    color:#8E8E93;
+}
+
+main {
+    flex: 1;
+
+    padding: 5px;
+    
+    height: 80px;
+    margin-top: 10px;
+    vertical-align: middle;
+    line-height: 80px;
+
+    font-weight: 300;
+    font-size: 40px;
+    text-align: center;
+    div{
+       position: relative;
+        line-height: 10px;
+        height: 10px;
+        font-weight: 300;
+        font-size: 14px;
+    }
+}

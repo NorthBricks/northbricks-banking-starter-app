@@ -5,11 +5,12 @@ import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
 
 import { User } from '../interface/iUser';
+import { Events } from 'ionic-angular';
 
 @Injectable()
 export class NorthbricksStorage {
 
-  constructor(public http: Http, public storage: Storage) {
+  constructor(private events: Events, private storage: Storage) {
     console.log('Hello Northbricks Storage Provider');
   }
 
@@ -29,11 +30,12 @@ export class NorthbricksStorage {
     return this.storage.get('token');
   }
 
-  setUser(value: User): Promise<any> {
+  setUser(value: User): Promise<User> {
     // alert(value);
+    this.events.publish('storage:user', value);
     return this.storage.set('user', JSON.stringify(value));
   }
-  getUser(): Promise<any> {
+  getUser(): Promise<User> {
     return this.storage.get('user');
   }
 

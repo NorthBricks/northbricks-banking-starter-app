@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 10">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: #c7c7cc;
+      }
+    </style>
+  </defs>
+  <g id="Disclosure_Indicator_" data-name="Disclosure Indicator " transform="translate(34 -161) rotate(90)">
+    <rect id="boundary" class="cls-1" width="10" height="22" transform="translate(161 12)"/>
+    <path id="Chevron" class="cls-2" d="M14.49,32.415,8,38.944,14.49,45.4l1.251-1.263-5.151-5.2,5.151-5.294Z" transform="translate(178 61.387) rotate(180)"/>
+  </g>
+</svg>

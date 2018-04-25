@@ -1,12 +1,13 @@
 import { Account } from '../../interface/iAccount';
 import { Transaction, TransactionsRoot } from '../../interface/iTransaction';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 // import * as moment from 'moment';
 import { Bank } from '../../interface/iBanks';
 import { User } from '../../interface/iUser';
 import { NorthbricksApi } from '../../providers/northbricks-api';
 import { ToastService } from '../../providers/utils/toast.service';
+import { AuthServiceNorthbricksProvider } from '../../providers/auth-service-northbricks/auth-service-northbricks';
 
 
 @IonicPage()
@@ -23,10 +24,11 @@ export class BankPage {
   bank: Bank;
   countTransactions: number = 0;
 
-  constructor(public northbricksApi: NorthbricksApi,
-    public navCtrl: NavController,
-    public toastCtrl: ToastService,
-    public navParams: NavParams) {
+  constructor(private northbricksApi: NorthbricksApi,
+    private viewCtrl: ViewController,
+    private toastCtrl: ToastService,
+    public navParams: NavParams,
+    private authService: AuthServiceNorthbricksProvider) {
     this.bank = <Bank>navParams.get('bank');
     this.user = <User>navParams.get('user');
 
@@ -34,12 +36,13 @@ export class BankPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BankPage');
-    // alert(this.bank);
+    // alert(JSON.stringify(this.user));
     this.northbricksApi.fetchBank(this.bank.id).subscribe(bank => {
       // alert(JSON.stringify(bank));
       this.bank = bank;
     }, () => {
       alert('Error fetchBank');
+      this.dismiss();
     });
 
 
@@ -48,12 +51,23 @@ export class BankPage {
       this.accounts = accounts.accounts;
     }, () => {
       alert('Error accounts');
+      this.dismiss();
     });
 
 
 
 
 
+  }
+  dismiss() {
+    this.viewCtrl.dismiss();
+  }
+  navigateTo() {
+    this.authService.navigateTo('http://www.nordea.com').then(done => {
+      console.log(done);
+    }, error => {
+      console.log(error);
+    });
   }
 
   fetchAccountsTransactions(account: Account) {

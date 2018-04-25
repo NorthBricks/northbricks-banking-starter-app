@@ -1,53 +1,74 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Northbricks</ion-title>
+    <ion-title>MY BANKS</ion-title>
     <ion-buttons end>
-      <button (click)="openLogin()" ion-button outline>
-        Login
+      <button ion-button icon-only margin-right (click)="openLogin()">
+        <ion-icon name="add" style="zoom:1.0;"></ion-icon>
       </button>
     </ion-buttons>
+
+
+
   </ion-navbar>
 
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-list-header>
-      Action
-    </ion-list-header>
-    <ion-item>Terminator II</ion-item>
-    <ion-item>The Empire Strikes Back</ion-item>
-    <ion-item>Blade Runner</ion-item>
-  </ion-list>
-
-
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
+
+  <ion-slides pager class="slider">
+    <ion-slide *ngFor="let bank of banks">
+      <div class="wrapper">
+        <header (click)="showBank(bank)">
+          <div class="headerImage">
+            <div [ngStyle]="{'background': 'url(../assets/banks/nordea/' + bank.shortName + '.png) no-repeat top left', 'margin-left':'18px','margin-top':'13px', 'background-size': 'contain','height':'36px','width':'36px'}"></div>
+          </div>
+          <div class="headerTitle">{{bank.fullName}}</div>
+        </header>
+        <main>
+
+          220$
+          <div>Available balance</div>
+
+        </main>
+        <footer>
+          <ion-item>
+            <div (click)="showActionsSheetAccounts()">
+              <div style="color:#8E8E93;font-size: 12px">
+                Select account
+              </div>
+              <div style="width: 100%;">
+                <span style="color:#000;font-weight: 500; font-size: 15px">{{selectedAccount?.iban}}</span>
+                <div float-right class="arrowDisclosure">
+                  <!-- <ion-icon class="arrowDisclosure" name="arrow-down" style="color:#C7C7CC"></ion-icon> -->
+                </div>
+              </div>
+            </div>
+
+          </ion-item>
+        </footer>
+      </div>
+    </ion-slide>
+  </ion-slides>
+  <div style="margin:5px;color:#8E8E93;">
+    Transaction history
+  </div>
   <ion-list>
 
-    <ion-list-header>
-      My banks
-    </ion-list-header>
-    <button ion-item *ngFor="let bank of banks" (click)="showBank(bank)">
-      <ion-avatar item-start class="logo">
-        <img src="../../assets/logo/Nordea200px.png">
-      </ion-avatar>
-      <h2>{{bank.fullName}}</h2>
+    <ion-item *ngFor="let transaction of transactions" (click)="showTransaction(transaction.id)">
+      <ion-icon [ngClass]="getIcon(transaction.amount.value)" item-start [style.color]="getColor(transaction.amount.value)"></ion-icon>
+      <h2>
+        <b>{{transaction.relatedParty.name}}</b>
+      </h2>
 
-    </button>
-  </ion-list>
-  <ion-list>
+      <p>{{transaction.bookingDate | momentFormat}}</p>
+      <h2 item-end [style.color]="getColor(transaction.amount.value)">{{transaction.amount.value}}{{transaction.amount.currency}}</h2>
 
-    <ion-list-header>
-      Add new banks
-    </ion-list-header>
-    <ion-item *ngFor="let bank of banks">
-      <ion-avatar item-start class="logo">
-        <img src="../../assets/logo/Nordea200px.png">
-      </ion-avatar>
-      <h2>{{bank.fullName}}</h2>
-      <button ion-button outline item-end (click)="AddBank(bank.id,bank.fullName)">Add bank</button>
     </ion-item>
+
   </ion-list>
+
+
 </ion-content>

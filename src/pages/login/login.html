@@ -8,7 +8,7 @@
 
 
 <ion-content>
-  <form (submit)="doLogin()">
+  <form>
     <ion-list>
 
       <!-- <ion-item>
@@ -30,7 +30,8 @@
       </ion-item> -->
 
       <div padding>
-        <button ion-button color="primary" block>Login</button>
+        <button ion-button color="primary" (click)="doLogin()" block>Login</button>
+        <button ion-button color="primary" (click)="register()" block>Register</button>
       </div>
 
     </ion-list>

@@ -30,16 +30,19 @@ $colors: (
   light:      #f4f4f4,
   dark:       #222,
   navbarColor: #fff,
-  northbricksorange: #f05f40
+  northbricksorange: #f05f40,
+  toolbarTitleTextColor:#000
 );
 $toolbar-backgroud:#fff;
-$tabs-background:#fff;
-$tabs-ios-tab-text-color:#f05f40;
-$tabs-ios-tab-text-color-active:#f05f40;
-$tabs-ios-tab-icon-color: #222;
-$tabs-ios-tab-icon-color-active: #f05f40;
-$tabs-md-tab-icon-color: #222;
-$tabs-md-tab-icon-color-active: #f05f40;
+$tabs-background:#3B3B3B;
+$tabs-ios-tab-text-color:#FFC40E;
+$tabs-ios-tab-text-color-active:#FFC40E;
+$tabs-ios-tab-icon-color: #FFC40E;
+$tabs-ios-tab-icon-color-active: #FFC40E;
+$tabs-md-tab-icon-color: #FFC40E;
+$tabs-md-tab-icon-color-active: #FFC40E;
+$tabs-md-tab-text-color:#FFC40E;
+$tabs-md-tab-text-color-active:#FFC40E;
 $background-color:#f6f6f6;
 $list-background-color:#fff;
 // $tabs-md-tab-text-color:#fff;
@@ -53,7 +56,7 @@ $text-color:#000;
 // iOS only Sass variables can go here
 .toolbar-title.toolbar-title-md, 
 .toolbar-title.toolbar-title-ios, 
-.toolbar-title.toolbar-title-wp { color: map-get($colors, northbricksorange); }
+.toolbar-title.toolbar-title-wp { color: map-get($colors, toolbarTitleTextColor); }
 
 
 

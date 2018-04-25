@@ -3,9 +3,9 @@
     <ion-title>
       Authenticate bank
     </ion-title>
-    <ion-buttons start>
-      <button ion-button outline (click)="dismiss()">
-        Close
+    <ion-buttons end>
+      <button ion-button icon-only margin-right (click)="dismiss()">
+        <ion-icon name="close" style="zoom:1.5;"></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>
@@ -13,6 +13,6 @@
 
 <ion-content padding>
   <div>
-    Add bank {{this.name}} Consent
+    Add bank {{this.name}} Consent {{response?.access_token}}
   </div>
 </ion-content>
