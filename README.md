@@ -3,8 +3,6 @@ This is a ionic2 hyrbid app that connects to Northbricks platform to utilize ban
 
 Connect with us [www.northbricks.com](http://www.northbricks.com)
 
-Video on Northbricks bank starter app - [https://photos.app.goo.gl/OCbY21y24ehKSpKg2]
-
 ##  Getting started
 Our goal is to enable developers and third-party providers to connect to banks easily and utilize their today closed services. 
 
@@ -14,6 +12,10 @@ Our slogan is - "One API to rule them ALL". With that we mean that we are going 
 - Nordea (11 million customers)
 
 ### Soon to be onboarded
+- BNP Paribas
+- Citi
+- Danske Bank
+- Swedbank
 - OP Bank Finland [https://uusi.op.fi/]
 - Länsförsäkringar 
 - SEB
