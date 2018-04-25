@@ -110,8 +110,12 @@ export class HomePage {
   }
   showBank(bank: Banks) {
     // alert(bank.id);
-    this.navCtrl.push(BankPage, { bank: bank, user: this.user });
 
+    let authModal = this.modalCtrl.create(BankPage, { bank: bank, user: this.user });
+    authModal.present();
+    // authModal.onDidDismiss(dismissed => {
+    //   this.fetchBanks();
+    // });
   }
   showActionsSheetAccounts() {
     this.loadActionSheet();

@@ -1,39 +1,61 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>{{bank?.fullName}}</ion-title>
-    <!-- <ion-buttons end>
-      <button (click)="addFavourite()" ion-button outline>
-        Add to favourite
+<ion-header no-border class="newHeaderStyle">
+  <ion-toolbar>
+    <div>
+      <div float-left margin-left margin-top [ngStyle]="{'background': 'url(../assets/banks/'+bank.shortName+'/' + bank.shortName + '.png) no-repeat top left', 'background-size': 'contain','height':'36px','width':'36px'}"></div>
+      <div float-left margin-left margin-top [ngStyle]="{'font-size':'20px'}">{{bank?.fullName}}</div>
+    </div>
+    <ion-buttons end>
+      <button ion-button icon-only margin-right (click)="dismiss()">
+        <ion-icon name="close" style="zoom:1.5;"></ion-icon>
       </button>
-    </ion-buttons> -->
-  </ion-navbar>
-
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list no-lines>
+  <ion-list>
+    <button ion-item style="color:#1157A0" (click)="navigateTo()">
+      <ion-icon item-start name="link"></ion-icon>
+      {{bank?.website}}
+    </button>
+  </ion-list>
 
+
+  <!-- <ion-list no-lines>
     <ion-list-header>
-      {{bank?.fullName}}
+      Account details
     </ion-list-header>
     <ion-item>
       <ion-label stacked>Bank</ion-label>
-      <ion-input readonly="true" type="text" value="{{bank?.shortName}}"></ion-input>
+      <ion-input readonly=" true " type="text " value="{{bank?.shortName}} "></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label stacked>Website</ion-label>
-      <ion-input readonly="true" type="text" value="{{bank?.website}}"></ion-input>
+      <ion-input readonly="true " type="text " value="{{bank?.website}} "></ion-input>
     </ion-item>
-  </ion-list>
-  <ion-list>
-    <ion-list-header>
-      Accounts
-    </ion-list-header>
-    <ion-item (click)="fetchAccountsTransactions(account)" *ngFor="let account of accounts">{{account.owner.name}} - {{account.id}}</ion-item>
+  </ion-list> -->
+  <div *ngFor="let account of accounts">
+    <ion-list>
+      <ion-list-header>
+        Account details
+      </ion-list-header>
 
-  </ion-list>
-  <ion-list>
+      <ion-item (click)="fetchAccountsTransactions(account)">{{account.id}}
+        <h6 style="color:#8E8E93">ID</h6>
+      </ion-item>
+      <ion-item (click)="fetchAccountsTransactions(account)">{{account.iban}}
+        <h6 style="color:#8E8E93">iBan</h6>
+      </ion-item>
+      <ion-item (click)="fetchAccountsTransactions(account)">{{account.type}}
+        <h6 style="color:#8E8E93">Type</h6>
+      </ion-item>
+      <ion-item (click)="fetchAccountsTransactions(account)">{{account.owner.name}}
+        <h6 style="color:#8E8E93">Owner</h6>
+      </ion-item>
+    </ion-list>
+  </div>
+  <!-- <ion-list>
     <ion-list-header>
       Transactions
       <span *ngIf="countTransactions>0">{{countTransactions}}</span>
@@ -43,5 +65,5 @@
       {{trans.amount.value}} {{trans.amount.currency}} {{trans.relatedParty.name}}
     </ion-item>
 
-  </ion-list>
+  </ion-list> -->
 </ion-content>
