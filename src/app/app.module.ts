@@ -16,7 +16,6 @@ import { HomePage } from '../pages/home/home';
 import { LoginPageModule } from '../pages/login/login.module';
 import { ProfilePageModule } from '../pages/profile/profile.module';
 import { TabsPage } from '../pages/tabs/tabs';
-import { MomentPipe } from '../pipes/moment.pipe';
 import { AuthServiceNorthbricksProvider } from '../providers/auth-service-northbricks/auth-service-northbricks';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { NorthbricksApi } from '../providers/northbricks-api';
@@ -31,6 +30,7 @@ import { TermsAndConditionsPageModule } from '../pages/terms-and-conditions/term
 import { TransactionPage } from '../pages/transaction/transaction';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { HttpClientModule } from '@angular/common/http';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -38,9 +38,7 @@ import { HttpClientModule } from '@angular/common/http';
     AboutPage,
     HomePage,
     TabsPage,
-    TransactionPage,
-    // InputDebounceDirective,
-    MomentPipe
+    TransactionPage
   ],
   imports: [
     BrowserModule,
@@ -48,6 +46,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpModule,
     ProfilePageModule,
     BankPageModule,
+    PipesModule,
     HttpClientModule,
     SplashScreenPageModule,
     LinkBanksPageModule,

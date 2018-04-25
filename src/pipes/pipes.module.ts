@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CurrencyPipe } from './currency/currency';
+import { MomentFormatPipe } from './moment-format/moment-format';
 @NgModule({
-	declarations: [CurrencyPipe],
+	declarations: [CurrencyPipe,
+    MomentFormatPipe],
 	imports: [],
-	exports: [CurrencyPipe]
+	exports: [CurrencyPipe,
+    MomentFormatPipe]
 })
 export class PipesModule {}

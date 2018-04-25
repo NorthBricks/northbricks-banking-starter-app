@@ -63,7 +63,7 @@
         <b>{{transaction.relatedParty.name}}</b>
       </h2>
 
-      <p>{{transaction.bookingDate}}</p>
+      <p>{{transaction.bookingDate | momentFormat}}</p>
       <h2 item-end [style.color]="getColor(transaction.amount.value)">{{transaction.amount.value}}{{transaction.amount.currency}}</h2>
 
     </ion-item>
