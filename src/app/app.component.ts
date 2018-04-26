@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Events, Platform, ModalController, Tab } from 'ionic-angular';
+import { Events, Platform, ModalController } from 'ionic-angular';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { NorthbricksStorage } from '../providers/northbricks-storage';
@@ -18,14 +18,14 @@ import { AuthServiceNorthbricksProvider } from '../providers/auth-service-northb
 })
 export class MyApp {
 
-  ModalLogin(): any {
+  private ModalLogin(): any {
     let modal = this.modalCtrl.create(LoginPage);
     modal.present();
     modal.onDidDismiss(() => {
       this.events.publish('user:loggedIn', true);
     });
   }
-  rootPage: any = TabsPage;
+  public rootPage: any = TabsPage;
 
   constructor(keyboard: Keyboard,
     public events: Events,

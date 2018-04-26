@@ -1,7 +1,7 @@
 import { NorthbricksApi } from '../../../providers/northbricks-api';
 import { Component } from '@angular/core';
 import { IonicPage, NavParams, ViewController, Platform } from 'ionic-angular';
-import { InAppBrowser, InAppBrowserObject, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
+import { InAppBrowser, InAppBrowserObject } from '@ionic-native/in-app-browser/ngx';
 import { AuthServiceNorthbricksProvider, OAuthResponse } from '../../../providers/auth-service-northbricks/auth-service-northbricks';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -12,24 +12,23 @@ import { Subscription } from 'rxjs/Subscription';
   templateUrl: 'bank-auth.html',
 })
 export class BankAuthPage {
-  bankId: string;
-  name: string;
-  response: OAuthResponse;
+  public bankId: string;
+  public name: string;
+  public response: OAuthResponse;
   private baseUrl = 'https://api.northbricks.io/api/v1'
   constructor(
     public viewCtrl: ViewController,
     public navParams: NavParams,
     public northbricksApi: NorthbricksApi,
-    private authService: AuthServiceNorthbricksProvider,
     private iab: InAppBrowser,
     private platform: Platform) {
 
     this.bankId = navParams.get("bankId");
   }
-  dismiss() {
+  public dismiss() {
     this.viewCtrl.dismiss();
   }
-  ionViewDidLoad() {
+  public ionViewDidLoad() {
     this.platform.ready().then(() => {
       console.log('ionViewDidLoad BankAuthPage');
       this.bankAuth(this.bankId)
@@ -47,7 +46,7 @@ export class BankAuthPage {
     //   console.log(JSON.stringify(error));
     // });
   }
-  bankAuth(bankId: string) {
+  public bankAuth(bankId: string) {
     let baseUrl = 'https://api.northbricks.io/api/v1'
     // return new Promise((resolve, reject) => {
 
@@ -93,7 +92,7 @@ export class BankAuthPage {
 
 
   }
-  authBank(): Promise<OAuthResponse> {
+  public authBank(): Promise<OAuthResponse> {
 
     return new Promise((resolve, reject) => {
       this.bankId = this.navParams.get('bankId');

@@ -1,9 +1,6 @@
 import 'rxjs/add/operator/map';
-
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
-
 import { User } from '../interface/iUser';
 import { Events } from 'ionic-angular';
 
@@ -14,32 +11,32 @@ export class NorthbricksStorage {
     console.log('Hello Northbricks Storage Provider');
   }
 
-  setValue(key: string, value: string): Promise<any> {
+  public setValue(key: string, value: string): Promise<any> {
     return this.storage.set(key, value);
   }
 
-  getValue(key: string): Promise<any> {
+  public getValue(key: string): Promise<any> {
     return this.storage.get(key);
   }
 
-  setToken(value: string): Promise<any> {
+  public setToken(value: string): Promise<any> {
     // alert(value);
     return this.storage.set('token', value);
   }
-  getToken(): Promise<any> {
+  public getToken(): Promise<any> {
     return this.storage.get('token');
   }
 
-  setUser(value: User): Promise<User> {
+  public setUser(value: User): Promise<User> {
     // alert(value);
     this.events.publish('storage:user', value);
     return this.storage.set('user', JSON.stringify(value));
   }
-  getUser(): Promise<User> {
+  public getUser(): Promise<User> {
     return this.storage.get('user');
   }
 
-  deleteAll(): Promise<any> {
+  public deleteAll(): Promise<any> {
     return this.storage.clear();
   }
 

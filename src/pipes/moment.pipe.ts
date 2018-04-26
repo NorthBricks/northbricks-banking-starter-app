@@ -5,8 +5,8 @@ import moment from 'moment';
     name: 'moment'
 })
 export class MomentPipe {
-    transform(value, args) {
+    public transform(value, args) {
         args = args || '';
-        return args == 'ago' ? moment(value).fromNow() : moment(value).format(args);
+        return args === 'ago' ? moment(value).fromNow() : moment(value).format(args);
     }
 }

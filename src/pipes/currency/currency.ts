@@ -12,7 +12,7 @@ export class CurrencyPipe implements PipeTransform {
   /**
    * Takes a value and makes it lowercase.
    */
-  transform(value: string, ...args) {
+  public transform(value: string, ...args) {
     return value.toLowerCase();
   }
 }

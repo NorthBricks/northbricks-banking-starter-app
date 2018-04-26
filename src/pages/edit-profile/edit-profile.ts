@@ -16,13 +16,13 @@ import { User } from '../../interface/iUser';
   templateUrl: 'edit-profile.html',
 })
 export class EditProfilePage {
-  user: User;
+  public user: User;
   constructor(public navCtrl: NavController,
     private northbricksApi: NorthbricksApi,
     public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
+  public ionViewDidLoad() {
 
     this.northbricksApi.fetchUser().subscribe(user => {
       // alert(JSON.stringify(user));

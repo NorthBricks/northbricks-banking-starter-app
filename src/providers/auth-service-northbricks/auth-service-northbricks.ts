@@ -17,33 +17,33 @@ export class AuthServiceNorthbricksProvider {
   public static devAccessToken: string = '';
   public tokenType: string = '';
 
-  options: InAppBrowserOptions = {
-    location: 'yes',//Or 'no' 
-    hidden: 'no', //Or  'yes'
+  public options: InAppBrowserOptions = {
+    location: 'yes',// Or 'no' 
+    hidden: 'no', // Or  'yes'
     clearcache: 'yes',
     clearsessioncache: 'yes',
-    zoom: 'yes',//Android only ,shows browser zoom controls 
+    zoom: 'yes',// Android only ,shows browser zoom controls 
     hardwareback: 'yes',
     mediaPlaybackRequiresUserAction: 'no',
-    shouldPauseOnSuspend: 'no', //Android only 
-    closebuttoncaption: 'Close', //iOS only
-    disallowoverscroll: 'no', //iOS only 
-    toolbar: 'yes', //iOS only 
-    enableViewportScale: 'no', //iOS only  
-    allowInlineMediaPlayback: 'no',//iOS only 
-    presentationstyle: 'pagesheet',//iOS only 
-    fullscreen: 'yes',//Windows only    
+    shouldPauseOnSuspend: 'no', // Android only 
+    closebuttoncaption: 'Close', // iOS only
+    disallowoverscroll: 'no', // iOS only 
+    toolbar: 'yes', // iOS only 
+    enableViewportScale: 'no', // iOS only  
+    allowInlineMediaPlayback: 'no',// iOS only 
+    presentationstyle: 'pagesheet',// iOS only 
+    fullscreen: 'yes' // Windows only    
   };
   constructor(public iab: InAppBrowser, public platform: Platform) {
     console.log('Hello AuthServiceNorthbricksProvider Provider');
 
   }
 
-  isAuthenticated(): boolean {
+  public isAuthenticated(): boolean {
     return false;
   }
 
-  register(): Promise<any> {
+  public register(): Promise<any> {
 
     return new Promise((resolve, reject) => {
 
@@ -75,16 +75,17 @@ export class AuthServiceNorthbricksProvider {
   }
 
 
-  navigateTo(url: string): Promise<any> {
+  public navigateTo(url: string): Promise<any> {
 
     return new Promise((resolve, reject) => {
 
       let browserRef: InAppBrowserObject = this.iab.create(url, "_blank", this.options);
 
-      const exitSubscription: Subscription = browserRef.on("exit").subscribe((event) => {
-        // alert("Reload page - check if there are a user.");
-        reject(new Error("Cancel - back to app"));
-      });
+      // const exitSubscription: Subscription = browserRef.on("exit").subscribe((event) => {
+      //   // alert("Reload page - check if there are a user.");
+      //   exitSubscription.closed();
+      //   reject(new Error("Cancel - back to app"));
+      // });
 
       browserRef.on("loadstart").subscribe((event) => {
         console.log('Log this - event');
@@ -92,7 +93,7 @@ export class AuthServiceNorthbricksProvider {
     });
   }
 
-  loginNorthbricks(): Promise<OAuthResponse> {
+  public loginNorthbricks(): Promise<OAuthResponse> {
 
     return new Promise((resolve, reject) => {
 

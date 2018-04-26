@@ -17,7 +17,7 @@ import { LoginPageModule } from '../pages/login/login.module';
 import { ProfilePageModule } from '../pages/profile/profile.module';
 import { TabsPage } from '../pages/tabs/tabs';
 import { AuthServiceNorthbricksProvider } from '../providers/auth-service-northbricks/auth-service-northbricks';
-import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+
 import { NorthbricksApi } from '../providers/northbricks-api';
 import { NorthbricksStorage } from '../providers/northbricks-storage';
 import { AlertService } from '../providers/utils/alert.service';
@@ -81,7 +81,6 @@ import { PipesModule } from '../pipes/pipes.module';
     ToastService,
     AlertService,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    AuthServiceProvider,
     AuthServiceNorthbricksProvider,
   ]
 })

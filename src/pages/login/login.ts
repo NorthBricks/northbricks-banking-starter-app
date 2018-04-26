@@ -10,10 +10,10 @@ import { NorthbricksStorage } from '../../providers/northbricks-storage';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  account: { email: string, password: string } = {
-    email: 'test@example.com',
-    password: 'test'
-  };
+  // account: { email: string, password: string } = {
+  //   email: 'test@example.com',
+  //   password: 'test'
+  // };
 
   constructor(public toastCtrl: ToastController,
     public viewCtrl: ViewController,
@@ -25,7 +25,7 @@ export class LoginPage {
   }
 
 
-  register() {
+  public register() {
     this.ngAuthProvider.register().then(register => {
       console.log(register);
     }, error => {
@@ -33,7 +33,7 @@ export class LoginPage {
     });
   }
 
-  doLogin() {
+  public doLogin() {
     this.ngAuthProvider.loginNorthbricks().then(response => {
       // alert(JSON.stringify(response));
       AuthServiceNorthbricksProvider.devAccessToken = response.access_token;
@@ -58,7 +58,7 @@ export class LoginPage {
     });
 
   }
-  closeModal() {
+  private closeModal() {
     this.viewCtrl.dismiss();
     // this.storage.setToken(AuthServiceNorthbricksProvider.accessToken).then(token => {
     //   this.viewCtrl.dismiss(AuthServiceNorthbricksProvider.accessToken);
@@ -66,7 +66,7 @@ export class LoginPage {
   }
 
 
-  showToast(message: string): Promise<any> {
+  private showToast(message: string): Promise<any> {
     let toast = this.toastCtrl.create({
       message: message,
       duration: 1000,
@@ -78,7 +78,7 @@ export class LoginPage {
     //   this.viewCtrl.dismiss();
     // })
   }
-  ionViewDidLoad() {
+  public ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
 
   }
