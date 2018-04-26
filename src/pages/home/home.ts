@@ -1,6 +1,6 @@
 import { BankAuthPage } from '../bank/bank-auth/bank-auth';
-import { Component } from '@angular/core';
-import { LoadingController, ModalController, NavController, ActionSheetController, ActionSheetButton, ActionSheet, Events } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { LoadingController, ModalController, NavController, ActionSheetController, ActionSheetButton, ActionSheet, Events, ToastController, Slides } from 'ionic-angular';
 
 import { Banks, Bank } from '../../interface/iBanks';
 import { Transaction } from '../../interface/iTransaction';
@@ -30,12 +30,14 @@ export class HomePage {
   accounts: Account[] = [];
   countTransactions: number = 0;
   actionSheet: ActionSheet;
+  @ViewChild(Slides) slides: Slides;
+
   constructor(public modalCtrl: ModalController,
     private actionSheetCtrl: ActionSheetController,
     public loadingCtrl: LoadingController,
     public northbricksApi: NorthbricksApi,
     public navCtrl: NavController,
-    public toastCtrl: ToastService,
+    public toastCtrl: ToastController,
     private storage: NorthbricksStorage,
     private events: Events) {
 
@@ -100,6 +102,18 @@ export class HomePage {
     let transactionModal = this.modalCtrl.create(TransactionPage, { bankId: this.selectedBank.id, transactionId: transactionId, accountId: this.selectedAccount.id });
     transactionModal.present();
   }
+
+  toastTransaction(transaction: Transaction) {
+
+    let toast = this.toastCtrl.create({
+      message: JSON.stringify(transaction),
+      showCloseButton: true,
+      position: 'middle'
+    });
+    toast.present();
+
+  }
+
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
 
@@ -117,6 +131,7 @@ export class HomePage {
     //   this.fetchBanks();
     // });
   }
+
   showActionsSheetAccounts() {
     this.loadActionSheet();
 
@@ -129,7 +144,7 @@ export class HomePage {
 
       this.accounts = account.accounts;
       this.selectedAccount = this.accounts[0];
-      console.log('Fetching accounts');
+      console.log('Fetching accounts ' + this.selectedAccount);
 
 
       if (this.selectedAccount != null) {
@@ -149,6 +164,28 @@ export class HomePage {
     });
 
   }
+
+  getRandom() {
+    if (this.slides.getActiveIndex() === 0) {
+      return "1200"
+    } else {
+      return "99212"
+    }
+
+  }
+  slideChanged(slider) {
+    // const currentSlide = this.slides[slider.getActiveIndex()];
+    if (this.selectedBank !== this.banks[this.slides.getActiveIndex()]) {
+      let currentIndex = this.slides.getActiveIndex();
+      this.selectedBank = this.banks[this.slides.getActiveIndex()];
+      this.countTransactions = 0;
+      this.transactions = null;
+      this.fetchAccounts(this.selectedBank);
+      console.log('Load accounts ' + currentIndex);
+    }
+
+
+  }
   fetchBanks() {
     let loader = this.loadingCtrl.create({
       content: "Please wait...",
@@ -156,18 +193,23 @@ export class HomePage {
       spinner: 'circles'
     });
     loader.present();
+    console.log(this.banks);
+    if (this.banks.length === 0) {
 
-    this.northbricksApi.fetchBanks().subscribe(banks => {
-      // alert(JSON.stringify(banks));
-      this.banks = banks.banks;
-      console.log(JSON.stringify(this.bank));
-      this.selectedBank = this.banks[0];
-      this.fetchAccounts(this.selectedBank);
+      this.northbricksApi.fetchBanks().subscribe(banks => {
+        // alert(JSON.stringify(banks));
+        this.banks = banks.banks;
+        console.log(JSON.stringify(this.bank));
+        this.selectedBank = this.banks[this.slides.getActiveIndex()];
+        this.fetchAccounts(this.selectedBank);
+        loader.dismiss();
+      }, (error) => {
+        alert(error);
+        loader.dismiss();
+      });
+    } else {
       loader.dismiss();
-    }, (error) => {
-      alert(error);
-      loader.dismiss();
-    });
+    }
 
 
   }
