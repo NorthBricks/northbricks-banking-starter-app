@@ -35,12 +35,22 @@ export class LoginPage {
 
   doLogin() {
     this.ngAuthProvider.loginNorthbricks().then(response => {
-      AuthServiceNorthbricksProvider.accessToken = response.access_token;
-      this.northbricksApi.fetchUser().subscribe(user => {
-        this.storage.setValue('user', JSON.stringify(user));
-        this.closeModal();
-      });
+      // alert(JSON.stringify(response));
+      AuthServiceNorthbricksProvider.devAccessToken = response.access_token;
+      this.storage.setToken(AuthServiceNorthbricksProvider.devAccessToken).then(token => {
+        this.northbricksApi.fetchUser().subscribe(user => {
+          this.storage.setValue('user', JSON.stringify(user));
+          this.showToast('Logged in...').then(() => {
+            this.closeModal();
+          });
 
+
+        }, error => {
+          AuthServiceNorthbricksProvider.devAccessToken = '';
+          this.showToast(JSON.stringify(error));
+          alert(JSON.stringify(error));
+        });
+      });
 
     }, error => {
       this.closeModal();
@@ -49,23 +59,24 @@ export class LoginPage {
 
   }
   closeModal() {
-    this.storage.setToken(AuthServiceNorthbricksProvider.accessToken).then(token => {
-      this.viewCtrl.dismiss(AuthServiceNorthbricksProvider.accessToken);
-    });
+    this.viewCtrl.dismiss();
+    // this.storage.setToken(AuthServiceNorthbricksProvider.accessToken).then(token => {
+    //   this.viewCtrl.dismiss(AuthServiceNorthbricksProvider.accessToken);
+    // });
   }
 
 
-  showToast() {
+  showToast(message: string): Promise<any> {
     let toast = this.toastCtrl.create({
-      message: 'Logged in...',
+      message: message,
       duration: 1000,
       position: 'top'
     });
-    toast.present();
+    return toast.present();
 
-    toast.onDidDismiss(() => {
-      this.viewCtrl.dismiss();
-    })
+    // toast.onDidDismiss(() => {
+    //   this.viewCtrl.dismiss();
+    // })
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');

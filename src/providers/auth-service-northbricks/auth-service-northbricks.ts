@@ -9,10 +9,12 @@ import { Platform } from 'ionic-angular';
 
 @Injectable()
 export class AuthServiceNorthbricksProvider {
-  private oAuthUrl = `https://api.northbricks.io/oauth/authorize?client_id=sampleClientId&redirect_uri=https://localhost&scope=read&response_type=token`;
+  private redirectUrl = 'https://localhost'
+  private oAuthUrl = `https://api.northbricks.io/oauth/authorize?client_id=sampleClientId&redirect_uri=${this.redirectUrl}&scope=read&response_type=token`;
 
   public static accessToken: string = '';
-  public static devAccessToken: string = '9bfd1c49-208a-49f5-a7ec-0c4e18e0ad66';
+  // public static devAccessToken: string = '4b86eb57-8e68-4863-a08e-dd2d1de40b4c1';
+  public static devAccessToken: string = '';
   public tokenType: string = '';
 
   options: InAppBrowserOptions = {
@@ -100,18 +102,23 @@ export class AuthServiceNorthbricksProvider {
         alert("The  sign in flow was canceled");
         reject(new Error("The Northbricks sign in flow was canceled"));
       });
+      browserRef.on("loaderror").subscribe((event) => {
+        console.log('loaderror ' + event.url);
+      });
+      browserRef.on("loadstop").subscribe((event) => {
+        console.log('loadstop ' + event.url);
+      });
+
+
 
       browserRef.on("loadstart").subscribe((event) => {
-        console.log('loadstart');
-        console.log(JSON.stringify(event));
-        if ((event.url).indexOf(`https://getpostman.com/oauth2/callback`) === 0) {
+        console.log('loadstart ' + event.url);
+
+        if ((event.url).indexOf(`${this.redirectUrl}`) === 0) {
           console.log('Fick tillbaka loadstart - redirect url');
-          exitSubscription.unsubscribe();
-          browserRef.close();
-
-
-          console.log(event.url);
+          console.log('URL:: ' + event.url);
           var responseParameters = ((event.url).split("#")[1]).split("&");
+          console.log(responseParameters);
           var parsedResponse = {};
           console.log('RESPONSE::: ' + responseParameters);
           for (var i = 0; i < responseParameters.length; i++) {
@@ -120,6 +127,9 @@ export class AuthServiceNorthbricksProvider {
           console.log('PARSED RESPONSE ' + JSON.stringify(parsedResponse));
           if (parsedResponse["access_token"] !== undefined && parsedResponse["access_token"] !== null) {
             console.log('Access token..');
+            exitSubscription.unsubscribe();
+            browserRef.close();
+
             resolve(<OAuthResponse>parsedResponse);
           } else {
             console.log("Problem authenticating with Northbricks");

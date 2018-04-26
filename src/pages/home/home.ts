@@ -87,14 +87,19 @@ export class HomePage {
     }
   }
   ionViewDidEnter() {
-
-    this.northbricksApi.fetchUser().subscribe(user => {
-      this.storage.setUser(user);
-      this.user = user;
-      this.fetchBanks();
-    }, error => {
-      this.events.publish('http', error);
+    this.events.subscribe('user:loggedIn', (isLoggedIn) => {
+      // user and time are the same arguments passed in `events.publish(user, time)`
+      if (isLoggedIn) {
+        this.northbricksApi.fetchUser().subscribe(user => {
+          this.storage.setUser(user);
+          this.user = user;
+          this.fetchBanks();
+        }, error => {
+          this.events.publish('http', error);
+        });
+      }
     });
+
 
     // this.loadActionSheet();
   }
@@ -108,7 +113,8 @@ export class HomePage {
     let toast = this.toastCtrl.create({
       message: JSON.stringify(transaction),
       showCloseButton: true,
-      position: 'middle'
+      duration: 3000,
+      position: 'top'
     });
     toast.present();
 

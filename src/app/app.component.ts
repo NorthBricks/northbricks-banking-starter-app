@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Events, Platform, ModalController } from 'ionic-angular';
+import { Events, Platform, ModalController, Tab } from 'ionic-angular';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { NorthbricksStorage } from '../providers/northbricks-storage';
@@ -10,12 +10,21 @@ import { NorthbricksStorage } from '../providers/northbricks-storage';
 import { LoginPage } from '../pages/login/login';
 import { User } from '../interface/iUser';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthServiceNorthbricksProvider } from '../providers/auth-service-northbricks/auth-service-northbricks';
 
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
+
+  ModalLogin(): any {
+    let modal = this.modalCtrl.create(LoginPage);
+    modal.present();
+    modal.onDidDismiss(() => {
+      this.events.publish('user:loggedIn', true);
+    });
+  }
   rootPage: any = TabsPage;
 
   constructor(keyboard: Keyboard,
@@ -42,13 +51,16 @@ export class MyApp {
             this.rootPage = TabsPage;
           }
         });
-
+      if (AuthServiceNorthbricksProvider.devAccessToken === '') {
+        this.rootPage = TabsPage;
+        this.ModalLogin();
+        events.publish('user:loggedIn', false);
+      }
 
       events.subscribe('http', (httpErrorResponse: HttpErrorResponse) => {
         console.log(httpErrorResponse.status);
         this.rootPage = TabsPage;
-        let modal = this.modalCtrl.create(LoginPage);
-        modal.present();
+        this.ModalLogin();
       });
 
       events.subscribe('storage:user', (user) => {
