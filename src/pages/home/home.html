@@ -23,7 +23,7 @@
       <div class="wrapper">
         <header (click)="showBank(bank)">
           <div class="headerImage">
-            <div [ngStyle]="{'background-image': 'url(assets/banks/nordea/' + bank.shortName + '.png) no-repeat top left', 'margin-left':'18px','margin-top':'13px', 'background-size': 'contain','height':'36px','width':'36px'}"></div>
+            <div [ngStyle]="{'background': 'url(assets/banks/' + bank.shortName + '/' + bank.shortName + '.png) no-repeat top left', 'margin-left':'18px','margin-top':'13px', 'background-size': 'contain','height':'36px','width':'36px'}"></div>
           </div>
           <div class="headerTitle">{{bank.fullName}}</div>
         </header>
