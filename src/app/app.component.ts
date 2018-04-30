@@ -11,6 +11,7 @@ import { LoginPage } from '../pages/login/login';
 import { User } from '../interface/iUser';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthServiceNorthbricksProvider } from '../providers/auth-service-northbricks/auth-service-northbricks';
+import { NorthbricksApi } from '../providers/northbricks-api';
 
 
 @Component({
@@ -19,6 +20,7 @@ import { AuthServiceNorthbricksProvider } from '../providers/auth-service-northb
 export class MyApp {
 
   private ModalLogin(): any {
+    console.log('Running ModalLogin()');
     let modal = this.modalCtrl.create(LoginPage);
     modal.present();
     modal.onDidDismiss(() => {
@@ -29,7 +31,9 @@ export class MyApp {
 
   constructor(keyboard: Keyboard,
     public events: Events,
-    platform: Platform, statusBar: StatusBar,
+    platform: Platform,
+    statusBar: StatusBar,
+    northbricksApi: NorthbricksApi,
     splashScreen: SplashScreen,
     storage: NorthbricksStorage,
     public modalCtrl: ModalController) {
@@ -51,11 +55,30 @@ export class MyApp {
             this.rootPage = TabsPage;
           }
         });
-      if (AuthServiceNorthbricksProvider.devAccessToken === '') {
-        this.rootPage = TabsPage;
-        this.ModalLogin();
-        events.publish('user:loggedIn', false);
-      }
+
+      // storage.deleteAll().then(del => {
+      storage.getToken().then(token => {
+        // alert('Found token in storage - ' + token);
+        if (token === null) {
+          if (AuthServiceNorthbricksProvider.devAccessToken === '') {
+            this.rootPage = TabsPage;
+            this.ModalLogin()
+            events.publish('user:loggedIn', false);
+          }
+        } else {
+          AuthServiceNorthbricksProvider.devAccessToken = token;
+          northbricksApi.fetchUser().subscribe(user2 => {
+            storage.setUser(user2);
+            events.publish('user:loggedIn', true);
+
+          });
+
+        }
+
+      });
+      console.log('Dev access token set to - ' + AuthServiceNorthbricksProvider.devAccessToken);
+      // });
+
 
       events.subscribe('http', (httpErrorResponse: HttpErrorResponse) => {
         console.log(httpErrorResponse.status);
@@ -63,16 +86,16 @@ export class MyApp {
         this.ModalLogin();
       });
 
-      events.subscribe('storage:user', (user) => {
+      // events.subscribe('storage:user', (user) => {
 
-        storage.getUser()
-          .then((user: User) => {
-            if (user) {
-              console.log(JSON.stringify(user));
-              console.log(`Current user is ${user.firstName} ${user.lastName}`)
-            }
-          });
-      });
+      //   storage.getUser()
+      //     .then((user: User) => {
+      //       if (user) {
+      //         console.log(JSON.stringify(user));
+      //         console.log(`Current user is ${user.firstName} ${user.lastName}`)
+      //       }
+      //     });
+      // });
       events.subscribe('app:logged-out', (user, time) => {
         // user and time are the same arguments passed in `events.publish(user, time)`
         console.log('Goto login page.');

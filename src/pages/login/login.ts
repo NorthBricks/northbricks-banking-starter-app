@@ -39,11 +39,12 @@ export class LoginPage {
       AuthServiceNorthbricksProvider.devAccessToken = response.access_token;
       this.storage.setToken(AuthServiceNorthbricksProvider.devAccessToken).then(token => {
         this.northbricksApi.fetchUser().subscribe(user => {
-          this.storage.setValue('user', JSON.stringify(user));
-          this.showToast('Logged in...').then(() => {
-            this.closeModal();
+          this.storage.setToken(token).then(setToken => {
+            this.showToast('Logged in...').then(() => {
+              this.closeModal();
+            });
           });
-
+          // this.storage.setValue('user', JSON.stringify(user));
 
         }, error => {
           AuthServiceNorthbricksProvider.devAccessToken = '';

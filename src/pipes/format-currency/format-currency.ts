@@ -15,7 +15,7 @@ export class FormatCurrencyPipe implements PipeTransform {
   public transform(value: string, args: string) {
 
     let num = numeral(value).format('0,0.00');
-    console.log('Currency ' + num)
+    // console.log('Currency ' + num)
     return num;
   }
 }

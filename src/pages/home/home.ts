@@ -21,6 +21,7 @@ export class HomePage {
   public transactions: Transaction[] = [];
   public banks: Bank[] = [];
   public bank: Banks;
+  public loadingText = 'Loading accounts...';
   public accountId: number;
   public selectedBank: Bank;
   public user: User;
@@ -45,7 +46,7 @@ export class HomePage {
   public onItemSelection(selection) {
     console.log(JSON.stringify(selection));
     if (selection) {
-      // console.log("item selected: " + selection.iban);
+      console.log("item selected: " + selection.iban);
       this.selectedAccount = selection;
       this.fetchAccountsTransactions(selection);
     } else {
@@ -141,17 +142,19 @@ export class HomePage {
   }
 
   public fetchAccounts(bank: Bank) {
-
+    // alert(bank.id);
     this.northbricksApi.fetchAccounts(bank.id).subscribe(account => {
-      console.log(JSON.stringify(account.accounts));
+      // alert(JSON.stringify(account.accounts));
 
       this.accounts = account.accounts;
       this.selectedAccount = this.accounts[0];
       console.log('Fetching accounts ' + this.selectedAccount);
 
-
-      if (this.selectedAccount !== null) {
+      // alert(this.accounts.length);
+      if (this.accounts.length !== 0) {
         this.fetchAccountsTransactions(this.selectedAccount);
+      } else {
+        this.loadingText = "No accounts found";
       }
     }, () => {
       alert('Error accounts');
@@ -183,6 +186,7 @@ export class HomePage {
       this.selectedBank = this.banks[this.slides.getActiveIndex()];
       this.countTransactions = 0;
       this.transactions = null;
+      // alert(JSON.stringify(this.selectedBank));
       this.fetchAccounts(this.selectedBank);
       console.log('Load accounts ' + currentIndex);
     }
@@ -207,7 +211,7 @@ export class HomePage {
         this.fetchAccounts(this.selectedBank);
         loader.dismiss();
       }, (error) => {
-        alert(error);
+        // alert(error);
         loader.dismiss();
       });
     } else {

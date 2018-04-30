@@ -5,6 +5,7 @@ import { User } from '../../interface/iUser';
 import { NorthbricksApi } from '../../providers/northbricks-api';
 import { LinkBanksPage } from '../link-banks/link-banks';
 import { EditProfilePage } from '../edit-profile/edit-profile';
+import { Bank } from '../../interface/iBanks';
 
 @IonicPage()
 @Component({
@@ -13,7 +14,7 @@ import { EditProfilePage } from '../edit-profile/edit-profile';
 })
 export class ProfilePage {
   public user: User;
-
+  public banks: Bank[];
   constructor(private northbricksApi: NorthbricksApi,
     private toastCtrl: ToastController,
     private navCtrl: NavController) {
