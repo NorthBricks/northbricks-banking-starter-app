@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavParams, ToastController, ViewController } from 'ionic-angular';
+import { NavParams, ToastController, ViewController, Events, NavController } from 'ionic-angular';
 
 import { AuthServiceNorthbricksProvider } from '../../providers/auth-service-northbricks/auth-service-northbricks';
 import { NorthbricksApi } from '../../providers/northbricks-api';
 import { NorthbricksStorage } from '../../providers/northbricks-storage';
+import { TabsPage } from '../tabs/tabs';
 
 @Component({
   selector: 'page-login',
@@ -17,10 +18,12 @@ export class LoginPage {
 
   constructor(public toastCtrl: ToastController,
     public viewCtrl: ViewController,
+    public navCtrl: NavController,
     private storage: NorthbricksStorage,
     public navParams: NavParams,
     private ngAuthProvider: AuthServiceNorthbricksProvider,
-    public northbricksApi: NorthbricksApi) {
+    public northbricksApi: NorthbricksApi,
+    private events: Events) {
 
   }
 
@@ -41,7 +44,9 @@ export class LoginPage {
         this.northbricksApi.fetchUser().subscribe(user => {
           this.storage.setToken(token).then(setToken => {
             this.showToast('Logged in...').then(() => {
-              this.closeModal();
+              // this.closeModal();
+              this.navCtrl.setRoot(TabsPage);
+              // this.events.publish('user:loggedIn', user);
             });
           });
           // this.storage.setValue('user', JSON.stringify(user));
@@ -60,10 +65,10 @@ export class LoginPage {
 
   }
   private closeModal() {
-    this.viewCtrl.dismiss();
-    // this.storage.setToken(AuthServiceNorthbricksProvider.accessToken).then(token => {
-    //   this.viewCtrl.dismiss(AuthServiceNorthbricksProvider.accessToken);
+    // this.viewCtrl.dismiss().then(() => {
+    //   this.events.publish('user:loggedIn');
     // });
+
   }
 
 

@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, Events } from 'ionic-angular';
 
 import { User } from '../../interface/iUser';
 import { NorthbricksApi } from '../../providers/northbricks-api';
 import { LinkBanksPage } from '../link-banks/link-banks';
 import { EditProfilePage } from '../edit-profile/edit-profile';
 import { Bank } from '../../interface/iBanks';
+import { AuthServiceNorthbricksProvider } from '../../providers/auth-service-northbricks/auth-service-northbricks';
+import { NorthbricksStorage } from '../../providers/northbricks-storage';
 
 @IonicPage()
 @Component({
@@ -15,9 +17,12 @@ import { Bank } from '../../interface/iBanks';
 export class ProfilePage {
   public user: User;
   public banks: Bank[];
-  constructor(private northbricksApi: NorthbricksApi,
+  constructor(
+    private northbricksApi: NorthbricksApi,
     private toastCtrl: ToastController,
-    private navCtrl: NavController) {
+    private navCtrl: NavController,
+    private storage: NorthbricksStorage,
+    private events: Events) {
   }
   public LinkBanks() {
     this.navCtrl.push(LinkBanksPage);
@@ -32,6 +37,15 @@ export class ProfilePage {
       this.presentToast('Could not remove bank - please try again');
     });
   }
+
+  public SignOut() {
+    AuthServiceNorthbricksProvider.devAccessToken = '';
+    this.storage.deleteAll().then(() => {
+      console.log('Sigin out...');
+      // this.events.publish('user:loggedOut', true);
+    });
+  }
+
   public presentToast(message: string) {
     let toast = this.toastCtrl.create({
       message: message,
@@ -40,7 +54,7 @@ export class ProfilePage {
     });
     toast.present();
   }
-  public ionViewCanEnter() {
+  public ionViewDidEnter() {
     console.log('ionViewDidLoad ProfilePage');
 
     this.northbricksApi.fetchUser().subscribe(user => {

@@ -85,18 +85,24 @@ export class HomePage {
     }
   }
   public ionViewDidEnter() {
-    this.events.subscribe('user:loggedIn', (isLoggedIn) => {
-      // user and time are the same arguments passed in `events.publish(user, time)`
-      if (isLoggedIn) {
-        this.northbricksApi.fetchUser().subscribe(user => {
-          this.storage.setUser(user);
-          this.user = user;
-          this.fetchBanks();
-        }, error => {
-          this.events.publish('http', error);
-        });
+    // this.events.subscribe('user:loggedIn', (isLoggedIn) => {
+    //   // user and time are the same arguments passed in `events.publish(user, time)`
+    //   if (isLoggedIn) {
+    console.log('Did enter home');
+    this.storage.getUser().then(user => {
+      if (user) {
+        this.user = user;
+        this.fetchBanks();
+      } else {
+        console.log('Logging out home');
+        this.events.publish('user:loggedOut', true);
       }
+    }, error => {
+      console.log('HTTP out home');
+      // this.events.publish('http', error);
     });
+    // }
+    // });
 
 
     // this.loadActionSheet();
@@ -116,6 +122,14 @@ export class HomePage {
     });
     toast.present();
 
+  }
+
+  public lowerCaseBank(bankName: string): string {
+
+    if (bankName === 'Swedbank SE') {
+      return 'swedbank';
+    }
+    return bankName.toLowerCase();
   }
 
   public doRefresh(refresher) {
@@ -145,19 +159,26 @@ export class HomePage {
     // alert(bank.id);
     this.northbricksApi.fetchAccounts(bank.id).subscribe(account => {
       // alert(JSON.stringify(account.accounts));
-
+      let totalSum = 0;
       this.accounts = account.accounts;
       this.selectedAccount = this.accounts[0];
       console.log('Fetching accounts ' + this.selectedAccount);
 
       // alert(this.accounts.length);
       if (this.accounts.length !== 0) {
+        this.accounts.forEach(element => {
+          totalSum += element.balance;
+        });
+        console.log(totalSum);
+        console.log(JSON.stringify(this.selectedAccount));
         this.fetchAccountsTransactions(this.selectedAccount);
       } else {
         this.loadingText = "No accounts found";
       }
     }, () => {
-      alert('Error accounts');
+      this.accounts = null;
+      this.selectedAccount = null;
+      this.loadingText = "No accounts found";
     });
   }
 
@@ -200,18 +221,19 @@ export class HomePage {
       spinner: 'circles'
     });
     loader.present();
-    console.log(this.banks);
+    console.log('Fetch banks ' + this.banks.length);
     if (this.banks.length === 0) {
 
       this.northbricksApi.fetchBanks().subscribe(banks => {
-        // alert(JSON.stringify(banks));
+        console.log('banks... ' + JSON.stringify(banks));
+        console.log(JSON.stringify(banks));
         this.banks = banks.banks;
         console.log(JSON.stringify(this.bank));
         this.selectedBank = this.banks[this.slides.getActiveIndex()];
         this.fetchAccounts(this.selectedBank);
         loader.dismiss();
       }, (error) => {
-        // alert(error);
+        alert(error);
         loader.dismiss();
       });
     } else {
@@ -222,13 +244,12 @@ export class HomePage {
   }
 
   public fetchAccountsTransactions(account: Account) {
-    // alert(JSON.stringify(account));
     this.northbricksApi.fetchTransactions(account.id, this.selectedBank.id).subscribe(transactions => {
-      // alert(JSON.stringify(transactions));
       this.countTransactions = transactions.transactions.length;
       this.transactions = transactions.transactions;
     }, () => {
-      alert('Error transactions');
+
+      this.transactions = [];
     });
   }
 

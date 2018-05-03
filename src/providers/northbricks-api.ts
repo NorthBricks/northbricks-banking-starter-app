@@ -18,6 +18,8 @@ import { Events } from 'ionic-angular';
 
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { catchError } from 'rxjs/operators/catchError';
+import { NorthbricksStorage } from './northbricks-storage';
+
 
 
 @Injectable()
@@ -35,9 +37,11 @@ export class NorthbricksApi {
   // private token: string
   constructor(
     public httpClient: HttpClient,
-    public events: Events) {
+    public events: Events,
+    private auth: AuthServiceNorthbricksProvider,
+    private storage: NorthbricksStorage) {
     console.log('Hello Northbricks API Provider');
-
+    this.setHeaders2();
   }
 
   public addBankToUser(bankId: string): Observable<Bank> {
@@ -58,10 +62,11 @@ export class NorthbricksApi {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
-      this.events.publish('http', error);
+      // this.events.publish('http', error);
       return new ErrorObservable(error);
     } else {
-      this.events.publish('http', error);
+      console.log(JSON.stringify(error));
+      // this.events.publish('http', error);
       console.error(
         `Backend returned code ${error.status}, ` +
         `body was: ${error.error.error}`);

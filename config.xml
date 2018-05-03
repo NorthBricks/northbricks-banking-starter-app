@@ -3,7 +3,7 @@
     <name>Northbricks</name>
     <description>http://www.northbricks.com</description>
     <author email="info@northbricks.com" href="http://www.northbricks.io/">Northbricks Team</author>
-    <content original-src="index.html" src="http://192.168.51.201:8100" />
+    <content original-src="index.html" src="http://192.168.1.240:8100" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-navigation href="http://localhost:8080/*" />
@@ -112,6 +112,8 @@
     <allow-navigation href="http://192.168.255.71:8100" />
     <allow-navigation href="http://192.168.1.156:8100" />
     <allow-navigation href="http://192.168.51.201:8100" />
+    <allow-navigation href="http://10.33.13.86:8100" />
+    <allow-navigation href="http://192.168.1.240:8100" />
     <engine name="android" spec="^7.1.0" />
     <engine name="ios" spec="4.5.4" />
 </widget>

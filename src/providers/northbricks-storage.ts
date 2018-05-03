@@ -33,7 +33,10 @@ export class NorthbricksStorage {
     return this.storage.set('user', JSON.stringify(value));
   }
   public getUser(): Promise<User> {
-    return this.storage.get('user');
+    return this.storage.get('user').then(user => {
+      return JSON.parse(user);
+    });
+
   }
 
   public deleteAll(): Promise<any> {

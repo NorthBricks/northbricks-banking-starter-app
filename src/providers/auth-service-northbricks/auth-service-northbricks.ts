@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { InAppBrowser, InAppBrowserObject, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { Subscription } from 'rxjs/Subscription';
 import { Platform } from 'ionic-angular';
+import { NorthbricksStorage } from '../northbricks-storage';
 
 
 @Injectable()
@@ -15,6 +16,10 @@ export class AuthServiceNorthbricksProvider {
   public static accessToken: string = '';
   // public static devAccessToken: string = '4b86eb57-8e68-4863-a08e-dd2d1de40b4c1';
   public static devAccessToken: string = '';
+
+  public get accessTokenStorage(): Promise<any> {
+    return this.storage.getToken();
+  }
   public tokenType: string = '';
 
   public options: InAppBrowserOptions = {
@@ -34,7 +39,9 @@ export class AuthServiceNorthbricksProvider {
     presentationstyle: 'pagesheet',// iOS only 
     fullscreen: 'yes' // Windows only    
   };
-  constructor(public iab: InAppBrowser, public platform: Platform) {
+  constructor(public iab: InAppBrowser,
+    public platform: Platform,
+    private storage: NorthbricksStorage) {
     console.log('Hello AuthServiceNorthbricksProvider Provider');
 
   }
