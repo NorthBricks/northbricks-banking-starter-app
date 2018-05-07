@@ -249,7 +249,8 @@ export class HomePage {
 
     this.northbricksApi.fetchMyBanks().subscribe(banks => {
       console.log('banks... ' + JSON.stringify(banks));
-      if (this.banks.length === 0) {
+
+      if (banks.banks.length === 0) {
         alert('You dont have any connected banks yet to Northbricks. We open up page for you to connect to your bank.');
         this.openLogin();
       } else {
