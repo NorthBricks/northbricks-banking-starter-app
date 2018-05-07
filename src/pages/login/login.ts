@@ -1,31 +1,34 @@
 import { Component } from '@angular/core';
-import { NavParams, ToastController, ViewController } from 'ionic-angular';
+import { NavParams, ToastController, ViewController, Events, NavController } from 'ionic-angular';
 
 import { AuthServiceNorthbricksProvider } from '../../providers/auth-service-northbricks/auth-service-northbricks';
 import { NorthbricksApi } from '../../providers/northbricks-api';
 import { NorthbricksStorage } from '../../providers/northbricks-storage';
+import { TabsPage } from '../tabs/tabs';
 
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  account: { email: string, password: string } = {
-    email: 'test@example.com',
-    password: 'test'
-  };
+  // account: { email: string, password: string } = {
+  //   email: 'test@example.com',
+  //   password: 'test'
+  // };
 
   constructor(public toastCtrl: ToastController,
     public viewCtrl: ViewController,
+    public navCtrl: NavController,
     private storage: NorthbricksStorage,
     public navParams: NavParams,
     private ngAuthProvider: AuthServiceNorthbricksProvider,
-    public northbricksApi: NorthbricksApi) {
+    public northbricksApi: NorthbricksApi,
+    private events: Events) {
 
   }
 
 
-  register() {
+  public register() {
     this.ngAuthProvider.register().then(register => {
       console.log(register);
     }, error => {
@@ -33,14 +36,27 @@ export class LoginPage {
     });
   }
 
-  doLogin() {
+  public doLogin() {
     this.ngAuthProvider.loginNorthbricks().then(response => {
-      AuthServiceNorthbricksProvider.accessToken = response.access_token;
-      this.northbricksApi.fetchUser().subscribe(user => {
-        this.storage.setValue('user', JSON.stringify(user));
-        this.closeModal();
-      });
+      // alert(JSON.stringify(response));
+      AuthServiceNorthbricksProvider.devAccessToken = response.access_token;
+      this.storage.setToken(AuthServiceNorthbricksProvider.devAccessToken).then(token => {
+        this.northbricksApi.fetchUser().subscribe(user => {
+          this.storage.setToken(token).then(setToken => {
+            this.showToast('Logged in...').then(() => {
+              // this.closeModal();
+              this.navCtrl.setRoot(TabsPage);
+              // this.events.publish('user:loggedIn', user);
+            });
+          });
+          // this.storage.setValue('user', JSON.stringify(user));
 
+        }, error => {
+          AuthServiceNorthbricksProvider.devAccessToken = '';
+          this.showToast(JSON.stringify(error));
+          alert(JSON.stringify(error));
+        });
+      });
 
     }, error => {
       this.closeModal();
@@ -48,26 +64,27 @@ export class LoginPage {
     });
 
   }
-  closeModal() {
-    this.storage.setToken(AuthServiceNorthbricksProvider.accessToken).then(token => {
-      this.viewCtrl.dismiss(AuthServiceNorthbricksProvider.accessToken);
-    });
+  private closeModal() {
+    // this.viewCtrl.dismiss().then(() => {
+    //   this.events.publish('user:loggedIn');
+    // });
+
   }
 
 
-  showToast() {
+  private showToast(message: string): Promise<any> {
     let toast = this.toastCtrl.create({
-      message: 'Logged in...',
+      message: message,
       duration: 1000,
       position: 'top'
     });
-    toast.present();
+    return toast.present();
 
-    toast.onDidDismiss(() => {
-      this.viewCtrl.dismiss();
-    })
+    // toast.onDidDismiss(() => {
+    //   this.viewCtrl.dismiss();
+    // })
   }
-  ionViewDidLoad() {
+  public ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
 
   }

@@ -18,7 +18,7 @@ import { TermsAndConditionsPage } from '../terms-and-conditions/terms-and-condit
   templateUrl: 'splash-screen.html',
 })
 export class SplashScreenPage {
-  account: { email: string } = {
+  public account: { email: string } = {
     email: 'test@example.com'
   };
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -29,10 +29,10 @@ export class SplashScreenPage {
     public northbricksApi: NorthbricksApi) {
   }
 
-  ionViewDidLoad() {
+  public ionViewDidLoad() {
     console.log('ionViewDidLoad SplashScreenPage');
   }
-  doLogin() {
+  public doLogin() {
     this.ngAuthProvider.loginNorthbricks().then(response => {
       AuthServiceNorthbricksProvider.accessToken = response.access_token;
       this.northbricksApi.fetchUser().subscribe(user => {
@@ -48,11 +48,11 @@ export class SplashScreenPage {
 
   }
 
-  termsAndConditions() {
+  public termsAndConditions() {
     this.navCtrl.push(TermsAndConditionsPage);
   }
 
-  closeModal() {
+  public closeModal() {
     this.storage.setToken(AuthServiceNorthbricksProvider.accessToken).then(token => {
       this.viewCtrl.dismiss(AuthServiceNorthbricksProvider.accessToken);
     });

@@ -16,13 +16,13 @@ import { AuthServiceNorthbricksProvider } from '../../providers/auth-service-nor
   templateUrl: 'bank.html',
 })
 export class BankPage {
-  accounts: Account[] = [];
-  banks: Bank[];
-  transactions: Transaction[] = [];
-  transactionsRoot: TransactionsRoot;
-  user: User;
-  bank: Bank;
-  countTransactions: number = 0;
+  public accounts: Account[] = [];
+  public banks: Bank[];
+  public transactions: Transaction[] = [];
+  public transactionsRoot: TransactionsRoot;
+  public user: User;
+  public bank: Bank;
+  public countTransactions: number = 0;
 
   constructor(private northbricksApi: NorthbricksApi,
     private viewCtrl: ViewController,
@@ -34,7 +34,7 @@ export class BankPage {
 
   }
 
-  ionViewDidLoad() {
+  public ionViewDidLoad() {
     console.log('ionViewDidLoad BankPage');
     // alert(JSON.stringify(this.user));
     this.northbricksApi.fetchBank(this.bank.id).subscribe(bank => {
@@ -59,10 +59,10 @@ export class BankPage {
 
 
   }
-  dismiss() {
+  public dismiss() {
     this.viewCtrl.dismiss();
   }
-  navigateTo() {
+  public navigateTo() {
     this.authService.navigateTo('http://www.nordea.com').then(done => {
       console.log(done);
     }, error => {
@@ -70,7 +70,7 @@ export class BankPage {
     });
   }
 
-  fetchAccountsTransactions(account: Account) {
+  public fetchAccountsTransactions(account: Account) {
     // alert(JSON.stringify(account));
     this.northbricksApi.fetchTransactions(account.id, this.bank.id).subscribe(transactions => {
       // alert(JSON.stringify(transactions));
@@ -81,7 +81,7 @@ export class BankPage {
     });
   }
 
-  showTransaction(transaction: Transaction) {
+  public showTransaction(transaction: Transaction) {
     this.toastCtrl.showTransaction(transaction,
       true,
       5000

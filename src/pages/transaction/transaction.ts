@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { NorthbricksApi } from '../../providers/northbricks-api';
-import { Transaction, TransactionsRoot } from '../../interface/iTransaction';
+import { Transaction } from '../../interface/iTransaction';
 
 
 @IonicPage()
@@ -10,10 +10,10 @@ import { Transaction, TransactionsRoot } from '../../interface/iTransaction';
   templateUrl: 'transaction.html',
 })
 export class TransactionPage {
-  bankId: string;
-  transactionId: string;
-  accountId: string;
-  transaction: Transaction;
+  public bankId: string;
+  public transactionId: string;
+  public accountId: string;
+  public transaction: Transaction;
 
   constructor(public navCtrl: NavController,
     public viewCtrl: ViewController,
@@ -22,7 +22,7 @@ export class TransactionPage {
 
   }
 
-  ionViewDidLoad() {
+  public ionViewDidLoad() {
     console.log('ionViewDidLoad TransactionPage');
     this.bankId = this.navParams.get('bankId');
     this.transactionId = this.navParams.get('transactionId');
@@ -35,7 +35,7 @@ export class TransactionPage {
       console.log(JSON.stringify(transaction));
     });
   }
-  close() {
-    this.viewCtrl.dismiss();
-  }
+  // private close() {
+  //   this.viewCtrl.dismiss();
+  // }
 }

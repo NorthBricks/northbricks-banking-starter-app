@@ -12,7 +12,7 @@ export class CurrencySymbolPipe implements PipeTransform {
   /**
    * Takes a value and makes it lowercase.
    */
-  transform(value: string, currency: string) {
+  public transform(value: string, currency: string) {
     switch (value.toLowerCase()) {
       case 'eur':
         return "€"

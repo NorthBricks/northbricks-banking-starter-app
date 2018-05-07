@@ -12,10 +12,10 @@ export class FormatCurrencyPipe implements PipeTransform {
   /**
    * Takes a value and makes it lowercase.
    */
-  transform(value: string, args: string) {
+  public transform(value: string, args: string) {
 
     let num = numeral(value).format('0,0.00');
-    console.log('Currency ' + num)
+    // console.log('Currency ' + num)
     return num;
   }
 }

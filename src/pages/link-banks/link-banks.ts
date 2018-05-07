@@ -10,8 +10,8 @@ import { BankAuthPage } from '../bank/bank-auth/bank-auth';
   templateUrl: 'link-banks.html',
 })
 export class LinkBanksPage {
-  banks: Bank[] = [];
-  bank: Banks;
+  public banks: Bank[] = [];
+  public bank: Banks;
   constructor(public navCtrl: NavController,
     public modalCtrl: ModalController,
     public navParams: NavParams,
@@ -20,11 +20,11 @@ export class LinkBanksPage {
     private viewCtrl: ViewController) {
   }
 
-  ionViewDidLoad() {
+  public ionViewDidLoad() {
     this.fetchBanks();
 
   }
-  fetchBanks() {
+  public fetchBanks() {
     let loader = this.loadingCtrl.create({
       content: "Please wait...",
       showBackdrop: true,
@@ -45,7 +45,7 @@ export class LinkBanksPage {
 
 
   }
-  AddBank(bankId: string, name: string) {
+  public AddBank(bankId: string, name: string) {
     alert(bankId);
     this.northbricksApi.addBankToUser(bankId).subscribe(addedBank => {
       let authModal = this.modalCtrl.create(BankAuthPage, { bankId: bankId, name: name });
@@ -57,7 +57,7 @@ export class LinkBanksPage {
     });
 
   }
-  close() {
+  public close() {
     this.viewCtrl.dismiss();
   }
 }

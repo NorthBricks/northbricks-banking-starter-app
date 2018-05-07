@@ -23,7 +23,7 @@
       <div class="wrapper">
         <header (click)="showBank(bank)">
           <div class="headerImage">
-            <div [ngStyle]="{'background': 'url(../assets/banks/nordea/' + bank.shortName + '.png) no-repeat top left', 'margin-left':'18px','margin-top':'13px', 'background-size': 'contain','height':'36px','width':'36px'}"></div>
+            <div [ngStyle]="{'background': 'url(assets/banks/' + lowerCaseBank(bank.shortName)  + '/' + lowerCaseBank(bank.shortName)  + '.png) no-repeat top left', 'margin-left':'18px','margin-top':'13px', 'background-size': 'contain','height':'36px','width':'36px'}"></div>
           </div>
           <div class="headerTitle">{{bank.fullName}}</div>
         </header>
@@ -40,7 +40,7 @@
               </div>
               <div style="width: 100%;">
                 <span *ngIf="selectedAccount" style="color:#000;font-weight: 500; font-size: 15px">{{selectedAccount?.iban}}</span>
-                <span *ngIf="!selectedAccount" style="color:#000;font-weight: 500; font-size: 15px">Loading accounts...</span>
+                <span *ngIf="!selectedAccount" style="color:#000;font-weight: 500; font-size: 15px">{{loadingText}}</span>
                 <div float-right class="arrowDisclosure">
                   <!-- <ion-icon class="arrowDisclosure" name="arrow-down" style="color:#C7C7CC"></ion-icon> -->
                 </div>
@@ -56,7 +56,9 @@
     Transaction history
   </div>
   <ion-list>
-
+    <ion-item *ngIf="transactions?.length === 0">
+      <p>No transactions on account</p>
+    </ion-item>
     <ion-item style="height: 100px" *ngFor="let transaction of transactions" (click)="toastTransaction(transaction)">
       <ion-icon small [ngClass]="getIcon(transaction.amount.value)" item-start [style.color]="getColor(transaction.amount.value)"></ion-icon>
       <h2>

@@ -5,10 +5,10 @@ import { Toast, ToastController } from 'ionic-angular';
 @Injectable()
 export class ToastService {
 
-    toast: Toast;
+    public toast: Toast;
     constructor(public toastCtrl: ToastController) { }
 
-    create(message: any, ok = false, duration = 2000) {
+    public create(message: any, ok = false, duration = 2000) {
         if (this.toast) {
             this.toast.dismiss();
         }
@@ -22,7 +22,7 @@ export class ToastService {
         });
         this.toast.present();
     }
-    showTransaction(message: Transaction, ok = false, duration = 2000) {
+    public showTransaction(message: Transaction, ok = false, duration = 2000) {
         if (this.toast) {
             this.toast.dismiss();
         }

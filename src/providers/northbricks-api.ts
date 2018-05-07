@@ -14,11 +14,12 @@ import { Banks, Bank } from '../interface/iBanks';
 import { Transaction, TransactionsRoot } from '../interface/iTransaction';
 import { User } from '../interface/iUser';
 import { AuthServiceNorthbricksProvider } from './auth-service-northbricks/auth-service-northbricks';
-import { NorthbricksStorage } from './northbricks-storage';
 import { Events } from 'ionic-angular';
 
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { catchError } from 'rxjs/operators/catchError';
+import { NorthbricksStorage } from './northbricks-storage';
+
 
 
 @Injectable()
@@ -36,18 +37,20 @@ export class NorthbricksApi {
   // private token: string
   constructor(
     public httpClient: HttpClient,
-    public events: Events) {
+    public events: Events,
+    private auth: AuthServiceNorthbricksProvider,
+    private storage: NorthbricksStorage) {
     console.log('Hello Northbricks API Provider');
-
+    this.setHeaders2();
   }
 
-  addBankToUser(bankId: string): Observable<Bank> {
+  public addBankToUser(bankId: string): Observable<Bank> {
     let body = {
       bankId: bankId
     }
     return this.httpClient.post<Bank>(`https://api.northbricks.io/api/v1/me/banks`, JSON.stringify(body), { headers: this.setHeaders2() });
   }
-  removeBankFromUser(bankId: string): Observable<any> {
+  public removeBankFromUser(bankId: string): Observable<any> {
     return this.httpClient.delete(`https://api.northbricks.io/api/v1/me/banks/${bankId}`, { headers: this.setHeaders2() });
 
   }
@@ -59,10 +62,11 @@ export class NorthbricksApi {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
-      this.events.publish('http', error);
+      // this.events.publish('http', error);
       return new ErrorObservable(error);
     } else {
-      this.events.publish('http', error);
+      console.log(JSON.stringify(error));
+      // this.events.publish('http', error);
       console.error(
         `Backend returned code ${error.status}, ` +
         `body was: ${error.error.error}`);
@@ -88,10 +92,10 @@ export class NorthbricksApi {
 
   };
 
-  login() {
+  public login() {
 
   }
-  bankAuth(bankId: string): Observable<Response> {
+  public bankAuth(bankId: string): Observable<Response> {
 
     return this.httpClient.get<Response>(this.baseUrl + `/me/banks/${bankId}/auth?access_token=${AuthServiceNorthbricksProvider.devAccessToken}`, { headers: this.setHeaders2() })
       .pipe(
@@ -102,7 +106,7 @@ export class NorthbricksApi {
 
 
 
-  fetchAccounts(bankId: string): Observable<Accounts> {
+  public fetchAccounts(bankId: string): Observable<Accounts> {
     return this.httpClient.get<Accounts>(this.baseUrl + `/banks/${bankId}/accounts`, { headers: this.setHeaders2() })
       .pipe(
         catchError(this.handleError)
@@ -118,7 +122,7 @@ export class NorthbricksApi {
    * 
    * @memberof NorthbricksApi
    */
-  fetchTransactions(accountId: string, bankId: string): Observable<TransactionsRoot> {
+  public fetchTransactions(accountId: string, bankId: string): Observable<TransactionsRoot> {
     // let myParams: URLSearchParams = new URLSearchParams();
     // myParams.set('userId', userId.toString());
     // this.options.search = myParams;
@@ -130,7 +134,7 @@ export class NorthbricksApi {
         catchError(this.handleError)
       );
   }
-  fetchTransaction(accountId: string, bankId: string, transactionId: string): Observable<Transaction> {
+  public fetchTransaction(accountId: string, bankId: string, transactionId: string): Observable<Transaction> {
 
     return this.httpClient.get<Transaction>(this.baseUrl + `/banks/${bankId}/accounts/${accountId}/transactions/${transactionId}`, { headers: this.setHeaders2() })
       .pipe(
@@ -145,7 +149,7 @@ export class NorthbricksApi {
    * 
    * @memberof NorthbricksApi
    */
-  fetchUserTransaction(transactionId: number): Observable<Transaction> {
+  public fetchUserTransaction(transactionId: number): Observable<Transaction> {
     let myParams: HttpParams = new HttpParams();
     myParams.set('transactionId', transactionId.toString());
 
@@ -155,7 +159,7 @@ export class NorthbricksApi {
       );
   }
 
-  fetchBanks(): Observable<Banks> {
+  public fetchBanks(): Observable<Banks> {
 
     return this.httpClient.get<Banks>(this.baseUrl + '/banks', { headers: this.setHeaders2() })
       .pipe(
@@ -163,7 +167,7 @@ export class NorthbricksApi {
       );
 
   }
-  fetchMyBanks(): Observable<Banks> {
+  public fetchMyBanks(): Observable<Banks> {
 
     return this.httpClient.get<Banks>(this.baseUrl + '/me/banks', { headers: this.setHeaders2() })
       .pipe(
@@ -174,7 +178,7 @@ export class NorthbricksApi {
 
 
 
-  fetchBank(bankId: string): Observable<any> {
+  public fetchBank(bankId: string): Observable<any> {
 
     // return this.http.get(this.baseUrl + `/banks/${bankId}`, this.setHeaders())
     //   .map(res => <any>res.json());
@@ -185,11 +189,11 @@ export class NorthbricksApi {
   }
 
 
-  setHeaders2(supplementalHeaders: Headers[] = null, accessToken: boolean = true): HttpHeaders {
+  public setHeaders2(supplementalHeaders: Headers[] = null, accessToken: boolean = true): HttpHeaders {
     return new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + AuthServiceNorthbricksProvider.devAccessToken });
 
   }
-  fetchUser(): Observable<User> {
+  public fetchUser(): Observable<User> {
     return this.httpClient.get<User>(this.baseUrl + '/me/user', { headers: this.setHeaders2() })
       .pipe(
         catchError(this.handleError)

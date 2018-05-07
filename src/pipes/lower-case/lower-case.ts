@@ -1,18 +1,18 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 /**
- * Generated class for the CurrencyPipe pipe.
+ * Generated class for the LowerCasePipe pipe.
  *
  * See https://angular.io/api/core/Pipe for more info on Angular Pipes.
  */
 @Pipe({
-  name: 'currencyPipe',
+  name: 'lowerCase',
 })
-export class CurrencyPipe implements PipeTransform {
+export class LowerCasePipe implements PipeTransform {
   /**
    * Takes a value and makes it lowercase.
    */
-  public transform(value: string, ...args) {
+  transform(value: string, args: string) {
     return value.toLowerCase();
   }
 }

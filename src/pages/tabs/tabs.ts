@@ -9,10 +9,10 @@ import { ProfilePage } from '../profile/profile';
 })
 export class TabsPage {
 
-  homeRoot = HomePage;
-  banksRoot = HomePage;
+  public homeRoot = HomePage;
+  public banksRoot = HomePage;
   // transactionsRoot = BankPage;
-  profileRoot = ProfilePage;
+  public profileRoot = ProfilePage;
 
   constructor() {
 

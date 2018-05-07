@@ -25,6 +25,9 @@
     <button ion-item detail-push (click)="EditProfile()">
       Edit your profile
     </button>
+    <button ion-item detail-push (click)="SignOut()">
+      Sign out
+    </button>
   </ion-list>
 
   <ion-list no-border>
@@ -33,7 +36,7 @@
     </ion-list-header>
     <ion-item *ngFor="let bank of banks" (click)="removeBank(bank.id)">
       <ion-avatar item-start class="logo">
-        <img src="../../assets/logo/Nordea200px.png">
+        <img src="assets/logo/Nordea200px.png">
       </ion-avatar>
       <h2>{{bank.fullName}}</h2>
       <button ion-button outline item-end>Disconnect</button>

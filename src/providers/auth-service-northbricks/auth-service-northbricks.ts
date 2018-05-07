@@ -5,43 +5,52 @@ import { Injectable } from '@angular/core';
 import { InAppBrowser, InAppBrowserObject, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { Subscription } from 'rxjs/Subscription';
 import { Platform } from 'ionic-angular';
+import { NorthbricksStorage } from '../northbricks-storage';
 
 
 @Injectable()
 export class AuthServiceNorthbricksProvider {
-  private oAuthUrl = `https://api.northbricks.io/oauth/authorize?client_id=sampleClientId&redirect_uri=https://localhost&scope=read&response_type=token`;
+  private redirectUrl = 'https://localhost'
+  private oAuthUrl = `https://api.northbricks.io/oauth/authorize?client_id=sampleClientId&redirect_uri=${this.redirectUrl}&scope=read&response_type=token`;
 
   public static accessToken: string = '';
-  public static devAccessToken: string = '9bfd1c49-208a-49f5-a7ec-0c4e18e0ad66';
+  // public static devAccessToken: string = '4b86eb57-8e68-4863-a08e-dd2d1de40b4c1';
+  public static devAccessToken: string = '';
+
+  public get accessTokenStorage(): Promise<any> {
+    return this.storage.getToken();
+  }
   public tokenType: string = '';
 
-  options: InAppBrowserOptions = {
-    location: 'yes',//Or 'no' 
-    hidden: 'no', //Or  'yes'
+  public options: InAppBrowserOptions = {
+    location: 'yes',// Or 'no' 
+    hidden: 'no', // Or  'yes'
     clearcache: 'yes',
     clearsessioncache: 'yes',
-    zoom: 'yes',//Android only ,shows browser zoom controls 
+    zoom: 'yes',// Android only ,shows browser zoom controls 
     hardwareback: 'yes',
     mediaPlaybackRequiresUserAction: 'no',
-    shouldPauseOnSuspend: 'no', //Android only 
-    closebuttoncaption: 'Close', //iOS only
-    disallowoverscroll: 'no', //iOS only 
-    toolbar: 'yes', //iOS only 
-    enableViewportScale: 'no', //iOS only  
-    allowInlineMediaPlayback: 'no',//iOS only 
-    presentationstyle: 'pagesheet',//iOS only 
-    fullscreen: 'yes',//Windows only    
+    shouldPauseOnSuspend: 'no', // Android only 
+    closebuttoncaption: 'Close', // iOS only
+    disallowoverscroll: 'no', // iOS only 
+    toolbar: 'yes', // iOS only 
+    enableViewportScale: 'no', // iOS only  
+    allowInlineMediaPlayback: 'no',// iOS only 
+    presentationstyle: 'pagesheet',// iOS only 
+    fullscreen: 'yes' // Windows only    
   };
-  constructor(public iab: InAppBrowser, public platform: Platform) {
+  constructor(public iab: InAppBrowser,
+    public platform: Platform,
+    private storage: NorthbricksStorage) {
     console.log('Hello AuthServiceNorthbricksProvider Provider');
 
   }
 
-  isAuthenticated(): boolean {
+  public isAuthenticated(): boolean {
     return false;
   }
 
-  register(): Promise<any> {
+  public register(): Promise<any> {
 
     return new Promise((resolve, reject) => {
 
@@ -73,16 +82,17 @@ export class AuthServiceNorthbricksProvider {
   }
 
 
-  navigateTo(url: string): Promise<any> {
+  public navigateTo(url: string): Promise<any> {
 
     return new Promise((resolve, reject) => {
 
       let browserRef: InAppBrowserObject = this.iab.create(url, "_blank", this.options);
 
-      const exitSubscription: Subscription = browserRef.on("exit").subscribe((event) => {
-        // alert("Reload page - check if there are a user.");
-        reject(new Error("Cancel - back to app"));
-      });
+      // const exitSubscription: Subscription = browserRef.on("exit").subscribe((event) => {
+      //   // alert("Reload page - check if there are a user.");
+      //   exitSubscription.closed();
+      //   reject(new Error("Cancel - back to app"));
+      // });
 
       browserRef.on("loadstart").subscribe((event) => {
         console.log('Log this - event');
@@ -90,7 +100,7 @@ export class AuthServiceNorthbricksProvider {
     });
   }
 
-  loginNorthbricks(): Promise<OAuthResponse> {
+  public loginNorthbricks(): Promise<OAuthResponse> {
 
     return new Promise((resolve, reject) => {
 
@@ -100,18 +110,23 @@ export class AuthServiceNorthbricksProvider {
         alert("The  sign in flow was canceled");
         reject(new Error("The Northbricks sign in flow was canceled"));
       });
+      browserRef.on("loaderror").subscribe((event) => {
+        console.log('loaderror ' + event.url);
+      });
+      browserRef.on("loadstop").subscribe((event) => {
+        console.log('loadstop ' + event.url);
+      });
+
+
 
       browserRef.on("loadstart").subscribe((event) => {
-        console.log('loadstart');
-        console.log(JSON.stringify(event));
-        if ((event.url).indexOf(`https://getpostman.com/oauth2/callback`) === 0) {
+        console.log('loadstart ' + event.url);
+
+        if ((event.url).indexOf(`${this.redirectUrl}`) === 0) {
           console.log('Fick tillbaka loadstart - redirect url');
-          exitSubscription.unsubscribe();
-          browserRef.close();
-
-
-          console.log(event.url);
+          console.log('URL:: ' + event.url);
           var responseParameters = ((event.url).split("#")[1]).split("&");
+          console.log(responseParameters);
           var parsedResponse = {};
           console.log('RESPONSE::: ' + responseParameters);
           for (var i = 0; i < responseParameters.length; i++) {
@@ -120,6 +135,9 @@ export class AuthServiceNorthbricksProvider {
           console.log('PARSED RESPONSE ' + JSON.stringify(parsedResponse));
           if (parsedResponse["access_token"] !== undefined && parsedResponse["access_token"] !== null) {
             console.log('Access token..');
+            exitSubscription.unsubscribe();
+            browserRef.close();
+
             resolve(<OAuthResponse>parsedResponse);
           } else {
             console.log("Problem authenticating with Northbricks");
