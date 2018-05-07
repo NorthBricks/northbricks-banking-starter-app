@@ -3,7 +3,7 @@
     <name>Northbricks</name>
     <description>http://www.northbricks.com</description>
     <author email="info@northbricks.com" href="http://www.northbricks.io/">Northbricks Team</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.2.209:8100" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-navigation href="http://localhost:8080/*" />
@@ -117,5 +117,5 @@
     <allow-navigation href="http://172.20.10.2:8100" />
     <plugin name="cordova-plugin-safariviewcontroller" spec="^1.5.3" />
     <engine name="android" spec="^7.1.0" />
-    <engine name="ios" spec="~4.5.4" />
+    <engine name="ios" spec="^4.5.4" />
 </widget>

@@ -11,6 +11,7 @@ import { NorthbricksStorage } from '../../providers/northbricks-storage';
 import { LinkBanksPage } from '../link-banks/link-banks';
 import { TransactionPage } from '../transaction/transaction';
 import { AuthServiceNorthbricksProvider } from '../../providers/auth-service-northbricks/auth-service-northbricks';
+import { isNumber, isString } from 'ionic-angular/util/util';
 
 
 @Component({
@@ -165,6 +166,9 @@ export class HomePage {
 
   public fetchAccounts(bank: Bank) {
     // alert(bank.id);
+    if (!bank) {
+      return;
+    }
     this.northbricksApi.fetchAccounts(bank.id).subscribe(account => {
       // alert(JSON.stringify(account.accounts));
       let totalSum = 0;
