@@ -56,6 +56,9 @@ export class HomePage {
       console.log("no item selected");
     }
   }
+  public LoadSafari() {
+    this.auth.LoadSafari();
+  }
 
   public loadActionSheet() {
 
@@ -246,11 +249,17 @@ export class HomePage {
 
     this.northbricksApi.fetchMyBanks().subscribe(banks => {
       console.log('banks... ' + JSON.stringify(banks));
-      console.log(JSON.stringify(banks));
-      this.banks = banks.banks;
-      console.log(JSON.stringify(this.bank));
-      this.selectedBank = this.banks[this.slides.getActiveIndex()];
-      this.fetchAccounts(this.selectedBank);
+      if (this.banks.length === 0) {
+        alert('You dont have any connected banks yet to Northbricks. We open up page for you to connect to your bank.');
+        this.openLogin();
+      } else {
+        console.log(JSON.stringify(banks));
+        this.banks = banks.banks;
+        console.log(JSON.stringify(this.bank));
+        this.selectedBank = this.banks[this.slides.getActiveIndex()];
+        this.fetchAccounts(this.selectedBank);
+      }
+
       loader.dismiss();
     }, (error) => {
       if (error.status === 401) {

@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/map';
 
 import { Injectable } from '@angular/core';
-
+import { SafariViewController } from '@ionic-native/safari-view-controller/ngx';
 import { InAppBrowser, InAppBrowserObject, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { Subscription } from 'rxjs/Subscription';
 import { Platform } from 'ionic-angular';
@@ -40,6 +40,7 @@ export class AuthServiceNorthbricksProvider {
     fullscreen: 'yes' // Windows only    
   };
   constructor(public iab: InAppBrowser,
+    private safariViewController: SafariViewController,
     public platform: Platform,
     private storage: NorthbricksStorage) {
     console.log('Hello AuthServiceNorthbricksProvider Provider');
@@ -49,7 +50,40 @@ export class AuthServiceNorthbricksProvider {
   public isAuthenticated(): boolean {
     return false;
   }
+  public LoadSafari() {
+    this.safariViewController.isAvailable()
+      .then((available: boolean) => {
+        if (available) {
 
+          this.safariViewController.show({
+            url: 'https://api.northbricks.io/signup',
+            hidden: false,
+            animated: false,
+            transition: 'curl',
+            enterReaderModeIfAvailable: true,
+            tintColor: '#ff0000'
+          })
+            .subscribe((result: any) => {
+              console.log(JSON.stringify(result));
+              if (result.event === 'opened') {
+                console.log(JSON.stringify(result));
+                console.log('Opened');
+              }
+              else if (result.event === 'loaded') {
+                console.log('Loaded');
+                console.log(JSON.stringify(result));
+              }
+              else if (result.event === 'closed') console.log('Closed');
+            },
+              (error: any) => console.error(error)
+            );
+
+        } else {
+          // use fallback browser, example InAppBrowser
+        }
+      }
+      );
+  }
   public register(): Promise<any> {
 
     return new Promise((resolve, reject) => {

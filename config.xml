@@ -115,6 +115,7 @@
     <allow-navigation href="http://10.33.13.86:8100" />
     <allow-navigation href="http://192.168.1.240:8100" />
     <allow-navigation href="http://172.20.10.2:8100" />
+    <plugin name="cordova-plugin-safariviewcontroller" spec="^1.5.3" />
     <engine name="android" spec="^7.1.0" />
-    <engine name="ios" spec="4.5.4" />
+    <engine name="ios" spec="^4.5.4" />
 </widget>
