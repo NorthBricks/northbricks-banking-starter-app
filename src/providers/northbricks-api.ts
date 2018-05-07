@@ -48,10 +48,10 @@ export class NorthbricksApi {
     let body = {
       bankId: bankId
     }
-    return this.httpClient.post<Bank>(`https://api.northbricks.io/api/v1/me/banks`, JSON.stringify(body), { headers: this.setHeaders2() });
+    return this.httpClient.post<Bank>(`${this.baseUrl}/me/banks`, JSON.stringify(body), { headers: this.setHeaders2() });
   }
   public removeBankFromUser(bankId: string): Observable<any> {
-    return this.httpClient.delete(`https://api.northbricks.io/api/v1/me/banks/${bankId}`, { headers: this.setHeaders2() });
+    return this.httpClient.delete(`${this.baseUrl}/me/banks/${bankId}`, { headers: this.setHeaders2() });
 
   }
 

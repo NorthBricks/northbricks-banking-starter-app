@@ -218,6 +218,8 @@ export class HomePage {
   }
   public slideChanged(slider) {
     // const currentSlide = this.slides[slider.getActiveIndex()];
+    this.loadingText = "Loading accounts..."
+    this.accountBalance = 0;
     this.selectedAccount = null;
     if (this.selectedBank !== this.banks[this.slides.getActiveIndex()]) {
       let currentIndex = this.slides.getActiveIndex();
