@@ -41,17 +41,30 @@
         Account details
       </ion-list-header>
 
-      <ion-item (click)="fetchAccountsTransactions(account)">{{account.id}}
+      <ion-item>{{account.id}}
         <h6 style="color:#8E8E93">ID</h6>
       </ion-item>
-      <ion-item (click)="fetchAccountsTransactions(account)">{{account.iban}}
+      <ion-item>{{account.iban}}
         <h6 style="color:#8E8E93">iBan</h6>
       </ion-item>
-      <ion-item (click)="fetchAccountsTransactions(account)">{{account.type}}
-        <h6 style="color:#8E8E93">Type</h6>
+      <ion-item>
+        <div item-start>
+          {{account.type}}
+
+          <h6 style="color:#8E8E93">Type</h6>
+        </div>
       </ion-item>
-      <ion-item (click)="fetchAccountsTransactions(account)">{{account.owner.name}}
+      <ion-item>{{account.owner.name}}
         <h6 style="color:#8E8E93">Owner</h6>
+
+      </ion-item>
+      <ion-item>
+        <div item-start>
+          Allow Payments from this account
+
+        </div>
+        <ion-toggle checked="false" item-end></ion-toggle>
+
       </ion-item>
     </ion-list>
   </div>

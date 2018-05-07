@@ -168,7 +168,7 @@ export class NorthbricksApi {
 
   }
   public fetchMyBanks(): Observable<Banks> {
-
+    console.log('Fetch my banks');
     return this.httpClient.get<Banks>(this.baseUrl + '/me/banks', { headers: this.setHeaders2() })
       .pipe(
         catchError(this.handleError)
@@ -190,8 +190,10 @@ export class NorthbricksApi {
 
 
   public setHeaders2(supplementalHeaders: Headers[] = null, accessToken: boolean = true): HttpHeaders {
-    return new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + AuthServiceNorthbricksProvider.devAccessToken });
-
+    console.log('setHeaders2 method ' + AuthServiceNorthbricksProvider.devAccessToken);
+    if (AuthServiceNorthbricksProvider.devAccessToken) {
+      return new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + AuthServiceNorthbricksProvider.devAccessToken });
+    }
   }
   public fetchUser(): Observable<User> {
     return this.httpClient.get<User>(this.baseUrl + '/me/user', { headers: this.setHeaders2() })

@@ -46,7 +46,10 @@ export class LoginPage {
             this.showToast('Logged in...').then(() => {
               // this.closeModal();
               this.navCtrl.setRoot(TabsPage);
-              // this.events.publish('user:loggedIn', user);
+              this.storage.setUser(user).then(userSaved => {
+                this.events.publish('user:loggedIn', user);
+              });
+
             });
           });
           // this.storage.setValue('user', JSON.stringify(user));

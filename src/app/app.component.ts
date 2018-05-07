@@ -63,7 +63,7 @@ export class MyApp {
           if (AuthServiceNorthbricksProvider.devAccessToken === '') {
             this.rootPage = LoginPage;
             // this.ModalLogin()
-            events.publish('user:loggedIn', false);
+            // events.publish('user:loggedIn', false);
           }
         } else {
           AuthServiceNorthbricksProvider.devAccessToken = token;
@@ -81,17 +81,24 @@ export class MyApp {
       events.subscribe('user:loggedOut', () => {
         console.log('logged out');
         this.rootPage = LoginPage;
+        events.unsubscribe('user:loggedOut');
       });
       events.subscribe('user:loggedIn', () => {
         console.log('logged -in');
         this.rootPage = TabsPage;
+        events.unsubscribe('user:loggedIn');
       });
 
       events.subscribe('http', (httpErrorResponse: HttpErrorResponse) => {
+        if (httpErrorResponse.status === 401) {
+          console.log('401 ' + JSON.stringify(httpErrorResponse));
+          this.rootPage = LoginPage;
+        } else if (httpErrorResponse.status === 404) {
+          console.log('404 ' + JSON.stringify(httpErrorResponse));
+        }
 
-        console.log('Hehj ' + JSON.stringify(httpErrorResponse));
 
-        this.rootPage = LoginPage;
+
         // this.ModalLogin();
       });
 

@@ -32,7 +32,8 @@ export class ProfilePage {
   }
   public removeBank(bankId: string) {
     this.northbricksApi.removeBankFromUser(bankId).subscribe(removed => {
-      this.presentToast('Bank was sucessfully removed');
+      this.fetchMyBanks();
+      this.presentToast('Bank was sucessfully removed from your account in Northbricks.');
     }, error => {
       this.presentToast('Could not remove bank - please try again');
     });
@@ -42,7 +43,7 @@ export class ProfilePage {
     AuthServiceNorthbricksProvider.devAccessToken = '';
     this.storage.deleteAll().then(() => {
       console.log('Sigin out...');
-      // this.events.publish('user:loggedOut', true);
+      this.events.publish('user:loggedOut', true);
     });
   }
 
@@ -62,18 +63,19 @@ export class ProfilePage {
       this.user = user;
     });
 
-    this.northbricksApi.fetchMyBanks().subscribe(banks => {
-      // alert(JSON.stringify(user));
-      this.banks = banks.banks;
-    });
+    this.fetchMyBanks();
 
     // this.northbricksApi.fetchBanks().subscribe(banksNotAdded => {
     //   // alert(JSON.stringify(banks));
     //   this.banksNotAdded = banksNotAdded.banks;
     // });
+  }
 
-
-
+  fetchMyBanks() {
+    this.northbricksApi.fetchMyBanks().subscribe(banks => {
+      // alert(JSON.stringify(user));
+      this.banks = banks.banks;
+    });
   }
 
 }
