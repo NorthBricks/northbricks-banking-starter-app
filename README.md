@@ -10,9 +10,12 @@ Our slogan is - "One API to rule them ALL". With that we mean that we are going 
 
 ### Conntected banks
 - Nordea (11 million customers)
+- Swedbank (8 million customers)
+- Deutsche Bank (27 million customers)
+- BNP Paribas
 
 ### Soon to be onboarded
-- BNP Paribas
+
 - Citi
 - Danske Bank
 - Swedbank
