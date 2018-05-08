@@ -31,6 +31,7 @@ import { TransactionPage } from '../pages/transaction/transaction';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { HttpClientModule } from '@angular/common/http';
 import { PipesModule } from '../pipes/pipes.module';
+import { DeeplinkMatch, Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { SafariViewController } from '@ionic-native/safari-view-controller/ngx';
 
 @NgModule({
@@ -77,6 +78,7 @@ import { SafariViewController } from '@ionic-native/safari-view-controller/ngx';
     InAppBrowser,
     SafariViewController,
     NorthbricksApi,
+    Deeplinks,
     NorthbricksStorage,
     Keyboard,
     SplashScreen,

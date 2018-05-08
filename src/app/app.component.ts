@@ -12,6 +12,7 @@ import { User } from '../interface/iUser';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthServiceNorthbricksProvider } from '../providers/auth-service-northbricks/auth-service-northbricks';
 import { NorthbricksApi } from '../providers/northbricks-api';
+import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class MyApp {
     northbricksApi: NorthbricksApi,
     splashScreen: SplashScreen,
     storage: NorthbricksStorage,
-    public modalCtrl: ModalController) {
+    public modalCtrl: ModalController,
+    private deeplinks: Deeplinks) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -45,6 +47,22 @@ export class MyApp {
       }
       statusBar.styleDefault();
       splashScreen.hide();
+
+      this.deeplinks.route({
+        '/fv': LoginPage,
+        '/universal-links-test': TabsPage
+      }).subscribe((match) => {
+        // match.$route - the route we matched, which is the matched entry from the arguments to route()
+        // match.$args - the args passed in the link
+        // match.$link - the full link data
+        console.log('Successfully matched route', match);
+      }, (nomatch) => {
+        // nomatch.$link - the full link data
+        console.error('Got a deeplink that didn\'t match', nomatch);
+      });
+
+
+
       console.log(AuthServiceNorthbricksProvider.devAccessToken);
       storage.getValue('hasSeenTutorial')
         .then((hasSeenTutorial) => {
