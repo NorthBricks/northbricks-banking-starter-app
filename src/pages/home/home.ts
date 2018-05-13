@@ -12,6 +12,7 @@ import { LinkBanksPage } from '../link-banks/link-banks';
 import { TransactionPage } from '../transaction/transaction';
 import { AuthServiceNorthbricksProvider } from '../../providers/auth-service-northbricks/auth-service-northbricks';
 import { isNumber, isString } from 'ionic-angular/util/util';
+import { Subscription } from 'rxjs/Subscription';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class HomePage {
   public countTransactions: number = 0;
   public actionSheet: ActionSheet;
   public accountBalance: number = 0;
+  private subscriptions: Array<Subscription> = [];
   @ViewChild(Slides) public slides: Slides;
 
   constructor(public modalCtrl: ModalController,
@@ -98,6 +100,11 @@ export class HomePage {
     // this.events.subscribe('user:loggedIn', (isLoggedIn) => {
     //   // user and time are the same arguments passed in `events.publish(user, time)`
     //   if (isLoggedIn) {
+    this.events.subscribe('disconnectedBank', disconn => {
+      if (disconn) {
+        this.fetchBanks();
+      }
+    });
     console.log('Did enter home');
     this.storage.getUser().then(user => {
       if (user) {
@@ -169,14 +176,13 @@ export class HomePage {
     if (!bank) {
       return;
     }
-    this.northbricksApi.fetchAccounts(bank.id).subscribe(account => {
+    this.subscriptions.push(this.northbricksApi.fetchAccounts(bank.id).subscribe(account => {
       // alert(JSON.stringify(account.accounts));
       let totalSum = 0;
       this.accounts = account.accounts;
       this.selectedAccount = this.accounts[0];
       console.log('Fetching accounts ' + this.selectedAccount);
 
-      // alert(this.accounts.length);
       if (this.accounts.length !== 0) {
         console.log('Balance ' + this.selectedAccount.balance);
         if (this.selectedAccount.balance === null) {
@@ -184,12 +190,6 @@ export class HomePage {
         } else {
           this.accountBalance = this.selectedAccount.balance;
         }
-
-        // this.accounts.forEach(element => {
-        //   console.log('ELEMENT FROM ACCOUNTS:::  ' + JSON.stringify(element));
-        //   // totalSum += element.balance;
-        // });
-        // console.log(totalSum);
         console.log(JSON.stringify(this.selectedAccount));
         this.fetchAccountsTransactions(this.selectedAccount);
       } else {
@@ -202,7 +202,7 @@ export class HomePage {
       this.accounts = null;
       this.selectedAccount = null;
       this.loadingText = "There were issues loading accounts";
-    });
+    }));
   }
 
   // private AddBank(bankId: string, name: string) {
@@ -225,8 +225,14 @@ export class HomePage {
   }
   public slideChanged(slider) {
     // const currentSlide = this.slides[slider.getActiveIndex()];
+    this.subscriptions.forEach((subscription: Subscription) => {
+      console.log('Cancel subscriptions ' + subscription);
+      subscription.unsubscribe();
+    });
+
     this.loadingText = "Loading accounts..."
     this.accountBalance = 0;
+    this.transactions = [];
     this.selectedAccount = null;
     if (this.selectedBank !== this.banks[this.slides.getActiveIndex()]) {
       let currentIndex = this.slides.getActiveIndex();
@@ -251,7 +257,7 @@ export class HomePage {
     console.log('Fetch banks ' + this.banks.length);
     // if (this.banks.length === 0) {
 
-    this.northbricksApi.fetchMyBanks().subscribe(banks => {
+    this.subscriptions.push(this.northbricksApi.fetchMyBanks().subscribe(banks => {
       console.log('banks... ' + JSON.stringify(banks));
 
       if (banks.banks.length === 0) {
@@ -272,7 +278,7 @@ export class HomePage {
 
       }
       loader.dismiss();
-    });
+    }));
     // } else {
     //   loader.dismiss();
     // }

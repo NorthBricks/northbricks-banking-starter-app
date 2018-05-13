@@ -108,6 +108,7 @@ export class NorthbricksApi {
 
   public fetchAccounts(bankId: string): Observable<Accounts> {
     return this.httpClient.get<Accounts>(this.baseUrl + `/banks/${bankId}/accounts`, { headers: this.setHeaders2() })
+      .retry(3)
       .pipe(
         catchError(this.handleError)
       );
