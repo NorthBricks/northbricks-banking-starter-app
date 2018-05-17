@@ -72,7 +72,7 @@ export class ProfilePage {
     // });
   }
 
-  fetchMyBanks() {
+  private fetchMyBanks() {
     this.northbricksApi.fetchMyBanks().subscribe(banks => {
       // alert(JSON.stringify(user));
       this.banks = banks.banks;

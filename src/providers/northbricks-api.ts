@@ -18,7 +18,7 @@ import { Events } from 'ionic-angular';
 
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { catchError } from 'rxjs/operators/catchError';
-import { NorthbricksStorage } from './northbricks-storage';
+
 
 
 
@@ -37,9 +37,7 @@ export class NorthbricksApi {
   // private token: string
   constructor(
     public httpClient: HttpClient,
-    public events: Events,
-    private auth: AuthServiceNorthbricksProvider,
-    private storage: NorthbricksStorage) {
+    public events: Events) {
     console.log('Hello Northbricks API Provider');
     this.setHeaders2();
   }
