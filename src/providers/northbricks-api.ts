@@ -192,6 +192,8 @@ export class NorthbricksApi {
     console.log('setHeaders2 method ' + AuthServiceNorthbricksProvider.devAccessToken);
     if (AuthServiceNorthbricksProvider.devAccessToken) {
       return new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + AuthServiceNorthbricksProvider.devAccessToken });
+    } else {
+      return new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer f2d2c072-dcd1-44db-8103-bf1d356e87f9' });
     }
   }
   public fetchUser(): Observable<User> {

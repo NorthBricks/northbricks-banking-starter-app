@@ -3,7 +3,7 @@
     <name>Northbricks</name>
     <description>http://www.northbricks.com</description>
     <author email="info@northbricks.com" href="http://www.northbricks.io/">Northbricks Team</author>
-    <content original-src="index.html" src="http://172.20.10.2:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-navigation href="http://localhost:8080/*" />

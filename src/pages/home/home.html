@@ -21,41 +21,41 @@
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
+  <div class="sliderWrap">
+    <ion-slides pager (ionSlideDidChange)="slideChanged($event)">
+      <ion-slide id="{{bank.id}}" *ngFor="let bank of banks">
+        <div class="wrapper">
+          <header (click)="showBank(bank)">
+            <div class="headerImage">
+              <div [ngStyle]="{'background': 'url(assets/banks/' + lowerCaseBank(bank.shortName)  + '/' + lowerCaseBank(bank.shortName)  + '.png) no-repeat top left', 'margin-left':'18px','margin-top':'13px', 'background-size': 'contain','height':'36px','width':'36px'}"></div>
+            </div>
+            <div class="headerTitle">{{bank.fullName}}</div>
+          </header>
+          <main>
+            {{accountBalance}}
+            <div>Available balance</div>
 
-  <ion-slides pager class="slider" (ionSlideDidChange)="slideChanged($event)">
-    <ion-slide id="{{bank.id}}" *ngFor="let bank of banks">
-      <div class="wrapper">
-        <header (click)="showBank(bank)">
-          <div class="headerImage">
-            <div [ngStyle]="{'background': 'url(assets/banks/' + lowerCaseBank(bank.shortName)  + '/' + lowerCaseBank(bank.shortName)  + '.png) no-repeat top left', 'margin-left':'18px','margin-top':'13px', 'background-size': 'contain','height':'36px','width':'36px'}"></div>
-          </div>
-          <div class="headerTitle">{{bank.fullName}}</div>
-        </header>
-        <main>
-          {{accountBalance}}
-          <div>Available balance</div>
-
-        </main>
-        <footer>
-          <ion-item>
-            <div (click)="showActionsSheetAccounts()">
-              <div style="color:#8E8E93;font-size: 12px">
+          </main>
+          <footer>
+            <div class="footerWrap">
+              <div class="selectAccountLabel" (click)="showActionsSheetAccounts()">
                 Select account
               </div>
-              <div style="width: 100%;">
+
+              <div class="selectAccount">
                 <span *ngIf="selectedAccount" style="color:#000;font-weight: 500; font-size: 15px">{{selectedAccount?.iban}}</span>
                 <span *ngIf="!selectedAccount" style="color:#000;font-weight: 500; font-size: 15px">{{loadingText}}</span>
                 <div float-right class="arrowDisclosure">
                   <!-- <ion-icon class="arrowDisclosure" name="arrow-down" style="color:#C7C7CC"></ion-icon> -->
                 </div>
+
               </div>
             </div>
-
-          </ion-item>
-        </footer>
-      </div>
-    </ion-slide>
-  </ion-slides>
+          </footer>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </div>
   <div style="margin:5px;color:#8E8E93;">
     Transaction history
   </div>
