@@ -35,9 +35,7 @@
       My banks
     </ion-list-header>
     <ion-item *ngFor="let bank of banks" (click)="removeBank(bank.id)">
-      <ion-avatar item-start class="logo">
-        <img src="assets/logo/Nordea200px.png">
-      </ion-avatar>
+      <!-- <ion-icon item-start name="briefcase"></ion-icon> -->
       <h2>{{bank.fullName}}</h2>
       <button ion-button outline item-end>Disconnect</button>
     </ion-item>

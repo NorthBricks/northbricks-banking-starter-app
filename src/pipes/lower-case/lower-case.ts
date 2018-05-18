@@ -12,7 +12,7 @@ export class LowerCasePipe implements PipeTransform {
   /**
    * Takes a value and makes it lowercase.
    */
-  transform(value: string, args: string) {
+  public transform(value: string, args: string) {
     return value.toLowerCase();
   }
 }

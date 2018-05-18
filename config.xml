@@ -3,7 +3,7 @@
     <name>Northbricks</name>
     <description>http://www.northbricks.com</description>
     <author email="info@northbricks.com" href="http://www.northbricks.io/">Northbricks Team</author>
-    <content original-src="index.html" src="http://192.168.1.240:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-navigation href="http://localhost:8080/*" />
@@ -114,6 +114,32 @@
     <allow-navigation href="http://192.168.51.201:8100" />
     <allow-navigation href="http://10.33.13.86:8100" />
     <allow-navigation href="http://192.168.1.240:8100" />
-    <engine name="android" spec="^7.1.0" />
-    <engine name="ios" spec="4.5.4" />
+    <allow-navigation href="http://172.20.10.2:8100" />
+    <plugin name="cordova-plugin-safariviewcontroller" spec="^1.5.3" />
+    <allow-navigation href="http://192.168.51.105:8100" />
+    <plugin name="ionic-plugin-deeplinks" spec="^1.0.15">
+        <variable name="URL_SCHEME" value="northbricks" />
+        <variable name="DEEPLINK_HOST" value="northbricks.io" />
+        <variable name="ANDROID_PATH_PREFIX" value="/" />
+        <variable name="DEEPLINK_SCHEME" value="https" />
+        <variable name="ANDROID_2_PATH_PREFIX" value="/" />
+        <variable name="ANDROID_3_PATH_PREFIX" value="/" />
+        <variable name="ANDROID_4_PATH_PREFIX" value="/" />
+        <variable name="ANDROID_5_PATH_PREFIX" value="/" />
+        <variable name="DEEPLINK_2_SCHEME" value=" " />
+        <variable name="DEEPLINK_2_HOST" value=" " />
+        <variable name="DEEPLINK_3_SCHEME" value=" " />
+        <variable name="DEEPLINK_3_HOST" value=" " />
+        <variable name="DEEPLINK_4_SCHEME" value=" " />
+        <variable name="DEEPLINK_4_HOST" value=" " />
+        <variable name="DEEPLINK_5_SCHEME" value=" " />
+        <variable name="DEEPLINK_5_HOST" value=" " />
+    </plugin>
+    <allow-navigation href="http://10.31.212.132:8100" />
+    <allow-navigation href="http://10.3.169.159:8100" />
+    <allow-navigation href="http://10.2.120.116:8100" />
+    <allow-navigation href="http://192.168.9.82:8100" />
+    <allow-navigation href="http://192.168.1.140:8100" />
+    <engine name="ios" spec="^4.5.4" />
+    <engine name="android" spec="7.0.0" />
 </widget>

@@ -2,16 +2,17 @@ import { Component } from '@angular/core';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Events, Platform, ModalController, Tabs } from 'ionic-angular';
+import { Events, Platform, ModalController } from 'ionic-angular';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { NorthbricksStorage } from '../providers/northbricks-storage';
 // import { SplashScreenPage } from '../pages/splash-screen/splash-screen';
 import { LoginPage } from '../pages/login/login';
-import { User } from '../interface/iUser';
+
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthServiceNorthbricksProvider } from '../providers/auth-service-northbricks/auth-service-northbricks';
 import { NorthbricksApi } from '../providers/northbricks-api';
+import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class MyApp {
     northbricksApi: NorthbricksApi,
     splashScreen: SplashScreen,
     storage: NorthbricksStorage,
-    public modalCtrl: ModalController) {
+    public modalCtrl: ModalController,
+    private deeplinks: Deeplinks) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -45,6 +47,26 @@ export class MyApp {
       }
       statusBar.styleDefault();
       splashScreen.hide();
+
+      this.deeplinks.route({
+        '/': TabsPage,
+        '/callback': LoginPage,
+        '/universal-links-test': TabsPage
+      }).subscribe((match) => {
+        // match.$route - the route we matched, which is the matched entry from the arguments to route()
+        // match.$args - the args passed in the link
+        // match.$link - the full link data
+        console.log(match.$args);
+        console.log(match.$route);
+        console.log(match.$link);
+        console.log('Successfully matched route', match);
+      }, (nomatch) => {
+        // nomatch.$link - the full link data
+        console.error('Got a deeplink that didn\'t match', nomatch);
+      });
+
+
+
       console.log(AuthServiceNorthbricksProvider.devAccessToken);
       storage.getValue('hasSeenTutorial')
         .then((hasSeenTutorial) => {
@@ -63,7 +85,7 @@ export class MyApp {
           if (AuthServiceNorthbricksProvider.devAccessToken === '') {
             this.rootPage = LoginPage;
             // this.ModalLogin()
-            events.publish('user:loggedIn', false);
+            // events.publish('user:loggedIn', false);
           }
         } else {
           AuthServiceNorthbricksProvider.devAccessToken = token;
@@ -81,17 +103,24 @@ export class MyApp {
       events.subscribe('user:loggedOut', () => {
         console.log('logged out');
         this.rootPage = LoginPage;
+        events.unsubscribe('user:loggedOut');
       });
       events.subscribe('user:loggedIn', () => {
         console.log('logged -in');
         this.rootPage = TabsPage;
+        events.unsubscribe('user:loggedIn');
       });
 
       events.subscribe('http', (httpErrorResponse: HttpErrorResponse) => {
+        if (httpErrorResponse.status === 401) {
+          console.log('401 ' + JSON.stringify(httpErrorResponse));
+          this.rootPage = LoginPage;
+        } else if (httpErrorResponse.status === 404) {
+          console.log('404 ' + JSON.stringify(httpErrorResponse));
+        }
 
-        console.log('Hehj ' + JSON.stringify(httpErrorResponse));
 
-        this.rootPage = LoginPage;
+
         // this.ModalLogin();
       });
 

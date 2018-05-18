@@ -18,7 +18,7 @@ import { Events } from 'ionic-angular';
 
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { catchError } from 'rxjs/operators/catchError';
-import { NorthbricksStorage } from './northbricks-storage';
+
 
 
 
@@ -37,9 +37,7 @@ export class NorthbricksApi {
   // private token: string
   constructor(
     public httpClient: HttpClient,
-    public events: Events,
-    private auth: AuthServiceNorthbricksProvider,
-    private storage: NorthbricksStorage) {
+    public events: Events) {
     console.log('Hello Northbricks API Provider');
     this.setHeaders2();
   }
@@ -48,10 +46,10 @@ export class NorthbricksApi {
     let body = {
       bankId: bankId
     }
-    return this.httpClient.post<Bank>(`https://api.northbricks.io/api/v1/me/banks`, JSON.stringify(body), { headers: this.setHeaders2() });
+    return this.httpClient.post<Bank>(`${this.baseUrl}/me/banks`, JSON.stringify(body), { headers: this.setHeaders2() });
   }
   public removeBankFromUser(bankId: string): Observable<any> {
-    return this.httpClient.delete(`https://api.northbricks.io/api/v1/me/banks/${bankId}`, { headers: this.setHeaders2() });
+    return this.httpClient.delete(`${this.baseUrl}/me/banks/${bankId}`, { headers: this.setHeaders2() });
 
   }
 
@@ -108,6 +106,7 @@ export class NorthbricksApi {
 
   public fetchAccounts(bankId: string): Observable<Accounts> {
     return this.httpClient.get<Accounts>(this.baseUrl + `/banks/${bankId}/accounts`, { headers: this.setHeaders2() })
+      .retry(3)
       .pipe(
         catchError(this.handleError)
       );
@@ -168,7 +167,7 @@ export class NorthbricksApi {
 
   }
   public fetchMyBanks(): Observable<Banks> {
-
+    console.log('Fetch my banks');
     return this.httpClient.get<Banks>(this.baseUrl + '/me/banks', { headers: this.setHeaders2() })
       .pipe(
         catchError(this.handleError)
@@ -190,8 +189,12 @@ export class NorthbricksApi {
 
 
   public setHeaders2(supplementalHeaders: Headers[] = null, accessToken: boolean = true): HttpHeaders {
-    return new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + AuthServiceNorthbricksProvider.devAccessToken });
-
+    console.log('setHeaders2 method ' + AuthServiceNorthbricksProvider.devAccessToken);
+    if (AuthServiceNorthbricksProvider.devAccessToken) {
+      return new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + AuthServiceNorthbricksProvider.devAccessToken });
+    } else {
+      return new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer f2d2c072-dcd1-44db-8103-bf1d356e87f9' });
+    }
   }
   public fetchUser(): Observable<User> {
     return this.httpClient.get<User>(this.baseUrl + '/me/user', { headers: this.setHeaders2() })

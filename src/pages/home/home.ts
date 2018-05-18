@@ -10,6 +10,9 @@ import { BankPage } from '../bank/bank';
 import { NorthbricksStorage } from '../../providers/northbricks-storage';
 import { LinkBanksPage } from '../link-banks/link-banks';
 import { TransactionPage } from '../transaction/transaction';
+import { AuthServiceNorthbricksProvider } from '../../providers/auth-service-northbricks/auth-service-northbricks';
+
+import { Subscription } from 'rxjs/Subscription';
 
 
 @Component({
@@ -28,6 +31,8 @@ export class HomePage {
   public accounts: Account[] = [];
   public countTransactions: number = 0;
   public actionSheet: ActionSheet;
+  public accountBalance: number = 0;
+  private subscriptions: Array<Subscription> = [];
   @ViewChild(Slides) public slides: Slides;
 
   constructor(public modalCtrl: ModalController,
@@ -37,7 +42,8 @@ export class HomePage {
     public navCtrl: NavController,
     public toastCtrl: ToastController,
     private storage: NorthbricksStorage,
-    private events: Events) {
+    private events: Events,
+    private auth: AuthServiceNorthbricksProvider) {
 
 
 
@@ -53,6 +59,9 @@ export class HomePage {
       console.log("no item selected");
     }
   }
+  public LoadSafari() {
+    this.auth.LoadSafari();
+  }
 
   public loadActionSheet() {
 
@@ -60,11 +69,14 @@ export class HomePage {
       title: 'Accounts'
     });
     console.log(JSON.stringify(this.accounts));
-    this.accounts.forEach(element => {
-      this.actionSheet.addButton({ text: element.iban, handler: () => { this.onItemSelection(element) } });
-    });
-    this.actionSheet.present();
+    if (this.accounts) {
 
+      this.accounts.forEach(element => {
+        this.actionSheet.addButton({ text: element.iban, handler: () => { this.onItemSelection(element) } });
+      });
+      this.actionSheet.present();
+
+    }
   }
 
 
@@ -84,10 +96,15 @@ export class HomePage {
       return "arrowgreen"
     }
   }
-  public ionViewDidEnter() {
+  public ionViewDidLoad() {
     // this.events.subscribe('user:loggedIn', (isLoggedIn) => {
     //   // user and time are the same arguments passed in `events.publish(user, time)`
     //   if (isLoggedIn) {
+    this.events.subscribe('disconnectedBank', disconn => {
+      if (disconn) {
+        this.fetchBanks();
+      }
+    });
     console.log('Did enter home');
     this.storage.getUser().then(user => {
       if (user) {
@@ -141,13 +158,12 @@ export class HomePage {
     }, 2000);
   }
   public showBank(bank: Banks) {
-    // alert(bank.id);
 
     let authModal = this.modalCtrl.create(BankPage, { bank: bank, user: this.user });
     authModal.present();
-    // authModal.onDidDismiss(dismissed => {
-    //   this.fetchBanks();
-    // });
+    authModal.onDidDismiss(dismissed => {
+      this.fetchBanks();
+    });
   }
 
   public showActionsSheetAccounts() {
@@ -157,29 +173,36 @@ export class HomePage {
 
   public fetchAccounts(bank: Bank) {
     // alert(bank.id);
-    this.northbricksApi.fetchAccounts(bank.id).subscribe(account => {
+    if (!bank) {
+      return;
+    }
+    this.subscriptions.push(this.northbricksApi.fetchAccounts(bank.id).subscribe(account => {
       // alert(JSON.stringify(account.accounts));
-      let totalSum = 0;
+
       this.accounts = account.accounts;
       this.selectedAccount = this.accounts[0];
       console.log('Fetching accounts ' + this.selectedAccount);
 
-      // alert(this.accounts.length);
       if (this.accounts.length !== 0) {
-        this.accounts.forEach(element => {
-          totalSum += element.balance;
-        });
-        console.log(totalSum);
+        console.log('Balance ' + this.selectedAccount.balance);
+        if (this.selectedAccount.balance === null) {
+          this.accountBalance = 0;
+        } else {
+          this.accountBalance = this.selectedAccount.balance;
+        }
         console.log(JSON.stringify(this.selectedAccount));
         this.fetchAccountsTransactions(this.selectedAccount);
       } else {
+        this.accounts = null;
+        this.selectedAccount = null;
         this.loadingText = "No accounts found";
       }
-    }, () => {
+    }, error => {
+      this.events.publish('http', error);
       this.accounts = null;
       this.selectedAccount = null;
-      this.loadingText = "No accounts found";
-    });
+      this.loadingText = "There were issues loading accounts";
+    }));
   }
 
   // private AddBank(bankId: string, name: string) {
@@ -202,6 +225,15 @@ export class HomePage {
   }
   public slideChanged(slider) {
     // const currentSlide = this.slides[slider.getActiveIndex()];
+    this.subscriptions.forEach((subscription: Subscription) => {
+      console.log('Cancel subscriptions ' + subscription);
+      subscription.unsubscribe();
+    });
+
+    this.loadingText = "Loading accounts..."
+    this.accountBalance = 0;
+    this.transactions = [];
+    this.selectedAccount = null;
     if (this.selectedBank !== this.banks[this.slides.getActiveIndex()]) {
       let currentIndex = this.slides.getActiveIndex();
       this.selectedBank = this.banks[this.slides.getActiveIndex()];
@@ -220,25 +252,36 @@ export class HomePage {
       showBackdrop: true,
       spinner: 'circles'
     });
+
     loader.present();
     console.log('Fetch banks ' + this.banks.length);
-    if (this.banks.length === 0) {
+    // if (this.banks.length === 0) {
 
-      this.northbricksApi.fetchBanks().subscribe(banks => {
-        console.log('banks... ' + JSON.stringify(banks));
+    this.subscriptions.push(this.northbricksApi.fetchMyBanks().subscribe(banks => {
+      console.log('banks... ' + JSON.stringify(banks));
+
+      if (banks.banks.length === 0) {
+        alert('You dont have any connected banks yet to Northbricks. We open up page for you to connect to your bank.');
+        this.openLogin();
+      } else {
         console.log(JSON.stringify(banks));
         this.banks = banks.banks;
         console.log(JSON.stringify(this.bank));
         this.selectedBank = this.banks[this.slides.getActiveIndex()];
         this.fetchAccounts(this.selectedBank);
-        loader.dismiss();
-      }, (error) => {
-        alert(error);
-        loader.dismiss();
-      });
-    } else {
+      }
+
       loader.dismiss();
-    }
+    }, (error) => {
+      if (error.status === 401) {
+        this.events.publish('http', error);
+
+      }
+      loader.dismiss();
+    }));
+    // } else {
+    //   loader.dismiss();
+    // }
 
 
   }
