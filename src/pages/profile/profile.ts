@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ToastController, Events } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, Events, ModalController } from 'ionic-angular';
 
 import { User } from '../../interface/iUser';
 import { NorthbricksApi } from '../../providers/northbricks-api';
@@ -22,10 +22,16 @@ export class ProfilePage {
     private toastCtrl: ToastController,
     private navCtrl: NavController,
     private storage: NorthbricksStorage,
-    private events: Events) {
+    private events: Events,
+    private modalCtrl: ModalController) {
   }
   public LinkBanks() {
-    this.navCtrl.push(LinkBanksPage);
+    let modal = this.modalCtrl.create(LinkBanksPage);
+    modal.onDidDismiss(token => {
+      // alert(token);
+      this.events.publish('disconnectedBank', true);
+    });
+    modal.present();
   }
   public EditProfile() {
     this.navCtrl.push(EditProfilePage);

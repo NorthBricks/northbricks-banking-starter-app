@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Profile</ion-title>
+    <ion-title>Settings</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -10,21 +10,18 @@
 <ion-content>
   <ion-list>
     <ion-list-header>
-      <ion-avatar item-start (click)="updateProfileImage()">
-        <img [src]="placeholderPicture">
-      </ion-avatar>
-      <p class="username">{{user?.firstName}} {{user?.lastName}}</p>
-      <p *ngIf="user?.email">{{user?.email}}</p>
-      <p *ngIf="user?.phone">{{user?.phone}}</p>
+      Profile
     </ion-list-header>
   </ion-list>
   <ion-list>
+    <button ion-item detail-push (click)="EditProfile()">
+      {{user?.firstName}} {{user?.lastName}}
+
+    </button>
     <button ion-item detail-push (click)="LinkBanks()">
       Link bank to you're account
     </button>
-    <button ion-item detail-push (click)="EditProfile()">
-      Edit your profile
-    </button>
+
     <button ion-item detail-push (click)="SignOut()">
       Sign out
     </button>

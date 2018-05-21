@@ -83,7 +83,7 @@ export class MyApp {
         // alert('Found token in storage - ' + token);
         if (token === null) {
           if (AuthServiceNorthbricksProvider.devAccessToken === '') {
-            this.rootPage = LoginPage;
+            // this.rootPage = LoginPage;
             // this.ModalLogin()
             // events.publish('user:loggedIn', false);
           }
