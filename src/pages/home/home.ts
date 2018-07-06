@@ -107,6 +107,7 @@ export class HomePage {
     });
     console.log('Did enter home');
     this.storage.getUser().then(user => {
+      // alert(JSON.stringify(user));
       if (user) {
         this.user = user;
         this.fetchBanks();

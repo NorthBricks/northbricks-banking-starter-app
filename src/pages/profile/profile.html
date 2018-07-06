@@ -8,21 +8,23 @@
 
 
 <ion-content>
+
   <ion-list>
     <ion-list-header>
       Profile
     </ion-list-header>
-  </ion-list>
-  <ion-list>
     <button ion-item detail-push (click)="EditProfile()">
+      <ion-icon name="person" item-start></ion-icon>
       {{user?.firstName}} {{user?.lastName}}
 
     </button>
     <button ion-item detail-push (click)="LinkBanks()">
+      <ion-icon name="pricetag" item-start></ion-icon>
       Link bank to you're account
     </button>
 
     <button ion-item detail-push (click)="SignOut()">
+      <ion-icon name="log-out" item-start></ion-icon>
       Sign out
     </button>
   </ion-list>
@@ -32,7 +34,8 @@
       My banks
     </ion-list-header>
     <ion-item *ngFor="let bank of banks" (click)="removeBank(bank.id)">
-      <!-- <ion-icon item-start name="briefcase"></ion-icon> -->
+      <!-- <ion-icon name="logo-usd" item-start></ion-icon> -->
+      <ion-icon item-start name="briefcase"></ion-icon>
       <h2>{{bank.fullName}}</h2>
       <button ion-button outline item-end>Disconnect</button>
     </ion-item>

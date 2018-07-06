@@ -48,40 +48,42 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
 
-      this.deeplinks.route({
-        '/': TabsPage,
-        '/callback': LoginPage,
-        '/universal-links-test': TabsPage
-      }).subscribe((match) => {
-        // match.$route - the route we matched, which is the matched entry from the arguments to route()
-        // match.$args - the args passed in the link
-        // match.$link - the full link data
-        console.log(match.$args);
-        console.log(match.$route);
-        console.log(match.$link);
-        console.log('Successfully matched route', match);
-      }, (nomatch) => {
-        // nomatch.$link - the full link data
-        console.error('Got a deeplink that didn\'t match', nomatch);
-      });
+      // this.deeplinks.route({
+      //   '/': TabsPage,
+      //   '/callback': LoginPage,
+      //   '/universal-links-test': TabsPage
+      // }).subscribe((match) => {
+      //   // match.$route - the route we matched, which is the matched entry from the arguments to route()
+      //   // match.$args - the args passed in the link
+      //   // match.$link - the full link data
+      //   console.log(match.$args);
+      //   console.log(match.$route);
+      //   console.log(match.$link);
+      //   console.log('Successfully matched route', match);
+      // }, (nomatch) => {
+      //   // nomatch.$link - the full link data
+      //   console.error('Got a deeplink that didn\'t match', nomatch);
+      // });
 
 
 
       console.log(AuthServiceNorthbricksProvider.devAccessToken);
-      storage.getValue('hasSeenTutorial')
-        .then((hasSeenTutorial) => {
-          if (hasSeenTutorial) {
-            this.rootPage = TabsPage;
-          } else {
-            // this.rootPage = SplashScreenPage;
-            this.rootPage = TabsPage;
-          }
-        });
+      // storage.getValue('hasSeenTutorial')
+      //   .then((hasSeenTutorial) => {
+      //     if (hasSeenTutorial) {
+      //       this.rootPage = TabsPage;
+      //     } else {
+      //       // this.rootPage = SplashScreenPage;
+      //       this.rootPage = TabsPage;
+      //     }
+      //   });
 
       // storage.deleteAll().then(del => {
       storage.getToken().then(token => {
+        token = AuthServiceNorthbricksProvider.devAccessToken;
         // alert('Found token in storage - ' + token);
         if (token === null) {
+          // alert(token);
           if (AuthServiceNorthbricksProvider.devAccessToken === '') {
             // this.rootPage = LoginPage;
             // this.ModalLogin()

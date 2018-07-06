@@ -57,6 +57,17 @@ export class NorthbricksApi {
 
   public handleError(error: HttpErrorResponse) {
 
+    // switch (error.status) {
+    //   case 401:
+
+    //     return new ErrorObservable(error);
+
+    //   default:
+    //     return new ErrorObservable(
+    //       'Something bad happened; please try again later.');
+    //     break;
+    // }
+
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
@@ -70,16 +81,7 @@ export class NorthbricksApi {
         `body was: ${error.error.error}`);
 
       return new ErrorObservable(error);
-      // switch (error.status) {
-      //   case 401:
 
-      //   // break;
-
-      //   default:
-      //     return new ErrorObservable(
-      //       'Something bad happened; please try again later.');
-      // break;
-      // }
 
 
       // The backend returned an unsuccessful response code.

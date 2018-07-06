@@ -15,7 +15,7 @@ export class AuthServiceNorthbricksProvider {
 
   public static accessToken: string = '';
   // public static devAccessToken: string = '4b86eb57-8e68-4863-a08e-dd2d1de40b4c1';
-  public static devAccessToken: string = '';
+  public static devAccessToken: string = 'ce7cf20a-6fe4-49c7-b4cd-3f9fae718c32';
 
   public get accessTokenStorage(): Promise<any> {
     return this.storage.getToken();
@@ -157,7 +157,7 @@ export class AuthServiceNorthbricksProvider {
         console.log('loadstart ' + event.url);
 
         if ((event.url).indexOf(`${this.redirectUrl}`) === 0) {
-          console.log('Fick tillbaka loadstart - redirect url');
+          alert('Fick tillbaka loadstart - redirect url');
           console.log('URL:: ' + event.url);
           var responseParameters = ((event.url).split("#")[1]).split("&");
           console.log(responseParameters);

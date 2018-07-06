@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.northbricks.app" version="2.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.northbricks.app" version="2.0.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Northbricks</name>
     <description>http://www.northbricks.com</description>
     <author email="info@northbricks.com" href="http://www.northbricks.io/">Northbricks Team</author>
-    <content original-src="index.html" src="http://192.168.2.209:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-navigation href="http://localhost:8080/*" />
@@ -140,6 +140,9 @@
     <allow-navigation href="http://10.2.120.116:8100" />
     <allow-navigation href="http://192.168.9.82:8100" />
     <allow-navigation href="http://192.168.1.140:8100" />
+    <allow-navigation href="http://192.168.2.209:8101" />
+    <allow-navigation href="http://192.168.255.48:8100" />
+    <allow-navigation href="http://10.0.0.112:8100" />
     <engine name="ios" spec="^4.5.4" />
     <engine name="android" spec="7.0.0" />
 </widget>
