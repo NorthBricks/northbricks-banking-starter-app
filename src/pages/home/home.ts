@@ -126,7 +126,7 @@ export class HomePage {
     // this.loadActionSheet();
   }
   public showTransaction(transactionId: string) {
-    let transactionModal = this.modalCtrl.create(TransactionPage, { bankId: this.selectedBank.id, transactionId: transactionId, accountId: this.selectedAccount.id });
+    let transactionModal = this.modalCtrl.create(TransactionPage, { bic: this.selectedBank.bic, transactionId: transactionId, accountId: this.selectedAccount.id });
     transactionModal.present();
   }
 
@@ -177,8 +177,8 @@ export class HomePage {
     if (!bank) {
       return;
     }
-    this.subscriptions.push(this.northbricksApi.fetchAccounts(bank.id).subscribe(account => {
-      // alert(JSON.stringify(account.accounts));
+    this.subscriptions.push(this.northbricksApi.fetchAccounts(bank.bic).subscribe(account => {
+      alert(JSON.stringify(account.accounts));
 
       this.accounts = account.accounts;
       this.selectedAccount = this.accounts[0];
@@ -206,9 +206,9 @@ export class HomePage {
     }));
   }
 
-  // private AddBank(bankId: string, name: string) {
-  //   // alert(bankId);
-  //   let authModal = this.modalCtrl.create(BankAuthPage, { bankId: bankId, name: name });
+  // private AddBank(bic: string, name: string) {
+  //   // alert(bic);
+  //   let authModal = this.modalCtrl.create(BankAuthPage, { bic: bic, name: name });
   //   authModal.present();
   //   authModal.onDidDismiss(dismissed => {
   //     this.fetchBanks();
@@ -259,7 +259,7 @@ export class HomePage {
     // if (this.banks.length === 0) {
 
     this.subscriptions.push(this.northbricksApi.fetchMyBanks().subscribe(banks => {
-      console.log('banks... ' + JSON.stringify(banks));
+      // alert('banks... ' + JSON.stringify(banks));
 
       if (banks.banks.length === 0) {
         alert('You dont have any connected banks yet to Northbricks. We open up page for you to connect to your bank.');
@@ -274,6 +274,7 @@ export class HomePage {
 
       loader.dismiss();
     }, (error) => {
+      alert(JSON.stringify(error));
       if (error.status === 401) {
         this.events.publish('http', error);
 
@@ -288,7 +289,7 @@ export class HomePage {
   }
 
   public fetchAccountsTransactions(account: Account) {
-    this.northbricksApi.fetchTransactions(account.id, this.selectedBank.id).subscribe(transactions => {
+    this.northbricksApi.fetchTransactions(account.id, this.selectedBank.bic).subscribe(transactions => {
       this.countTransactions = transactions.transactions.length;
       this.transactions = transactions.transactions;
     }, () => {

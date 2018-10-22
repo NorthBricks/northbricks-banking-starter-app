@@ -29,6 +29,7 @@ export class LoginPage {
 
 
   public register() {
+
     this.ngAuthProvider.register().then(register => {
       console.log(register);
     }, error => {
@@ -38,13 +39,13 @@ export class LoginPage {
 
   public doLogin() {
     this.ngAuthProvider.loginNorthbricks().then(response => {
-      // alert(JSON.stringify(response));
+      alert(JSON.stringify(response.access_token));
       AuthServiceNorthbricksProvider.devAccessToken = response.access_token;
       this.storage.setToken(AuthServiceNorthbricksProvider.devAccessToken).then(token => {
         this.northbricksApi.fetchUser().subscribe(user => {
           this.storage.setToken(token).then(setToken => {
             this.showToast('Logged in...').then(() => {
-              // this.closeModal();
+              this.closeModal();
               this.navCtrl.setRoot(TabsPage);
               this.storage.setUser(user).then(userSaved => {
                 this.events.publish('user:loggedIn', user);

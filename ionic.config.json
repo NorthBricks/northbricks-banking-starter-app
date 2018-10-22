@@ -1,8 +1,8 @@
 {
   "name": "Northbricks",
-  "app_id": "02c7108e",
-  "type": "ionic-angular",
   "integrations": {
     "cordova": {}
-  }
+  },
+  "type": "ionic-angular",
+  "pro_id": "02c7108e"
 }

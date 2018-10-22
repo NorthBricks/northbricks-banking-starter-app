@@ -37,7 +37,7 @@ export class BankPage {
   public ionViewDidLoad() {
     console.log('ionViewDidLoad BankPage');
     // alert(JSON.stringify(this.user));
-    this.northbricksApi.fetchBank(this.bank.id).subscribe(bank => {
+    this.northbricksApi.fetchBank(this.bank.bic).subscribe(bank => {
       // alert(JSON.stringify(bank));
       this.bank = bank;
     }, () => {
@@ -46,7 +46,7 @@ export class BankPage {
     });
 
 
-    this.northbricksApi.fetchAccounts(this.bank.id).subscribe(accounts => {
+    this.northbricksApi.fetchAccounts(this.bank.bic).subscribe(accounts => {
       console.log(JSON.stringify(accounts));
       this.accounts = accounts.accounts;
     }, () => {
@@ -72,7 +72,7 @@ export class BankPage {
 
   public fetchAccountsTransactions(account: Account) {
     // alert(JSON.stringify(account));
-    this.northbricksApi.fetchTransactions(account.id, this.bank.id).subscribe(transactions => {
+    this.northbricksApi.fetchTransactions(account.id, this.bank.bic).subscribe(transactions => {
       // alert(JSON.stringify(transactions));
       this.countTransactions = transactions.transactions.length;
       this.transactions = transactions.transactions;

@@ -80,7 +80,8 @@ export class MyApp {
 
       // storage.deleteAll().then(del => {
       storage.getToken().then(token => {
-        token = AuthServiceNorthbricksProvider.devAccessToken;
+        AuthServiceNorthbricksProvider.devAccessToken = token;
+        // token = AuthServiceNorthbricksProvider.devAccessToken;
         // alert('Found token in storage - ' + token);
         if (token === null) {
           // alert(token);

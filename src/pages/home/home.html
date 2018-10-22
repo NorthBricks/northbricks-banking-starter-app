@@ -23,7 +23,7 @@
   </ion-refresher>
   <div class="sliderWrap">
     <ion-slides pager (ionSlideDidChange)="slideChanged($event)">
-      <ion-slide id="{{bank.id}}" *ngFor="let bank of banks">
+      <ion-slide id="{{bank.bic}}" *ngFor="let bank of banks">
         <div class="wrapper">
           <header (click)="showBank(bank)">
             <div class="headerImage">
@@ -71,7 +71,8 @@
       <p>Value date: {{transaction.valueDate | momentFormat}}</p>
       <p>Booked date {{transaction.bookingDate | momentFormat}}</p>
       <p>{{transaction.description}}</p>
-      <h2 item-end [style.color]="getColor(transaction.amount.value)">{{transaction.amount.currency | currencySymbol}} {{transaction.amount.value | formatCurrency}}</h2>
+      <h2 item-end [style.color]="getColor(transaction.amount.value)">{{transaction.amount.currency | currencySymbol}}
+        {{transaction.amount.value | formatCurrency}}</h2>
 
     </ion-item>
 

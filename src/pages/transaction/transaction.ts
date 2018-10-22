@@ -10,7 +10,7 @@ import { Transaction } from '../../interface/iTransaction';
   templateUrl: 'transaction.html',
 })
 export class TransactionPage {
-  public bankId: string;
+  public bic: string;
   public transactionId: string;
   public accountId: string;
   public transaction: Transaction;
@@ -24,12 +24,12 @@ export class TransactionPage {
 
   public ionViewDidLoad() {
     console.log('ionViewDidLoad TransactionPage');
-    this.bankId = this.navParams.get('bankId');
+    this.bic = this.navParams.get('bic');
     this.transactionId = this.navParams.get('transactionId');
     this.accountId = this.navParams.get('accountId');
 
     console.log(this.accountId);
-    this.northbricksApi.fetchTransaction(this.accountId, this.bankId, this.transactionId).subscribe(transaction => {
+    this.northbricksApi.fetchTransaction(this.accountId, this.bic, this.transactionId).subscribe(transaction => {
       this.transaction = transaction;
 
       console.log(JSON.stringify(transaction));

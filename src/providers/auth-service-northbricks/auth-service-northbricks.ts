@@ -10,12 +10,12 @@ import { NorthbricksStorage } from '../northbricks-storage';
 
 @Injectable()
 export class AuthServiceNorthbricksProvider {
-  private redirectUrl = 'https://localhost'
+  private redirectUrl = 'https://api.northbricks.io/oauth/token'
   private oAuthUrl = `https://api.northbricks.io/oauth/authorize?client_id=sampleClientId&redirect_uri=${this.redirectUrl}&scope=read&response_type=token`;
 
   public static accessToken: string = '';
   // public static devAccessToken: string = '4b86eb57-8e68-4863-a08e-dd2d1de40b4c1';
-  public static devAccessToken: string = 'ce7cf20a-6fe4-49c7-b4cd-3f9fae718c32';
+  public static devAccessToken: string = '0963d62c-8fa2-4b28-b435-0919b6bb9b36';
 
   public get accessTokenStorage(): Promise<any> {
     return this.storage.getToken();
@@ -157,7 +157,7 @@ export class AuthServiceNorthbricksProvider {
         console.log('loadstart ' + event.url);
 
         if ((event.url).indexOf(`${this.redirectUrl}`) === 0) {
-          alert('Fick tillbaka loadstart - redirect url');
+          console.log('Fick tillbaka loadstart - redirect url ' + this.redirectUrl);
           console.log('URL:: ' + event.url);
           var responseParameters = ((event.url).split("#")[1]).split("&");
           console.log(responseParameters);

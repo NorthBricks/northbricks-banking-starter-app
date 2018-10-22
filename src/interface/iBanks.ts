@@ -5,7 +5,7 @@
  * @interface Banks
  */
 export interface Bank {
-    id: string;
+    bic: string;
     shortName: string;
     fullName: string;
     logo: string;

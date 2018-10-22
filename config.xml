@@ -3,7 +3,7 @@
     <name>Northbricks</name>
     <description>http://www.northbricks.com</description>
     <author email="info@northbricks.com" href="http://www.northbricks.io/">Northbricks Team</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.5.55:8100" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-navigation href="http://localhost:8080/*" />
@@ -88,9 +88,6 @@
     <allow-navigation href="http://localhost:8080/*" />
     <allow-navigation href="http://localhost:8100/*" />
     <allow-navigation href="http://192.168.2.209:8100" />
-    <plugin name="cordova-plugin-console" spec="^1.1.0" />
-    <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
-    <plugin name="cordova-plugin-ionic-webview" spec="^1.1.14" />
     <allow-navigation href="http://10.0.1.63:8100" />
     <allow-navigation href="http://192.168.8.108:8100" />
     <allow-navigation href="http://10.177.49.55:8100" />
@@ -103,20 +100,31 @@
     <allow-navigation href="http://192.168.51.83:8100" />
     <allow-navigation href="http://192.168.51.166:8100" />
     <allow-navigation href="http://10.33.13.53:8100" />
-    <plugin name="cordova-plugin-inappbrowser" spec="~1.7.2" />
-    <plugin name="cordova-plugin-actionsheet" spec="^2.3.3" />
-    <plugin name="cordova-plugin-device" spec="^1.1.7" />
-    <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
-    <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
-    <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
     <allow-navigation href="http://192.168.255.71:8100" />
     <allow-navigation href="http://192.168.1.156:8100" />
     <allow-navigation href="http://192.168.51.201:8100" />
     <allow-navigation href="http://10.33.13.86:8100" />
     <allow-navigation href="http://192.168.1.240:8100" />
     <allow-navigation href="http://172.20.10.2:8100" />
-    <plugin name="cordova-plugin-safariviewcontroller" spec="^1.5.3" />
     <allow-navigation href="http://192.168.51.105:8100" />
+    <allow-navigation href="http://10.31.212.132:8100" />
+    <allow-navigation href="http://10.3.169.159:8100" />
+    <allow-navigation href="http://10.2.120.116:8100" />
+    <allow-navigation href="http://192.168.9.82:8100" />
+    <allow-navigation href="http://192.168.1.140:8100" />
+    <allow-navigation href="http://192.168.2.209:8101" />
+    <allow-navigation href="http://192.168.255.48:8100" />
+    <allow-navigation href="http://10.0.0.112:8100" />
+    <plugin name="cordova-plugin-inappbrowser" spec="^1.7.2" />
+    <plugin name="cordova-plugin-actionsheet" spec="^2.3.3" />
+    <plugin name="cordova-plugin-console" spec="^1.1.0" />
+    <plugin name="cordova-plugin-device" spec="^1.1.7" />
+    <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
+    <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
+    <plugin name="cordova-plugin-ionic-webview" spec="^1.2.0" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
+    <plugin name="cordova-plugin-safariviewcontroller" spec="^1.5.3" />
     <plugin name="ionic-plugin-deeplinks" spec="^1.0.15">
         <variable name="URL_SCHEME" value="northbricks" />
         <variable name="DEEPLINK_HOST" value="northbricks.io" />
@@ -135,14 +143,6 @@
         <variable name="DEEPLINK_5_SCHEME" value=" " />
         <variable name="DEEPLINK_5_HOST" value=" " />
     </plugin>
-    <allow-navigation href="http://10.31.212.132:8100" />
-    <allow-navigation href="http://10.3.169.159:8100" />
-    <allow-navigation href="http://10.2.120.116:8100" />
-    <allow-navigation href="http://192.168.9.82:8100" />
-    <allow-navigation href="http://192.168.1.140:8100" />
-    <allow-navigation href="http://192.168.2.209:8101" />
-    <allow-navigation href="http://192.168.255.48:8100" />
-    <allow-navigation href="http://10.0.0.112:8100" />
-    <engine name="ios" spec="^4.5.4" />
-    <engine name="android" spec="7.0.0" />
+    <allow-navigation href="http://192.168.5.55:8100" sessionid="d28e0463" />
+    <engine name="android" spec="^7.1.1" />
 </widget>

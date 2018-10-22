@@ -36,8 +36,8 @@ export class ProfilePage {
   public EditProfile() {
     this.navCtrl.push(EditProfilePage);
   }
-  public removeBank(bankId: string) {
-    this.northbricksApi.removeBankFromUser(bankId).subscribe(removed => {
+  public removeBank(bic: string) {
+    this.northbricksApi.removeBankFromUser(bic).subscribe(removed => {
       this.events.publish('disconnectedBank', true);
       this.fetchMyBanks();
       this.presentToast('Bank was sucessfully removed from your account in Northbricks.');

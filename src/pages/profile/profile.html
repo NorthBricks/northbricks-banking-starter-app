@@ -33,7 +33,7 @@
     <ion-list-header>
       My banks
     </ion-list-header>
-    <ion-item *ngFor="let bank of banks" (click)="removeBank(bank.id)">
+    <ion-item *ngFor="let bank of banks" (click)="removeBank(bank.bic)">
       <!-- <ion-icon name="logo-usd" item-start></ion-icon> -->
       <ion-icon item-start name="briefcase"></ion-icon>
       <h2>{{bank.fullName}}</h2>

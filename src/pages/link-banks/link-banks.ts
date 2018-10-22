@@ -48,23 +48,23 @@ export class LinkBanksPage {
 
 
   }
-  public AddBank(bankId: string, name: string) {
-    alert(bankId);
-    this.northbricksApi.addBankToUser(bankId).subscribe(addedBank => {
-      let authModal = this.modalCtrl.create(BankAuthPage, { bankId: bankId, name: name });
+  public AddBank(bic: string, name: string) {
+    alert('Add bank ' + bic);
+    this.northbricksApi.addBankToUser(bic).subscribe(addedBank => {
+      let authModal = this.modalCtrl.create(BankAuthPage, { bic: bic, name: name });
       authModal.present();
     }, error => {
       alert(JSON.stringify(error));
-      let authModal = this.modalCtrl.create(BankAuthPage, { bankId: bankId, name: name });
+      let authModal = this.modalCtrl.create(BankAuthPage, { bic: bic, name: name });
       authModal.present();
     });
 
   }
-  public bankAuth(bankId: string) {
+  public bankAuth(bic: string) {
     let baseUrl = 'https://api.northbricks.io/api/v1'
     // return new Promise((resolve, reject) => {
-
-    let urlAuth: string = baseUrl + `/me/banks/${bankId}/auth?access_token=${AuthServiceNorthbricksProvider.devAccessToken}`;
+    alert('bankAuth' + bic);
+    let urlAuth: string = baseUrl + `/me/banks/${bic}/auth?access_token=${AuthServiceNorthbricksProvider.devAccessToken}`;
     let browserRef: InAppBrowserObject = this.iab.create(urlAuth, "_blank", "location=no,clearsessioncache=yes,clearcache=yes")
 
 

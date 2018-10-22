@@ -12,14 +12,15 @@
     "ionic:serve": "ionic-app-scripts serve"
   },
   "dependencies": {
-    "@angular/common": "5.0.0",
-    "@angular/compiler": "5.0.0",
-    "@angular/compiler-cli": "5.0.0",
-    "@angular/core": "5.0.0",
-    "@angular/forms": "5.0.0",
-    "@angular/http": "5.0.0",
-    "@angular/platform-browser": "5.0.0",
-    "@angular/platform-browser-dynamic": "5.0.0",
+    "@angular/animations": "5.2.11",
+    "@angular/common": "5.2.11",
+    "@angular/compiler": "5.2.11",
+    "@angular/compiler-cli": "5.2.11",
+    "@angular/core": "5.2.11",
+    "@angular/forms": "5.2.11",
+    "@angular/http": "5.2.11",
+    "@angular/platform-browser": "5.2.11",
+    "@angular/platform-browser-dynamic": "5.2.11",
     "@ionic-native/action-sheet": "^5.0.0-beta.9",
     "@ionic-native/core": "^5.0.0-beta.9",
     "@ionic-native/deeplinks": "^5.0.0-beta.9",
@@ -31,8 +32,8 @@
     "@ionic-native/status-bar": "^5.0.0-beta.9",
     "@ionic/storage": "2.1.3",
     "auth0-js": "^9.4.2",
-    "cordova-android": "7.0.0",
-    "cordova-ios": "^4.5.4",
+    "cordova-android": "^7.1.1",
+    "cordova-ios": "^4.5.5",
     "cordova-plugin-actionsheet": "^2.3.3",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-console": "^1.1.0",
@@ -52,14 +53,14 @@
     "moment": "2.19.2",
     "npm": "^5.8.0",
     "numeral": "^2.0.6",
-    "rxjs": "^5.5.2",
+    "rxjs": "^5.5.11",
     "sw-toolbox": "3.6.0",
-    "zone.js": "^0.8.18"
+    "zone.js": "^0.8.26"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "^3.1.9",
+    "@ionic/app-scripts": "^3.2.0",
     "@ionic/cli-utils": "^1.19.2",
-    "typescript": "2.4.2"
+    "typescript": "^3.1.1"
   },
   "cordovaPlugins": [
     "cordova-plugin-inappbrowser",
@@ -104,7 +105,6 @@
       }
     },
     "platforms": [
-      "ios",
       "android"
     ]
   }

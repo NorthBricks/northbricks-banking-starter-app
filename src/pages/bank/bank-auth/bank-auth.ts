@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs/Subscription';
   templateUrl: 'bank-auth.html',
 })
 export class BankAuthPage {
-  public bankId: string;
+  public bic: string;
   public name: string;
   public response: OAuthResponse;
   private baseUrl = 'https://api.northbricks.io/api/v1'
@@ -23,7 +23,7 @@ export class BankAuthPage {
     private iab: InAppBrowser,
     private platform: Platform) {
 
-    this.bankId = navParams.get("bankId");
+    this.bic = navParams.get("bic");
   }
   public dismiss() {
     this.viewCtrl.dismiss();
@@ -31,7 +31,7 @@ export class BankAuthPage {
   public ionViewDidLoad() {
     this.platform.ready().then(() => {
       console.log('ionViewDidLoad BankAuthPage');
-      this.bankAuth(this.bankId)
+      this.bankAuth(this.bic)
       // .then(response => {
       //   console.log(JSON.stringify(response));
 
@@ -46,15 +46,17 @@ export class BankAuthPage {
     //   console.log(JSON.stringify(error));
     // });
   }
-  public bankAuth(bankId: string) {
+  public bankAuth(bic: string) {
     let baseUrl = 'https://api.northbricks.io/api/v1'
     // return new Promise((resolve, reject) => {
-
-    let urlAuth: string = baseUrl + `/me/banks/${bankId}/auth?access_token=${AuthServiceNorthbricksProvider.devAccessToken}`;
+    alert(AuthServiceNorthbricksProvider.devAccessToken);
+    alert('e2857d3c-0216-4f2f-8629-387de1940472');
+    alert(bic);
+    let urlAuth: string = baseUrl + `/me/banks/${bic}/auth?access_token=${AuthServiceNorthbricksProvider.devAccessToken}`;
     let browserRef: InAppBrowserObject = this.iab.create(urlAuth, "_self", "location=no,clearsessioncache=yes,clearcache=yes")
 
     browserRef.on("exit").subscribe((event) => {
-      alert("The  sign in flow was canceled");
+      console.log("The  sign in flow was canceled");
       // reject(new Error("The Northbricks sign in flow was canceled"));
     });
     browserRef.on('loadstop').subscribe(event => {
@@ -95,9 +97,9 @@ export class BankAuthPage {
   public authBank(): Promise<OAuthResponse> {
 
     return new Promise((resolve, reject) => {
-      this.bankId = this.navParams.get('bankId');
+      this.bic = this.navParams.get('bic');
       this.name = this.navParams.get('name');
-      let urlAuth: string = this.baseUrl + `/me/banks/${this.bankId}/auth?access_token=${AuthServiceNorthbricksProvider.devAccessToken}`;
+      let urlAuth: string = this.baseUrl + `/me/banks/${this.bic}/auth?access_token=${AuthServiceNorthbricksProvider.devAccessToken}`;
       let browserRef: InAppBrowserObject = this.iab.create(urlAuth, "_blank", "location=no,clearsessioncache=yes,clearcache=yes")
       const exitSubscription: Subscription = browserRef.on("exit").subscribe((event) => {
         console.log("The  sign in flow was canceled");
